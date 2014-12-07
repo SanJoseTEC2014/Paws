@@ -1,20 +1,20 @@
 package paws.vista;
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-
 import com.toedter.calendar.*;
 
-import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 import paws.control.*;
-import paws.modelo.Usuario;
-import paws.recursos.CasosPrueba;
-import paws.recursos.Diseno;
+import paws.control.excepciones.*;
+import paws.modelo.*;
+import paws.recursos.*;
 
+@SuppressWarnings("serial")
 public class VentanaParametrosSistema extends JFrame {
+	
 	private JButton botonGuardarFecha;
 	private JComboBox<String> comboCalificaciones;
 	private JButton botonAvanzarUnDia;
@@ -99,8 +99,15 @@ public class VentanaParametrosSistema extends JFrame {
 		botonCasos = new JButton("Cargar");
 		botonCasos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CasosPrueba.cargarDocumentoUsuariosPrueba();
-				CasosPrueba.cargarDocumentoMascotasPrueba();
+				try {
+					CasosPrueba.cargarDocumentoMascotasPrueba();
+					CasosPrueba.cargarDocumentoUsuariosPrueba();
+				} catch (TiempoSinEstablecerException ex) {
+					JOptionPane.showMessageDialog(null,
+						"No se pueden crear sucesos.\n" + ex.getMessage(),
+						"Error del Tiempo del Sistema",
+						JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		panelGeneral.add(botonCasos);

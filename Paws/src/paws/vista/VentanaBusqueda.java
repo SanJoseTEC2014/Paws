@@ -479,7 +479,7 @@ public class VentanaBusqueda extends JFrame {
 				tablaResultadosUsuarios.setVisible(true);
 				tablaResultadosUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 				tablaResultadosUsuarios.setAutoCreateRowSorter(true);
-				labelCantidadResultadosUsuarios.setText("Cantidad de resultados: " + modeloUsuarios.getCantidadResultados());
+				labelCantidadResultadosUsuarios.setText("Cantidad de resultados: " + modeloUsuarios.getRowCount());
 
 				if (ventanaContraida) {
 					expandirVentana();

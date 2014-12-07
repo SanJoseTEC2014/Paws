@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class ModeloTablaUsuarios extends AbstractTableModel {
 	private ArrayList<Usuario> listaUsuarios;
-	private String[] titulos = {"NickName", "Nombre", "Apellidos", "cedula", "Telefono", "Correo"};
+	private String[] titulos = {"Nickname", "Nombre", "Apellidos", "Cédula", "Teléfono", "Correo"};
 
 	public ModeloTablaUsuarios(ArrayList<Usuario> pListaUsusarios){
 		listaUsuarios = pListaUsusarios;
@@ -39,15 +39,11 @@ public class ModeloTablaUsuarios extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 6;
+		return titulos.length;
 	}
 
 	@Override
 	public int getRowCount() {
-		return listaUsuarios.size();
-	}
-	
-	public int getCantidadResultados(){
 		return listaUsuarios.size();
 	}
 }

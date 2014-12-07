@@ -47,7 +47,4 @@ public class ModeloTablaMensajes extends AbstractTableModel {
 		return listaMensajes.size();
 	}
 	
-	public int getCantidadDeResultados(){
-		return listaMensajes.size();
-	}
 }

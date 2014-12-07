@@ -37,6 +37,10 @@ public class Imagenes {
 		}
 	}
 	
+	public static BufferedImage getEstrellas(Integer estrellas) throws ImagenNoEncontradaException {
+		return getEstrellas((double) (int) estrellas);
+	}
+	
 	public static BufferedImage getEstrellas(Double ponderado) throws ImagenNoEncontradaException{
 		String rutaEstrellas = RutasArchivo.fotosSistema + "estrellas" + RutasArchivo.slash;
 		

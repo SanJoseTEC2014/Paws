@@ -3,6 +3,7 @@ package paws.control;
 import javax.swing.JOptionPane;
 
 import paws.control.excepciones.EventoNoExisteException;
+import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Mascota;
 import paws.modelo.Mensaje;
 import paws.modelo.Suceso;
@@ -26,7 +27,7 @@ public class EstadosMascotas {
 		return "INDEFINIDO";
 	}
 	
-	public static Suceso reportarEvento(Mascota pMascotaActual, String pNickEmisor, String pMensaje) throws EventoNoExisteException {
+	public static Suceso reportarEvento(Mascota pMascotaActual, String pNickEmisor, String pMensaje) throws EventoNoExisteException, TiempoSinEstablecerException {
 		String estadoActual = getEstadoActual(pMascotaActual.getMarcadoresEstado());
 		switch (pMensaje)
 		{

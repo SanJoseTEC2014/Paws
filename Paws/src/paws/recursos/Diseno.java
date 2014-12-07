@@ -18,7 +18,6 @@ import paws.control.excepciones.ImagenNoEncontradaException;
 
 public class Diseno {
 	public static Color fondoVentanas = new Color(150,192,150);
-	public static Color fondoMarcosVentanas = new Color(176,196,222);
 	public static Color letras = new Color(25,25,112);
 	public static Font fuenteTitulosVentanas;
 	public static Font fuenteBotones;
@@ -48,8 +47,6 @@ public class Diseno {
 			fuenteBotones = new Font("Tahoma", Font.PLAIN, 12);
 		}
 	}
-	
-	
 	
 	public static void inicializarLookAndFeel(){
 		// Establece un look and feel metálico, si no lo encuentra, establece el look and feel del sistema operativo.

@@ -215,10 +215,7 @@ public class VentanaMenuPrincipal extends JFrame {
 				Principal.coordinador.mostrarInicioSesion();
 			}
 		});
-		mntmCerrarSesion.setBackground(Diseno.fondoMarcosVentanas);
 		mnCuenta.add(mntmCerrarSesion);
-		
-	
 		mntmCondicionesDeRefugio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarCondicionesRefugio(Acceso.getUsuarioActivo());

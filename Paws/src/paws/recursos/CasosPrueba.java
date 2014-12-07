@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import paws.control.EstadosMascotas;
 import paws.control.Principal;
+import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Mascota;
 import paws.modelo.Suceso;
 import paws.modelo.Usuario;
@@ -46,7 +47,7 @@ public class CasosPrueba {
 				JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	public static void cargarDocumentoMascotasPrueba(){
+	public static void cargarDocumentoMascotasPrueba() throws TiempoSinEstablecerException{
 		try {
 			DocumentoCasosPrueba mascotasPrueba = new DocumentoCasosPrueba("mascotas.csv");
 			for (int i = 0; i < mascotasPrueba.getDocumentoSize(); i++){
@@ -77,8 +78,7 @@ public class CasosPrueba {
 				e.getMessage(),
 				"Error de casos de prueba",
 				JOptionPane.ERROR_MESSAGE);
-		}
-				
+		}		
 	}
 }
 

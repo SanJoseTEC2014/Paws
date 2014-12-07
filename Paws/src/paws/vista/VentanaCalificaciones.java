@@ -1,38 +1,44 @@
 package paws.vista;
 
-import javax.swing.JFrame;
+import java.awt.*;
 
-import java.awt.GridLayout;
-
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import paws.control.Imagenes;
+import paws.modelo.ModeloTablaCalificaciones;
 import paws.modelo.Usuario;
+import paws.recursos.Diseno;
 
-import java.awt.BorderLayout;
-
+@SuppressWarnings("serial")
 public class VentanaCalificaciones extends JFrame {
+
 	private JTable tablaCalificaciones;
-	private JScrollPane panelScrol;
+	private JScrollPane panelScroll;
 	String Titulos[] = {"Nick Calificante", "Calificación", "Comentario"};
+	private JLabel labelCalificaciones;
 
 	public VentanaCalificaciones() {
-		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		getContentPane().setBackground(Diseno.fondoVentanas);
 		setSize(400,400);
 		setIconImage(Imagenes.getIconoSistema().getImage());
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
+		labelCalificaciones = new JLabel("Calificaciones");
+		labelCalificaciones.setFont(Diseno.fuenteTitulosVentanas);
+		labelCalificaciones.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(labelCalificaciones, BorderLayout.NORTH);
+		
+		panelScroll = new JScrollPane();
+		panelScroll.setOpaque(false);
+		panelScroll.setViewportView(tablaCalificaciones);
+		getContentPane().add(panelScroll);
+		
 		tablaCalificaciones = new JTable();
-		panelScrol = new JScrollPane();
-		panel.add(panelScrol);
-		panelScrol.setViewportView(tablaCalificaciones);
+		tablaCalificaciones.setOpaque(false);
+		panelScroll.add(tablaCalificaciones);
 	}
 	public void setUsuario(Usuario usuarioActual) {
-		tablaCalificaciones = new JTable(usuarioActual.getArrayCalificaciones(), Titulos);
+		tablaCalificaciones = new JTable(new ModeloTablaCalificaciones(usuarioActual.getCalificaciones()));
 	}
 }
 	

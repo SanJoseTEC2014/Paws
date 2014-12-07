@@ -3,6 +3,7 @@ package paws.control;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Usuario;
 
 public class Tiempo {
@@ -19,7 +20,10 @@ public class Tiempo {
 		}
 	}
 
-	public static Calendar getFechaSistema(){
+	public static Calendar getFechaSistema() throws TiempoSinEstablecerException{
+		if (fechaSistema == null) {
+			throw new TiempoSinEstablecerException("No se ha establecido la fecha del sistema.");
+		}
 		return fechaSistema;
 	}
 	

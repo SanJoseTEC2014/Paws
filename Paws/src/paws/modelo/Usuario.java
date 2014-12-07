@@ -5,7 +5,11 @@ import java.math.*;
 import java.text.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import paws.control.Principal;
+import paws.control.excepciones.EventoNoExisteException;
+import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.control.excepciones.UsuarioNoExisteException;
 
 public class Usuario implements Serializable, Comunicable {
@@ -280,9 +284,14 @@ public class Usuario implements Serializable, Comunicable {
 	}
 	
 	@Override
-	public void enviarMensaje(String pTipoMensaje, Mascota pMascota, String pNickDestino) throws UsuarioNoExisteException {
-		pMascota.notificar(pTipoMensaje, this.nickname);		
-		Principal.getUsuario(pNickDestino).recibirMensaje(new Mensaje(pTipoMensaje, this.nickname, pMascota));
+	public void enviarMensaje(String pTipoMensaje, Mascota pMascota, String pNickDestino) {
+		try {
+			pMascota.notificar(pTipoMensaje, this.nickname);
+			Principal.getUsuario(pNickDestino).recibirMensaje(new Mensaje(pTipoMensaje, this.nickname, pMascota));
+		} catch (EventoNoExisteException | TiempoSinEstablecerException | UsuarioNoExisteException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() +
+			"\n Contacte al equipo de desarrollo", "Error inesperado", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	@Override
@@ -336,16 +345,6 @@ public class Usuario implements Serializable, Comunicable {
 			}
 			break;
 		}
-	}
-	
-	public String[][] getArrayCalificaciones(){
-		String[][] ArregloCalificaciones = new String[calificaciones.size()][3];
-		for (int i = 0; i < calificaciones.size(); i++){
-			ArregloCalificaciones[i][0] = calificaciones.get(i).getNicknameCalificante();
-			ArregloCalificaciones[i][1] = Integer.toString(calificaciones.get(i).getEstrellas());
-			ArregloCalificaciones[i][2] = calificaciones.get(i).getMensaje();
-		}
-		return ArregloCalificaciones;
 	}
 	
 	public Usuario clone() {

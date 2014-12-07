@@ -3,8 +3,10 @@ package paws.modelo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import paws.control.Tiempo;
+import paws.control.excepciones.TiempoSinEstablecerException;
 
 public class Suceso implements Serializable {
 	
@@ -16,7 +18,7 @@ public class Suceso implements Serializable {
 	private String detalles;
 	private String nick;
 	
-	public Suceso() {
+	public Suceso() throws TiempoSinEstablecerException {
 		nick = "";
 		estado = "";
 		lugar = "";
@@ -26,13 +28,12 @@ public class Suceso implements Serializable {
 		detalles = "";
 	}
 	
-	public Suceso(String pNick, String pEstado, String pLugar, String pDetalles) {
+	public Suceso(String pNick, String pEstado, String pLugar, String pDetalles) throws TiempoSinEstablecerException  {
 		nick = pNick;
 		estado = pEstado;
 		lugar = pLugar;
 		// Copia el valor Date de la fecha del Sistema
-		fecha = new Calendar.Builder().setCalendarType("iso8601")
-				.setInstant(Tiempo.getFechaSistema().getTime()).build();
+		fecha = new Calendar.Builder().setCalendarType("iso8601").setInstant(Tiempo.getFechaSistema().getTime()).build();
 		detalles = pDetalles;
 	}
 	

@@ -124,9 +124,9 @@ public class CoordinadorVisual {
 		mascotasAsociadas.setVisible(true);
 	}
 
-	public void mostrarCalificaciones(Usuario usuarioActual) {
+	public void mostrarCalificaciones(Usuario pUsuario) {
 		VentanaCalificaciones cals = new VentanaCalificaciones();
-		cals.setUsuario(usuarioActual);
+		cals.setUsuario(pUsuario);
 		cals.setVisible(true);
 	}
 

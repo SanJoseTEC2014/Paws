@@ -61,7 +61,7 @@ public class Principal {
 			while ((lineaActual = lector.readLine()) != null ) {
 				String pEspecie = lineaActual.substring(0, lineaActual.indexOf(":"));
 				LinkedList<String> pRazas = new LinkedList<String>();
-				for (String token : lineaActual.substring(lineaActual.indexOf(":"), lineaActual.length()).split(";")) {
+				for (String token : lineaActual.substring(lineaActual.indexOf(":") + 1, lineaActual.length()).split(";")) {
 					pRazas.add(token);
 				}
 				Mascota.addEspecie(pEspecie);

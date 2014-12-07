@@ -22,7 +22,9 @@ import javax.swing.DefaultComboBoxModel;
 
 import paws.control.EstadosMascotas;
 import paws.control.Imagenes;
+import paws.control.excepciones.EventoNoExisteException;
 import paws.control.excepciones.ImagenNoEncontradaException;
+import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Suceso;
 
 public class Mascota implements Serializable {
@@ -263,7 +265,7 @@ public class Mascota implements Serializable {
 		marcadoresEspera[2] = false;
 	}
 	
-	public void notificar(String pMensaje, String pNickEmisor) {
+	public void notificar(String pMensaje, String pNickEmisor) throws EventoNoExisteException, TiempoSinEstablecerException {
 		Suceso temp = EstadosMascotas.reportarEvento(this, pNickEmisor, pMensaje);
 		if (!temp.getNick().equals("")) addNuevoSuceso(temp); // Si el suceso tiene que cambiar.
 	}
