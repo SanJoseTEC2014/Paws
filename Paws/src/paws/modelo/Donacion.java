@@ -1,6 +1,9 @@
 package paws.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import paws.control.Principal;
 
 public class Donacion implements Serializable {
 	
@@ -30,4 +33,12 @@ public class Donacion implements Serializable {
 		return organizacionID;
 	}
 	
+	public ArrayList<Donacion> getDonaciones(){
+		ArrayList<Donacion> listaDonaciones = new ArrayList<Donacion>();
+		for(Donacion donacion : Principal.donaciones){
+			listaDonaciones.add(donacion);	
+		}
+		return listaDonaciones;
+	
+    }
 }

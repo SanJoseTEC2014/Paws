@@ -39,6 +39,7 @@ public class Usuario implements Serializable, Comunicable {
 	private Boolean bloqueado;
 	private Boolean administrador;
 	private CondicionesRefugio condicionesRef;
+	private Donacion donacion;
 	private Double ponderadoCalificacion;
 
 	public Usuario(String pNickname, String pNombre, String pApellidos, Integer pCedula, String pContrasenia,
@@ -157,6 +158,16 @@ public class Usuario implements Serializable, Comunicable {
 	public void setCondicionesRefugio(CondicionesRefugio pCondiciones) {
 		condicionesRef = pCondiciones;
 	}
+	
+
+	public Donacion getDonacion(){
+		return donacion;
+	}
+	
+	public void setDonacion(Donacion pdonacion){
+		donacion = pdonacion;
+	}
+
 
 	public void addDiasTranscurridos() {
 		diasUltimoEmparejamiento++;
