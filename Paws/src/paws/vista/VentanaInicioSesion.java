@@ -3,16 +3,13 @@ package paws.vista;
 import javax.swing.*;
 
 import paws.control.*;
-import paws.control.excepciones.ContraseniaIncorrectaException;
-import paws.control.excepciones.ImagenNoEncontradaException;
-import paws.control.excepciones.TiempoSinEstablecerException;
-import paws.control.excepciones.UsuarioNoExisteException;
+import paws.control.excepciones.*;
 import paws.recursos.Diseno;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.awt.image.*;
+import java.io.*;
 
 import javax.swing.border.*;
 

@@ -1,23 +1,10 @@
 package paws.vista;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.BorderLayout;
-
-import javax.swing.SwingConstants;
-
-import java.awt.Panel;
-import java.awt.Button;
-
-import javax.swing.JButton;
-import javax.swing.JTable;
-
+import java.awt.*;
+import javax.swing.*;
 import paws.recursos.Diseno;
 
-import java.awt.Font;
-import java.awt.Color;
-
+@SuppressWarnings("serial")
 public class VentanaListaAsociaciones extends JFrame {
 	
 	private JTable table;

@@ -1,33 +1,15 @@
 package paws.vista;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.border.*;
+import java.awt.event.*;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
-
-import java.awt.FlowLayout;
-
-import javax.swing.SwingConstants;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JTextPane;
-import javax.swing.JEditorPane;
-
-import paws.control.Acceso;
-import paws.control.Imagenes;
-import paws.modelo.Calificacion;
-import paws.modelo.Usuario;
+import paws.control.*;
+import paws.modelo.*;
 import paws.recursos.Diseno;
 
+@SuppressWarnings("serial")
 public class VentanaAgregarComentario extends JFrame {
 	private JButton btnCancelar;
 	private JButton btnComentar;

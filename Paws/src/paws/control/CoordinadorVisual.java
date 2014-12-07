@@ -13,9 +13,6 @@ package paws.control;
  *  
  */
 
-import java.awt.Window;
-
-import javax.naming.InitialContext;
 import javax.swing.JFrame;
 
 import paws.modelo.Mascota;
@@ -27,9 +24,6 @@ public class CoordinadorVisual {
 	private VentanaMenuPrincipal menuPrincipal;
 	private VentanaDetallesUsuario detallesUsuario;
 	private VentanaDetallesMascota detallesMascota;
-	
-	private JFrame ventanaActiva;
-	
 	private VentanaInicioSesion inicioSesion;
 	private VentanaCondicionesRefugio condicionesRefugio;
 	private VentanaMascotasDeUsuario mascotasAsociadas;
@@ -47,19 +41,16 @@ public class CoordinadorVisual {
 	public synchronized void mostrarInicioSesion() {
 		inicioSesion.setVisible(true);
 		inicioSesion.cargarLogo();
-		ventanaActiva = inicioSesion;
 	}
 
 	public synchronized void mostrarParametrosSistema() {
 		parametrosSistema.setVisible(Acceso.isAdministradorActivo());
 		parametrosSistema.setVisible(true);
-		ventanaActiva = parametrosSistema;
 	}
 
 	public synchronized void mostrarMenuPrincipal() {
 		menuPrincipal.setVisible(true);
 		menuPrincipal.setUsuario();
-		ventanaActiva = menuPrincipal;
 	}
 	
 	public synchronized void ocultarMenuPrincipal() {
@@ -70,7 +61,6 @@ public class CoordinadorVisual {
 		detallesUsuario.setDatosIniciales(usuarioActual);
 		detallesUsuario.setModoEdicion(usuarioActual == Acceso.getUsuarioActivo());
 		detallesUsuario.setVisible(true);
-		ventanaActiva = detallesUsuario;
 	}
 
 	public synchronized void mostrarRegistroUsuarios() {

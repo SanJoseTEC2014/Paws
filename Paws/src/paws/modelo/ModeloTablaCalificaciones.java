@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import paws.control.Imagenes;
 
+@SuppressWarnings("serial")
 public class ModeloTablaCalificaciones extends AbstractTableModel {
 
 	private ArrayList<Calificacion> listaCalificaciones;

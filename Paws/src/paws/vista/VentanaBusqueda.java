@@ -2,23 +2,18 @@ package paws.vista;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 
-import paws.control.Busqueda;
-import paws.control.Imagenes;
-import paws.control.Principal;
-import paws.control.excepciones.MascotaNoEncontradaException;
-import paws.control.excepciones.UsuarioNoExisteException;
-import paws.modelo.Mascota;
-import paws.modelo.ModeloTablaMascotas;
-import paws.modelo.ModeloTablaUsuarios;
-import paws.recursos.Dialogos;
-import paws.recursos.Diseno;
+import paws.control.*;
+import paws.control.excepciones.*;
+import paws.modelo.*;
+import paws.recursos.*;
 
+@SuppressWarnings("serial")
 public class VentanaBusqueda extends JFrame {
 
 	private static final Integer altoVentanaContraida = 395;

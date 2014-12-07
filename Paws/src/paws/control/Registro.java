@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import paws.control.excepciones.UsuarioNoExisteException;
 import paws.modelo.Mascota;
 import paws.modelo.Usuario;
 

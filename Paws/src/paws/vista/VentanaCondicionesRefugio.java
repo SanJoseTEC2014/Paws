@@ -1,49 +1,14 @@
 package paws.vista;
 
-import javax.swing.JFrame;
-
-import java.awt.BorderLayout;
-import java.awt.FontFormatException;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JPanel;
-
-import java.awt.GridLayout;
-import java.io.IOException;
-import java.util.ResourceBundle.Control;
-
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.BoxLayout;
-
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.CardLayout;
-
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.BevelBorder;
-
-import java.awt.Color;
-
-import javax.swing.JEditorPane;
-
-import paws.control.Acceso;
-import paws.control.Imagenes;
-import paws.control.Principal;
-import paws.modelo.Usuario;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.event.*;
+import paws.control.*;
+import paws.modelo.*;
 import paws.recursos.Diseno;
 
+@SuppressWarnings("serial")
 public class VentanaCondicionesRefugio extends JFrame {
 	private JEditorPane textDetalles;
 	private JButton botonGuardarCambios;

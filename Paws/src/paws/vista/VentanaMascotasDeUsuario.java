@@ -1,23 +1,15 @@
 package paws.vista;
 
 import java.awt.*;
-
 import javax.swing.*;
-
-import paws.control.Acceso;
-import paws.control.Emparejador;
-import paws.control.Principal;
-import paws.control.excepciones.MascotaNoEncontradaException;
-import paws.control.excepciones.UsuarioNoExisteException;
-import paws.modelo.Mascota;
-import paws.modelo.ModeloTablaMascotas;
-import paws.modelo.Usuario;
+import paws.control.*;
+import paws.control.excepciones.*;
+import paws.modelo.*;
 import paws.recursos.Diseno;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class VentanaMascotasDeUsuario extends JFrame {
 	private JTable tablaMascotas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();

@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+@SuppressWarnings("serial")
 public class VentanaRegistroMascotas extends JFrame {
 	private JTextField campoNombre;
 	private JTextField campoNumeroDeChip;

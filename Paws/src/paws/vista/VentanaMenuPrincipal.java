@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+@SuppressWarnings("serial")
 public class VentanaMenuPrincipal extends JFrame {
 	private JFlowPanel coverflowPanel;
 	private JLabel labelBienvenido;

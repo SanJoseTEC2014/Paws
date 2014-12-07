@@ -15,19 +15,14 @@ package paws.control;
  *  
  */
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 import javax.swing.JOptionPane;
 
 import paws.control.excepciones.*;
 import paws.modelo.*;
-import paws.recursos.CasosPrueba;
-import paws.recursos.Diseno;
-import paws.recursos.RutasArchivo;
+import paws.recursos.*;
 
 public class Principal {
 	public static ArrayList<Mascota> mascotas = new ArrayList<Mascota>();

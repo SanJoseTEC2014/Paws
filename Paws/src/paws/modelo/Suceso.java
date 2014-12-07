@@ -3,8 +3,6 @@ package paws.modelo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
 import paws.control.Tiempo;
 import paws.control.excepciones.TiempoSinEstablecerException;
 

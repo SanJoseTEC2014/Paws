@@ -1,26 +1,17 @@
 package paws.vista;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-import javax.swing.JButton;
-
-import paws.control.Principal;
-import paws.control.excepciones.MascotaNoEncontradaException;
-import paws.modelo.Mascota;
-import paws.modelo.ModeloTablaMascotas;
-import paws.recursos.Diseno;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
+import javax.swing.*;
+
+import paws.control.*;
+import paws.control.excepciones.*;
+import paws.modelo.*;
+import paws.recursos.Diseno;
+
+@SuppressWarnings("serial")
 public class VentanaListaTodasMascotas extends JFrame {
 	private JTable tablaMascotas;
 	private JLabel labelTitulo;

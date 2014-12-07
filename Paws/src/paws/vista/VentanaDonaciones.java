@@ -1,27 +1,11 @@
 package paws.vista;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.BorderLayout;
-
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
-import java.awt.Panel;
-
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.GroupLayout.*;
 import paws.recursos.Diseno;
 
-import java.awt.Label;
-import java.awt.TextField;
-import java.awt.Font;
-
+@SuppressWarnings("serial")
 public class VentanaDonaciones extends JFrame {
 	private JTextField textField;
 	public VentanaDonaciones() {

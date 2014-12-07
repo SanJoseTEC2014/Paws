@@ -1,7 +1,5 @@
 package paws.control;
 
-import javax.swing.JOptionPane;
-
 import paws.control.excepciones.EventoNoExisteException;
 import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Mascota;

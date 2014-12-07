@@ -18,6 +18,7 @@ import paws.modelo.Usuario;
 import paws.recursos.Dialogos;
 import paws.recursos.Diseno;
 
+@SuppressWarnings("serial")
 public class VentanaRegistroUsuarios extends JFrame {
 	private JTextField apellidosTextBox;
 	private JButton botonCancelar;

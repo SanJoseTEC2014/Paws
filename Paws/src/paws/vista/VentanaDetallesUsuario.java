@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+@SuppressWarnings("serial")
 public class VentanaDetallesUsuario extends JFrame {
 	
 	private JButton botonCondicionesRefugio;

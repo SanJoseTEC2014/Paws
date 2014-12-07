@@ -1,20 +1,9 @@
 package paws.recursos;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import java.awt.*;
+import java.io.*;
+import javax.swing.*;
 import paws.control.Imagenes;
-import paws.control.excepciones.ImagenNoEncontradaException;
 
 public class Diseno {
 	public static Color fondoVentanas = new Color(150,192,150);
