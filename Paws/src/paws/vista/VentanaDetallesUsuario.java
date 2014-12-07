@@ -66,14 +66,14 @@ public class VentanaDetallesUsuario extends JFrame {
 		getContentPane().add(marcoTitulos, BorderLayout.NORTH);
 		
 				labelTitulo1 = new JLabel("Información");
-				labelTitulo1.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+				labelTitulo1.setFont(Diseno.fuenteTitulosVentanas);
 				labelTitulo1.setHorizontalAlignment(SwingConstants.CENTER);
 				labelTitulo1.setOpaque(false);
 				marcoTitulos.add(labelTitulo1, BorderLayout.NORTH);
 				
 				labelTitulo2 = new JLabel("Contacto");
 				labelTitulo2.setHorizontalAlignment(SwingConstants.CENTER);
-				labelTitulo2.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+				labelTitulo2.setFont(Diseno.fuenteTitulosVentanas);
 				labelTitulo2.setOpaque(false);
 				marcoTitulos.add(labelTitulo2, BorderLayout.SOUTH);
 				

@@ -17,18 +17,16 @@ import paws.control.excepciones.*;
 import paws.modelo.Usuario;
 
 public class Acceso {
-	private static Usuario usuarioActivo;
-	
+	private static Usuario usuarioActivo;	
 	private static Usuario superUsuario;
 	
-	private static boolean modoAdministrador;
-	
-	// Aplicaciï¿½n de Singleton para el superUsuario
+	// Aplicación de Singleton para el superUsuario
 	private static void inicializarSuperUsuario(){
 		superUsuario = new Usuario("pitbull", "Superusuario", "Paws", 111111111,
-				"terrier", 25505033, "paws_TEC@gmail.com", "Barrio Amï¿½n");
+				"terrier", 25505033, "pawsconsultas@gmail.com", "Barrio Amón");
 		superUsuario.setLapsoEmparejamiento(Usuario.lapsos.get(2));
 		superUsuario.setAdministrador(true);
+		superUsuario.setRefugiante(true);
 	}
 	
 	private static Usuario getInstanciaSuperUsuario(){
@@ -38,15 +36,20 @@ public class Acceso {
 		return superUsuario;
 	}
 	
-	public static void validarCredenciales(String pNickname, String pContrasenia) throws Exception{
+	public static void validarCredenciales(String pNickname, String pContrasenia) 
+	throws UsuarioNoExisteException, TiempoSinEstablecerException, ContraseniaIncorrectaException
+	{
 		if (isSuperUsuario(pNickname, pContrasenia)){
 			usuarioActivo = getInstanciaSuperUsuario();
-			setModoAdministrador(true);
 		} else {
 			Usuario usuarioPorAcceder = validarUsuarioRegistrado(pNickname);
 			if (usuarioPorAcceder.getContrasenia().equals(pContrasenia)){
+				if (!Tiempo.isFechaEstablecida()){
+					throw new TiempoSinEstablecerException(
+						"Debe haber establecido una fecha inicial previamente.\n" +
+						"Contacte al administrador de su sistema.");
+				}
 				usuarioActivo = usuarioPorAcceder;
-				setModoAdministrador(usuarioActivo.isAdministrador());
 			} else {
 				throw new ContraseniaIncorrectaException("Contraseña incorrecta.");
 			}
@@ -61,15 +64,11 @@ public class Acceso {
 		} return false;
 	}
 	
-	private static Usuario validarUsuarioRegistrado(String pNickname) throws Exception {
+	private static Usuario validarUsuarioRegistrado(String pNickname) throws UsuarioNoExisteException {
 		for (Usuario i : Principal.usuarios) {
 			if (pNickname.equals(i.getNickname())) return i;
 		}
 		throw new UsuarioNoExisteException("Usuario no registrado en el sistema.");
-	}
-	
-	private static void setModoAdministrador(boolean opcion){
-		modoAdministrador = opcion;
 	}
 	
 	public static boolean isAdministradorActivo(){

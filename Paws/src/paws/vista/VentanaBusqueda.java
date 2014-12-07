@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import paws.control.Busqueda;
+import paws.control.Imagenes;
 import paws.control.Principal;
 import paws.control.excepciones.MascotaNoEncontradaException;
 import paws.control.excepciones.UsuarioNoExisteException;
@@ -55,7 +56,7 @@ public class VentanaBusqueda extends JFrame {
 	private JComboBox<String> comboRazas;
 	Thread hiloBarraProgreso;
 	Thread hiloExpandirVentana;
-	private JLabel labelTitulo1;
+	private JLabel labelTitulo;
 	private JPanel marcoCampos;
 	private JPanel marcoContenidoMascotas;
 	private JPanel marcoContenidoUsuarios;
@@ -88,15 +89,16 @@ public class VentanaBusqueda extends JFrame {
 	public VentanaBusqueda() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(anchoVentana, altoVentanaContraida);	
+		setSize(anchoVentana, altoVentanaContraida);
+		setIconImage(Imagenes.getIconoSistema().getImage());
 
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		ventanaContraida = true;
 		
-		labelTitulo1 = new JLabel("B\u00FAsqueda");
-		getContentPane().add(labelTitulo1, BorderLayout.NORTH);
-		labelTitulo1.setHorizontalAlignment(SwingConstants.CENTER);
-		labelTitulo1.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+		labelTitulo = new JLabel("B\u00FAsqueda");
+		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTitulo.setFont(Diseno.fuenteTitulosVentanas);
+		getContentPane().add(labelTitulo, BorderLayout.NORTH);
 
 		pestanias = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(pestanias, BorderLayout.CENTER);

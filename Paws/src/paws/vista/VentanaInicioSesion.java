@@ -3,124 +3,124 @@ package paws.vista;
 import javax.swing.*;
 
 import paws.control.*;
+import paws.control.excepciones.ContraseniaIncorrectaException;
 import paws.control.excepciones.ImagenNoEncontradaException;
+import paws.control.excepciones.TiempoSinEstablecerException;
+import paws.control.excepciones.UsuarioNoExisteException;
 import paws.recursos.Diseno;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.IOException;
 
+import javax.swing.border.*;
 
+@SuppressWarnings("serial")
 public class VentanaInicioSesion extends JFrame {
 	
 	// Atributos
+	private Integer anchoVentana;
+	private Integer altoVentana;
 	private JTextField nicknameTextBox;
 	private JPasswordField passwordTextBox;
 	private JLabel labelPasswordError;
-	private JLabel labelUsuarioError;
-	private JLabel labelNickname;
-	private JLabel labelPassword;
-	private JPanel marcoDatosIngresados;
+	private JLabel labelNicknameError;
+	private JPanel marcoLogotipo;
 	private JButton botonRegistrarNuevoUsuario;
 	private JButton botonInicioSesion;
-	private JPanel marcoBotones;
+	private JPanel marcoContenido;
 	private JLabel labelLogotipo;
-	private ImageIcon imagenLogotipo;
 	private JButton botonSalir;
+	private JPanel panelNickname;
+	private JPanel panelPassword;
+	private JPanel panelBotones;
 
 	public VentanaInicioSesion() {
-		setResizable(false);
+		anchoVentana = 400;
+		altoVentana = 600;
 		setTitle("Inicio");
-		try {
-			setIconImage(Imagenes.getIconoSistema());
-		} catch (ImagenNoEncontradaException e2) {
-		}
-		
-		setSize(500,446);
+		setIconImage(Imagenes.getIconoSistema().getImage());
+		setSize(anchoVentana, altoVentana);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setSize(anchoVentana, altoVentana);
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		try {
-			imagenLogotipo = new ImageIcon(Imagenes.getLogo().getScaledInstance(240, 170, BufferedImage.SCALE_FAST));
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(),
-				"Error inesperado del sistema.", JOptionPane.ERROR_MESSAGE);
-		}
+		
+		marcoLogotipo = new JPanel();
+		marcoLogotipo.setBackground(Diseno.fondoVentanas);
+		marcoLogotipo.setLayout(new BorderLayout(0, 0));
 		
 		labelLogotipo = new JLabel("");
-		labelLogotipo.setIcon(imagenLogotipo);
 		labelLogotipo.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(labelLogotipo, BorderLayout.NORTH);
+		marcoLogotipo.add(labelLogotipo);
 		
-		marcoDatosIngresados = new JPanel();
-		marcoDatosIngresados.setBackground(Diseno.fondoVentanas);
-		getContentPane().add(marcoDatosIngresados, BorderLayout.CENTER);
-		marcoDatosIngresados.setLayout(null);
+		marcoContenido = new JPanel();
+		marcoContenido.setBackground(Diseno.fondoVentanas);
+		marcoContenido.setLayout(new BoxLayout(marcoContenido, BoxLayout.Y_AXIS));
 		
-		labelNickname = new JLabel("Nickname:");
-		labelNickname.setBounds(14, 40, 87, 26);
-		marcoDatosIngresados.add(labelNickname);
-		labelNickname.setFont(Diseno.fuenteTitulosVentanas.deriveFont(16f));
+		panelNickname = new JPanel();
+		marcoContenido.add(panelNickname);
+		panelNickname.setOpaque(false);
+		panelNickname.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ingrese su Nickname:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelNickname.setLayout(new BorderLayout(0, 0));
 		
 		nicknameTextBox = new JTextField();
-		nicknameTextBox.setBounds(0, 69, 494, 46);
+		panelNickname.add(nicknameTextBox, BorderLayout.CENTER);
 		nicknameTextBox.setFont(new Font("Calibri", Font.PLAIN, 20));
-		marcoDatosIngresados.add(nicknameTextBox);
 		
-		labelUsuarioError = new JLabel("");
-		labelUsuarioError.setBounds(14, 217, 0, 0);
-		marcoDatosIngresados.add(labelUsuarioError);
+		labelNicknameError = new JLabel("");
+		panelNickname.add(labelNicknameError, BorderLayout.SOUTH);
 		
-		labelPassword = new JLabel("Contrase\u00F1a:");
-		labelPassword.setBounds(14, 123, 101, 26);
-		marcoDatosIngresados.add(labelPassword);
-		labelPassword.setFont(Diseno.fuenteTitulosVentanas.deriveFont(17f));
+		panelPassword = new JPanel();
+		marcoContenido.add(panelPassword);
+		panelPassword.setOpaque(false);
+		panelPassword.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ingrese su contrase\u00F1a:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelPassword.setLayout(new BorderLayout(0, 0));
 		
 		passwordTextBox = new JPasswordField();
-		passwordTextBox.setBounds(0, 160, 494, 46);
+		panelPassword.add(passwordTextBox, BorderLayout.CENTER);
 		passwordTextBox.setFont(new Font("Calibri", Font.PLAIN, 20));
 		passwordTextBox.setHorizontalAlignment(SwingConstants.LEFT);
-		marcoDatosIngresados.add(passwordTextBox);
 		
 		labelPasswordError = new JLabel("");
-		labelPasswordError.setBounds(14, 434, 0, 0);
-		marcoDatosIngresados.add(labelPasswordError);
+		panelPassword.add(labelPasswordError, BorderLayout.SOUTH);
 		
-		marcoBotones = new JPanel();
-		marcoBotones.setBackground(Diseno.fondoVentanas);
-		getContentPane().add(marcoBotones, BorderLayout.SOUTH);
+		panelBotones = new JPanel();
+		panelBotones.setOpaque(false);
 		
-		botonInicioSesion = new JButton("Iniciar Sesi\u00F3n");
-		marcoBotones.add(botonInicioSesion);
+		botonInicioSesion = new JButton("Ingresar");
 		botonInicioSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Acceso.validarCredenciales(nicknameTextBox.getText(), new String(passwordTextBox.getPassword()));
+					Acceso.validarCredenciales(nicknameTextBox.getText(),
+							new String(passwordTextBox.getPassword()));
 					Principal.coordinador.ocultarInicioSesion();
 					Principal.coordinador.mostrarMenuPrincipal();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Error de Acceso", JOptionPane.ERROR_MESSAGE);
-					labelUsuarioError.setText(e.getMessage());
+				} catch (UsuarioNoExisteException e) {
+					labelNicknameError.setText(e.getMessage());
+				} catch (ContraseniaIncorrectaException e) {
+					labelPasswordError.setText(e.getMessage());
+				} catch (TiempoSinEstablecerException e) {
+					JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error al Ingresar.", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		botonInicioSesion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		botonInicioSesion.setFont(Diseno.fuenteBotones);
 		botonInicioSesion.setOpaque(false);
+		panelBotones.add(botonInicioSesion);
 		
-		botonRegistrarNuevoUsuario = new JButton("Registrar Nuevo Usuario");
+		botonRegistrarNuevoUsuario = new JButton("Registrarse");
 		botonRegistrarNuevoUsuario.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			VentanaRegistroUsuarios window = new VentanaRegistroUsuarios();
 			window.setVisible(true);	
 			}
 		});
-		
-		marcoBotones.add(botonRegistrarNuevoUsuario);
-		botonRegistrarNuevoUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
+		botonRegistrarNuevoUsuario.setFont(Diseno.fuenteBotones);
 		botonRegistrarNuevoUsuario.setOpaque(false);
+		panelBotones.add(botonRegistrarNuevoUsuario);
 		
 		botonSalir = new JButton("Salir");
 		botonSalir.addActionListener(new ActionListener() {
@@ -130,17 +130,33 @@ public class VentanaInicioSesion extends JFrame {
 			}
 		});
 		botonSalir.setOpaque(false);
-		botonSalir.setFont(new Font("Tahoma", Font.BOLD, 15));
-		marcoBotones.add(botonSalir);
+		botonSalir.setFont(Diseno.fuenteBotones);
+		panelBotones.add(botonSalir);
+		
+		marcoContenido.add(panelBotones);
+		getContentPane().add(marcoContenido, BorderLayout.SOUTH);
+		getContentPane().add(marcoLogotipo, BorderLayout.CENTER);
 	}
 	
-	private void cerrarVentana() {
-		setVisible(false);
+	public void cargarLogo(){
+		try {
+			BufferedImage logo = Imagenes.getLogo1();
+			Dimension nuevoTamanio = Imagenes.getNuevaDimension(
+					anchoVentana - 2,
+					altoVentana - marcoContenido.getHeight(),
+					logo.getSampleModel().getWidth(),
+					logo.getSampleModel().getHeight());
+			labelLogotipo.setIcon(new ImageIcon(Imagenes.redimensionar(logo, nuevoTamanio.width, nuevoTamanio.height)));
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(),
+				"Logotipo no encontrado.", JOptionPane.ERROR_MESSAGE);
+		}
 	}
-
+	
 	public void limpiarCampos() {
 		nicknameTextBox.setText("");
+		labelNicknameError.setText("");
 		passwordTextBox.setText("");
+		labelPasswordError.setText("");
 	}
-	
 }

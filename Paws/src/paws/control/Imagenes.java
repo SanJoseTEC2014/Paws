@@ -13,6 +13,7 @@ package paws.control;
  *  
  */
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
@@ -27,8 +28,9 @@ import net.coobird.thumbnailator.Thumbnails;
 public class Imagenes {
 		
 	public static BufferedImage cargarImagen(String pRuta) throws ImagenNoEncontradaException{
-		// JOptionPane.showMessageDialog(null, pRuta);
 		try {
+			//BufferedImage temp = 
+			//JOptionPane.showMessageDialog(null, pRuta + "\n" + temp.getWidth() + "\n" + temp.getHeight());
 			return ImageIO.read(new File(pRuta));
 		} catch (IOException e) {
 			throw new ImagenNoEncontradaException(e.getMessage());
@@ -87,12 +89,20 @@ public class Imagenes {
 		return cargarImagen(RutasArchivo.fotosSistema + "404.jpg");
 	}
 	
-	public static BufferedImage getLogo() throws ImagenNoEncontradaException {
-		return cargarImagen(RutasArchivo.fotosSistema + "paws.png");
+	public static BufferedImage getLogo1() throws ImagenNoEncontradaException {
+		return cargarImagen(RutasArchivo.fotosSistema + "paws1.png");
 	}
 	
-	public static BufferedImage getIconoSistema() throws ImagenNoEncontradaException {
-		return cargarImagen(RutasArchivo.fotosSistema + "iconoHuella.png");
+	public static BufferedImage getLogo2() throws ImagenNoEncontradaException {
+		return cargarImagen(RutasArchivo.fotosSistema + "paws2.png");
+	}
+	
+	public static ImageIcon getIconoSistema() {
+		try {
+			return new ImageIcon(cargarImagen(RutasArchivo.fotosSistema + "whitepaw.png"));
+		} catch (ImagenNoEncontradaException e) {
+			return new ImageIcon();
+		}
 	}
 	
 	public static BufferedImage getIconoBusqueda() throws ImagenNoEncontradaException {
@@ -146,6 +156,26 @@ public class Imagenes {
 		} catch (IOException e) {
 			throw new ImagenNoEncontradaException("No se encuentra la imagen requerida.");
 		}
+	}
+	
+	public static double getRelacionAspecto(int x, int y)		{ return (double) x / (double) y; }
+	public static double getRelacionAspecto(int x, double y)	{ return (double) x / y; }
+	public static double getRelacionAspecto(double x, int y)	{ return x / (double) y; }
+	public static double getRelacionAspecto(double x, double y)	{ return x / y; }
+	
+	public static Dimension getNuevaDimension(int anchoDisponible, int altoDisponible, int anchoImagen, int altoImagen) {		
+		int nuevoAncho = anchoImagen;
+		if (nuevoAncho > anchoDisponible) nuevoAncho = anchoDisponible;
+		
+		int nuevoAlto = (int) ((double) anchoImagen / getRelacionAspecto(anchoImagen, altoImagen));
+
+		while (nuevoAlto > altoDisponible) {
+			 double porcentaje = (double) nuevoAlto / altoDisponible;
+			 nuevoAncho /= porcentaje;
+			 nuevoAlto /= porcentaje;
+		}
+		
+		return new Dimension(nuevoAncho, nuevoAlto);
 	}
 	
 }

@@ -35,7 +35,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 	private JLabel lblDireccion;
 	private JLabel lblNickname;
 	private JLabel lblNombre;
-	private JLabel lblRegistrarse;
+	private JLabel labelRegistrarse;
 	private JLabel lblTelefono;
 	private JPanel marcoBotones;
 	private JPanel marcoCampos;
@@ -52,10 +52,10 @@ public class VentanaRegistroUsuarios extends JFrame {
 		setTitle("Registro de Usuarios");
 		setSize(443,557);
 		
-		lblRegistrarse = new JLabel("Registrarse como Nuevo Usuario");
-		lblRegistrarse.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblRegistrarse.setFont(Diseno.fuenteTitulosVentanas.deriveFont(22f));
+		labelRegistrarse = new JLabel("Registrarse como Nuevo Usuario");
+		labelRegistrarse.setHorizontalAlignment(SwingConstants.CENTER);
+		labelRegistrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
+		labelRegistrarse.setFont(Diseno.fuenteTitulosVentanas);
 		
 		marcoOperaciones = new JPanel();
 		marcoOperaciones.setOpaque(false);
@@ -208,7 +208,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 		});
 		
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		getContentPane().add(lblRegistrarse, BorderLayout.NORTH);
+		getContentPane().add(labelRegistrarse, BorderLayout.NORTH);
 		
 		marcoCampos = new JPanel();
 		marcoCampos.setBorder(new TitledBorder(null, "Ingrese sus Datos", TitledBorder.LEADING, TitledBorder.TOP, null, null));

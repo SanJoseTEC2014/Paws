@@ -6,12 +6,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import paws.control.EstadosMascotas;
-import paws.control.Imagenes;
-import paws.control.excepciones.ImagenNoEncontradaException;
+import paws.control.*;
+import paws.control.excepciones.*;
 import paws.modelo.Mascota;
 import paws.recursos.Diseno;
 
+@SuppressWarnings("serial")
 public class VentanaDetallesMascota extends JFrame {
 	private JTextField campoColor;
 	private JCheckBox checkVacunada;
@@ -66,7 +66,7 @@ public class VentanaDetallesMascota extends JFrame {
 
 		marcoFoto = new JPanel();
 		marcoFoto.setBorder(new TitledBorder(null, "Detalles de Mascota", TitledBorder.CENTER, TitledBorder.TOP,
-		Diseno.fuenteTitulosVentanas.deriveFont(20f), null));
+		Diseno.fuenteTitulosVentanas, null));
 		marcoFoto.setOpaque(false);
 		marcoCentro.add(marcoFoto, BorderLayout.CENTER);
 		marcoFoto.setLayout(new BorderLayout(10, 10));
@@ -115,8 +115,8 @@ public class VentanaDetallesMascota extends JFrame {
 				comboRaza.setModel(Mascota.getModeloRazas((String) comboEspecie.getSelectedItem()));
 			}
 		});
-		// Esto permite que cuando el ComboBox estï¿½ desactivado, pueda
-		// seguir viï¿½ndose el texto de la especie de la Mascota claramente.
+		// Esto permite que cuando el ComboBox está desactivado, pueda
+		// seguir viéndose el texto de la especie de la Mascota claramente.
 		comboEspecie.setRenderer(new DefaultListCellRenderer(){
 		    @Override
 		    public Component
@@ -136,8 +136,8 @@ public class VentanaDetallesMascota extends JFrame {
 		marcoInformacionPrincipal.add(labelRaza);
 
 		comboRaza = new JComboBox<String>();
-		// Esto permite que cuando el ComboBox estï¿½ desactivado, pueda
-		// seguir viï¿½ndose el texto de la raza de la Mascota claramente.
+		// Esto permite que cuando el ComboBox está desactivado, pueda
+		// seguir viéndose el texto de la raza de la Mascota claramente.
 		comboRaza.setRenderer(new DefaultListCellRenderer(){
 		    @Override
 		    public Component

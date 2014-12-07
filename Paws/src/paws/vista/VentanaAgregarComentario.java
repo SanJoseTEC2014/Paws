@@ -23,6 +23,7 @@ import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
 
 import paws.control.Acceso;
+import paws.control.Imagenes;
 import paws.modelo.Calificacion;
 import paws.modelo.Usuario;
 import paws.recursos.Diseno;
@@ -42,6 +43,7 @@ public class VentanaAgregarComentario extends JFrame {
 	
 	public VentanaAgregarComentario() {
 		setSize(480,299);
+		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		setTitle("Agregar Comentario");
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -53,7 +55,7 @@ public class VentanaAgregarComentario extends JFrame {
 		
 		lblTitulo = new JLabel("Dejar Comentario");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(Diseno.fuenteTitulosVentanas.deriveFont(40f));
+		lblTitulo.setFont(Diseno.fuenteTitulosVentanas);
 		panelTitulo.add(lblTitulo);
 		
 		panelContenido = new JPanel();

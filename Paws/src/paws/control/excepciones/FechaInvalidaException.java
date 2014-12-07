@@ -1,5 +1,6 @@
 package paws.control.excepciones;
 
+@SuppressWarnings("serial")
 public class FechaInvalidaException extends Exception {
 	public FechaInvalidaException(String msg){
 		super(msg);

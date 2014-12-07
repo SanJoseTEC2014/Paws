@@ -33,8 +33,7 @@ public class CoordinadorVisual {
 	private VentanaInicioSesion inicioSesion;
 	private VentanaCondicionesRefugio condicionesRefugio;
 	private VentanaMascotasDeUsuario mascotasAsociadas;
-	private VentanaCalificaciones calificaciones;
-	
+
 	public CoordinadorVisual(){
 		inicioSesion = new VentanaInicioSesion();
 		menuPrincipal = new VentanaMenuPrincipal();
@@ -47,6 +46,7 @@ public class CoordinadorVisual {
 	
 	public synchronized void mostrarInicioSesion() {
 		inicioSesion.setVisible(true);
+		inicioSesion.cargarLogo();
 		ventanaActiva = inicioSesion;
 	}
 
@@ -125,9 +125,9 @@ public class CoordinadorVisual {
 	}
 
 	public void mostrarCalificaciones(Usuario usuarioActual) {
-		calificaciones.setUsuario(usuarioActual);
-		calificaciones.setVisible(true);
-		
+		VentanaCalificaciones cals = new VentanaCalificaciones();
+		cals.setUsuario(usuarioActual);
+		cals.setVisible(true);
 	}
 
 	public void mostrarDetallesMascota(Mascota mascota) {

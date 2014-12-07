@@ -27,7 +27,7 @@ import java.util.LinkedList;
 
 public class VentanaMenuPrincipal extends JFrame {
 	private JFlowPanel coverflowPanel;
-	private JLabel lblBienvenido;
+	private JLabel labelBienvenido;
 	private JMenuItem mntmSolicitarSerRefugiante;
 	private JMenu mnAyuda;
 	private JMenuItem mntmParametrosSistema;
@@ -36,6 +36,12 @@ public class VentanaMenuPrincipal extends JFrame {
 	private JMenuItem mntmCerrarSesion;
 	private JMenuItem mntmVerMisDetalles;
 	private JMenuItem mntmVerMisCalificaciones;
+	private JMenuItem mntmRegistraTuMascota;
+	private JMenuItem mntmMisMascotas;
+	private JMenuItem mntmVerDesaparecidas;
+	private JMenuItem mntmVerEncontradas;
+	private JMenuItem mntmVerRefugiadas;
+	private JMenuItem mntmBuscar;
 
 	public VentanaMenuPrincipal() {
 		setTitle("Paws");
@@ -52,25 +58,33 @@ public class VentanaMenuPrincipal extends JFrame {
             }
         };
         addWindowListener(exitListener);
-		setSize(700,565);
+        int anchoVentana = 700;
+        int altoVentana = 600;
+		setSize(anchoVentana, altoVentana);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		getContentPane().add(panel, BorderLayout.NORTH);
+		JPanel marcoContenido = new JPanel();
+		marcoContenido.setOpaque(false);
+		getContentPane().add(marcoContenido, BorderLayout.NORTH);
+		marcoContenido.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
 		
-		lblBienvenido = new JLabel();
-		panel.add(lblBienvenido);
-		lblBienvenido.setFont(Diseno.fuenteTitulosVentanas.deriveFont(30f));
+		labelBienvenido = new JLabel();
+		labelBienvenido.setFont(Diseno.fuenteTitulosVentanas);
+		marcoContenido.add(labelBienvenido);
 		
-		JLabel labelLogo = new JLabel("");
-		panel.add(labelLogo);
+		JLabel labelLogotipo = new JLabel("");
+		marcoContenido.add(labelLogotipo);
 		try {
-			labelLogo.setIcon(new ImageIcon(Imagenes.getLogo().getScaledInstance(240, 170, BufferedImage.SCALE_FAST)));
-		} catch (ImagenNoEncontradaException e1) {
+			BufferedImage logo = Imagenes.getLogo2();
+			Dimension nuevoTamanio = Imagenes.getNuevaDimension(
+					350, 300,
+					logo.getSampleModel().getWidth(),
+					logo.getSampleModel().getHeight());
+			labelLogotipo.setIcon(new ImageIcon(Imagenes.redimensionar(logo, nuevoTamanio.width, nuevoTamanio.height)));
+		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(),
-				"Error inesperado del sistema.", JOptionPane.ERROR_MESSAGE);
+				"Logotipo no encontrado.", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -79,7 +93,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		JMenu mnMascotas = new JMenu("Mascotas");
 		menuBar.add(mnMascotas);
 		
-		JMenuItem mntmRegistraTuMascota = new JMenuItem("Registra tu mascota");
+		mntmRegistraTuMascota = new JMenuItem("Registra tu mascota");
 		mntmRegistraTuMascota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarRegistroMascotas();
@@ -87,7 +101,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmRegistraTuMascota);
 		
-		JMenuItem mntmMisMascotas = new JMenuItem("Mis mascotas");
+		mntmMisMascotas = new JMenuItem("Mis mascotas");
 		mntmMisMascotas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarMascotasAsociadas(Acceso.getUsuarioActivo());
@@ -95,7 +109,23 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmMisMascotas);
 		
-		JMenuItem mntmVerEncontradas = new JMenuItem("Encontradas registradas en Paws");
+		mntmVerDesaparecidas = new JMenuItem("Desaparecidas registradas en Paws");
+		mntmVerDesaparecidas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
+				ArrayList<Mascota> desaparecidas = new ArrayList<Mascota>();
+				for (Mascota x : Principal.mascotas){
+					if (x.getMarcadoresEstado()[0]){
+						desaparecidas.add(x.clone());
+					}
+				}
+				window.setDatosIniciales(desaparecidas, false);
+				window.setVisible(true);
+			}
+		});
+		mnMascotas.add(mntmVerDesaparecidas);
+		
+		mntmVerEncontradas = new JMenuItem("Encontradas registradas en Paws");
 		mntmVerEncontradas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
@@ -109,31 +139,15 @@ public class VentanaMenuPrincipal extends JFrame {
 				window.setVisible(true);
 			}
 		});
-		
-		JMenuItem mntmVerDesaparecidas = new JMenuItem("Desaparecidas registradas en Paws");
-		mntmVerDesaparecidas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
-				ArrayList<Mascota> desaparecidas = new ArrayList<Mascota>();
-				for (Mascota x : Principal.mascotas){
-					if (x.getMarcadoresEstado()[1]){
-						desaparecidas.add(x.clone());
-					}
-				}
-				window.setDatosIniciales(desaparecidas, false);
-				window.setVisible(true);
-			}
-		});
-		mnMascotas.add(mntmVerDesaparecidas);
 		mnMascotas.add(mntmVerEncontradas);
 		
-		JMenuItem mntmVerRefugiadas = new JMenuItem("Refugiadas registradas en Paws");
+		mntmVerRefugiadas = new JMenuItem("Refugiadas registradas en Paws");
 		mntmVerRefugiadas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
 				ArrayList<Mascota> refugiadas = new ArrayList<Mascota>();
 				for (Mascota x : Principal.mascotas){
-					if (x.getMarcadoresEstado()[1]){
+					if (x.getMarcadoresEstado()[2]){
 						refugiadas.add(x.clone());
 					}
 				}
@@ -143,16 +157,16 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmVerRefugiadas);
 		
-		JMenu mnBsqueda = new JMenu("B\u00FAsqueda");
-		menuBar.add(mnBsqueda);
+		JMenu mnBusqueda = new JMenu("B\u00FAsqueda");
+		menuBar.add(mnBusqueda);
 		
-		JMenuItem mntmUsuarios = new JMenuItem("Herramienta de B\u00FAsqueda");
-		mntmUsuarios.addActionListener(new ActionListener() {
+		mntmBuscar = new JMenuItem("Herramienta de B\u00FAsqueda");
+		mntmBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarBusqueda();
 			}
 		});
-		mnBsqueda.add(mntmUsuarios);
+		mnBusqueda.add(mntmBuscar);
 		
 		JMenu mnAsociaciones = new JMenu("Asociaciones");
 		menuBar.add(mnAsociaciones);
@@ -265,8 +279,7 @@ public class VentanaMenuPrincipal extends JFrame {
 	}
 
 	public void setUsuario(){
-		lblBienvenido.setText(Acceso.getUsuarioActivo().getNombre()+" Bienvenid@ a ");
-	
+		labelBienvenido.setText(Acceso.getUsuarioActivo().getNombre() + ", \n bienvenid@ a ");
 		if(Acceso.isAdministradorActivo()) {
 			mnCuenta.add(mntmParametrosSistema);
 		}

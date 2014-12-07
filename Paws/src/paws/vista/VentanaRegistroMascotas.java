@@ -74,7 +74,7 @@ public class VentanaRegistroMascotas extends JFrame {
 		
 		lblRegistrarUnaMascota = new JLabel("Registrar una mascota");
 		lblRegistrarUnaMascota.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistrarUnaMascota.setFont(Diseno.fuenteTitulosVentanas.deriveFont(25f));
+		lblRegistrarUnaMascota.setFont(Diseno.fuenteTitulosVentanas);
 		getContentPane().add(lblRegistrarUnaMascota, BorderLayout.NORTH);
 		
 		

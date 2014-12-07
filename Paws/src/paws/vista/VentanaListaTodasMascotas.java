@@ -41,7 +41,7 @@ public class VentanaListaTodasMascotas extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		labelTitulo = new JLabel();
-		labelTitulo.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+		labelTitulo.setFont(Diseno.fuenteTitulosVentanas);
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitulo.setOpaque(false);
 		panel.add(labelTitulo, BorderLayout.NORTH);

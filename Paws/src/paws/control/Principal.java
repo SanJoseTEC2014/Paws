@@ -50,48 +50,40 @@ public class Principal {
 		throw new MascotaNoEncontradaException("Error inesperado no se encuentra la mascota");
 	}
 	
-	public static void inicializarUsuarios() {
-		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
-	}
-	
-	public static void cargarBaseDatosMascotas() throws IOException {
-		FileInputStream archivo = new FileInputStream(RutasArchivo.recursosRoot + "pets.pdb");
-		BufferedReader lector = new BufferedReader(new InputStreamReader(archivo, "UTF-8"));
-		
-		String lineaActual;
-		while ((lineaActual = lector.readLine()) != null ) {
-			String pEspecie = lineaActual.substring(0, lineaActual.indexOf(":"));
-			LinkedList<String> pRazas = new LinkedList<String>();
-			for (String token : lineaActual.substring(lineaActual.indexOf(":"), lineaActual.length()).split(";")) {
-				pRazas.add(token);
+	public static void cargarBaseDatosMascotas() {
+		try(BufferedReader lector =
+			new BufferedReader(
+				new InputStreamReader(
+					new FileInputStream(
+						RutasArchivo.recursosRoot + "pets.pdb"), "UTF-8")))
+		{		
+			String lineaActual;
+			while ((lineaActual = lector.readLine()) != null ) {
+				String pEspecie = lineaActual.substring(0, lineaActual.indexOf(":"));
+				LinkedList<String> pRazas = new LinkedList<String>();
+				for (String token : lineaActual.substring(lineaActual.indexOf(":"), lineaActual.length()).split(";")) {
+					pRazas.add(token);
+				}
+				Mascota.addEspecie(pEspecie);
+				for (String pRaza : pRazas) {
+					Mascota.addRaza(pEspecie, pRaza);
+				}
 			}
-			Mascota.addEspecie(pEspecie);
-			for (String pRaza : pRazas) {
-				Mascota.addRaza(pEspecie, pRaza);
-			}
+			// JOptionPane.showMessageDialog(null,	"Base de datos de especies y razas de Mascotas cargada satisfactoriamente.");
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(null,
+					"Hubo un error que no permite que el programa pueda arrancar.",
+					"ERROR CRÍTICO DEL SISTEMA PAWS", JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
 		}
-		archivo.close();
-		JOptionPane.showMessageDialog(null,
-		"Base de datos de especies y razas de Mascotas cargada satisfactoriamente.");
 	}
 	
 	public static void main(String[] args) {
 		RutasArchivo.inicializar();
 		Diseno.inicializarLookAndFeel();
-		Diseno.inicializarFuentePaws();
-		inicializarUsuarios();
-		
-		try {
-			cargarBaseDatosMascotas();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,
-			"Hubo un error que no permite que el programa pueda arrancar.",
-			"ERROR CRÍTICO DEL SISTEMA PAWS", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
-		}
-		Tiempo.setFechaInicioProduccion(Calendar.getInstance());
-		CasosPrueba.cargarDocumentoMascotasPrueba();
-		CasosPrueba.cargarDocumentoUsuariosPrueba();
+		Diseno.inicializarFuentes();
+		cargarBaseDatosMascotas();
+		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() { 

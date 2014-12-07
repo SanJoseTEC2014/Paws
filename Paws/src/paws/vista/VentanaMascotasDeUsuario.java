@@ -37,7 +37,7 @@ public class VentanaMascotasDeUsuario extends JFrame {
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		labelTitulo = new JLabel("Mis Mascotas");
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		labelTitulo.setFont(Diseno.fuenteTitulosVentanas.deriveFont(30f));
+		labelTitulo.setFont(Diseno.fuenteTitulosVentanas);
 		getContentPane().add(labelTitulo, BorderLayout.NORTH);
 		
 		panelContenido = new JPanel();

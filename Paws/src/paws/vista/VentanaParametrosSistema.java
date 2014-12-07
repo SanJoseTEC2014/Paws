@@ -18,7 +18,7 @@ public class VentanaParametrosSistema extends JFrame {
 	private JButton botonGuardarFecha;
 	private JComboBox<String> comboCalificaciones;
 	private JButton botonAvanzarUnDia;
-	private JButton btnGuardarCalificacion;
+	private JButton botonCalificacion;
 	private JPanel marcoTitulo;
 	private JLabel labelTitulo1;
 	private JLabel labelTitulo2;
@@ -36,10 +36,8 @@ public class VentanaParametrosSistema extends JFrame {
 	private JPanel panelCalendar;
 	private JTabbedPane marcoPestanias;
 	private JLabel labelMinima;
-	private JLabel labelCasos1;
-	private JButton botonCasos1;
-	private JLabel labelCasos2;
-	private JButton botonCasos2;
+	private JLabel labelCasos;
+	private JButton botonCasos;
 	private JButton botonColorFondo;
 	private JLabel labelFecha;
 	private JTextField textFecha;
@@ -47,6 +45,7 @@ public class VentanaParametrosSistema extends JFrame {
 	private JPanel mensajeNuevo;
 	private JTextArea mensajeCorreoNuevo;
 	private JButton btnGuardarMensaje;
+	private JLabel labelColorFondo;
 	
 	public VentanaParametrosSistema() {
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -58,12 +57,12 @@ public class VentanaParametrosSistema extends JFrame {
 		marcoTitulo.setLayout(new BorderLayout(0, 0));
 		
 		labelTitulo1 = new JLabel("Par\u00E1metros");
-		labelTitulo1.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+		labelTitulo1.setFont(Diseno.fuenteTitulosVentanas);
 		labelTitulo1.setHorizontalAlignment(SwingConstants.CENTER);
 		marcoTitulo.add(labelTitulo1, BorderLayout.NORTH);
 		
 		labelTitulo2 = new JLabel("Sistema");
-		labelTitulo2.setFont(Diseno.fuenteTitulosVentanas.deriveFont(35f));
+		labelTitulo2.setFont(Diseno.fuenteTitulosVentanas);
 		labelTitulo2.setHorizontalAlignment(SwingConstants.CENTER);
 		marcoTitulo.add(labelTitulo2, BorderLayout.SOUTH);
 		
@@ -83,38 +82,28 @@ public class VentanaParametrosSistema extends JFrame {
 		panelGeneral.add(comboCalificaciones);
 		comboCalificaciones.setModel(new DefaultComboBoxModel<String>(calificaciones));
 		
-		btnGuardarCalificacion = new JButton("Guardar Calificaci\u00F3n");
-		btnGuardarCalificacion.addActionListener(new ActionListener() {
+		botonCalificacion = new JButton("Cambiar");
+		botonCalificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario.setCalificacionMinimaPermitidaUsuarios(
 						Double.valueOf((String) comboCalificaciones.getSelectedItem()));
 			}
 		});
 		
-		panelGeneral.add(btnGuardarCalificacion);
-		btnGuardarCalificacion.setOpaque(false);
+		panelGeneral.add(botonCalificacion);
+		botonCalificacion.setOpaque(false);
 		
-		labelCasos1 = new JLabel("Casos de Prueba de Usuarios:");
-		panelGeneral.add(labelCasos1);
+		labelCasos = new JLabel("Casos de Prueba de Usuarios:");
+		panelGeneral.add(labelCasos);
 		
-		botonCasos1 = new JButton("Cargar");
-		botonCasos1.addActionListener(new ActionListener() {
+		botonCasos = new JButton("Cargar");
+		botonCasos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CasosPrueba.cargarDocumentoUsuariosPrueba();
-			}
-		});
-		panelGeneral.add(botonCasos1);
-		
-		labelCasos2 = new JLabel("Casos de Prueba de Mascotas:");
-		panelGeneral.add(labelCasos2);
-		
-		botonCasos2 = new JButton("Cargar");
-		botonCasos2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 				CasosPrueba.cargarDocumentoMascotasPrueba();
 			}
 		});
-		panelGeneral.add(botonCasos2);
+		panelGeneral.add(botonCasos);
 		botonColorFondo = new JButton("Cambiar Color de Fondo de las Ventanas");
 		botonColorFondo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,6 +111,9 @@ public class VentanaParametrosSistema extends JFrame {
 				getContentPane().setBackground(Diseno.fondoVentanas);
 			}
 		});
+		
+		labelColorFondo = new JLabel("Casos de Prueba de Usuarios:");
+		panelGeneral.add(labelColorFondo);
 		panelGeneral.add(botonColorFondo);
 		
 		panelFecha = new JPanel();

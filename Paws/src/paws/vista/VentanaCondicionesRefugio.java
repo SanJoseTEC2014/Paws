@@ -39,6 +39,7 @@ import java.awt.Color;
 import javax.swing.JEditorPane;
 
 import paws.control.Acceso;
+import paws.control.Imagenes;
 import paws.control.Principal;
 import paws.modelo.Usuario;
 import paws.recursos.Diseno;
@@ -59,7 +60,7 @@ public class VentanaCondicionesRefugio extends JFrame {
 	private JPanel labels;
 	private JPanel panel_2;
 	private JPanel titulo;
-	private JLabel lblCondicionesDeRefugio;
+	private JLabel labelCondicionesRefugio;
 	private JLabel lblNewLabel;
 	private JPanel panel;
 	private JPanel panel_1;
@@ -68,6 +69,7 @@ public class VentanaCondicionesRefugio extends JFrame {
 	public VentanaCondicionesRefugio() {
 		
 		setSize(500, 320);
+		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		titulo = new JPanel();
@@ -75,10 +77,10 @@ public class VentanaCondicionesRefugio extends JFrame {
 		getContentPane().add(titulo, BorderLayout.NORTH);
 		titulo.setLayout(new GridLayout(2, 1, 0, 0));
 		
-		lblCondicionesDeRefugio = new JLabel("Condiciones");
-		titulo.add(lblCondicionesDeRefugio);
-		lblCondicionesDeRefugio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCondicionesDeRefugio.setFont(Diseno.fuenteTitulosVentanas.deriveFont(17f));
+		labelCondicionesRefugio = new JLabel("Condiciones");
+		titulo.add(labelCondicionesRefugio);
+		labelCondicionesRefugio.setHorizontalAlignment(SwingConstants.CENTER);
+		labelCondicionesRefugio.setFont(Diseno.fuenteTitulosVentanas);
 			
 		lblNewLabel = new JLabel("Los requisitos para refugiar unas mascota son:");
 		lblNewLabel.setEnabled(false);
