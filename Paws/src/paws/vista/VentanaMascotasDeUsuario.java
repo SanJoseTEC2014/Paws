@@ -111,7 +111,7 @@ public class VentanaMascotasDeUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = tablaMascotas.getSelectedRow();
 				if (fila != -1){
-					String IDMascota = (String) tablaMascotas.getValueAt(fila, 0);
+					String IDMascota = (String) tablaMascotas.getValueAt(fila, 0).toString();
 					try {
 						Principal.coordinador.mostrarDetallesMascota(Principal.getMascotaID(Integer.parseInt(IDMascota)));
 					} catch (MascotaNoEncontradaException e) {

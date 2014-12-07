@@ -2,6 +2,7 @@ package paws.vista;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -350,6 +351,16 @@ public class VentanaDetallesMascota extends JFrame {
 		
 		comboTamanio.setModel(Mascota.getModeloTamanios());
 		comboTamanio.setSelectedItem(mascota.getTamanio());
+		
+		try {
+			int ancho = labelFotoMascota.getSize().width;
+			int alto = labelFotoMascota.getSize().height;
+			BufferedImage porInsertar = mascota.getImagen();
+			labelFotoMascota.setIcon(new ImageIcon(porInsertar));
+		} catch (ImagenNoEncontradaException e) {
+			labelFotoMascota.setIcon(null);
+			labelFotoMascota.setText("Problema al Cargar la Imagen");
+		}
 	}
 	
 	public void setModoEdicion(boolean opcion){

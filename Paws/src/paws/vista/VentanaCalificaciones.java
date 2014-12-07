@@ -13,9 +13,9 @@ import paws.recursos.Diseno;
 public class VentanaCalificaciones extends JFrame {
 
 	private JTable tablaCalificaciones;
-	private JScrollPane panelScroll;
 	String Titulos[] = {"Nick Calificante", "Calificación", "Comentario"};
 	private JLabel labelCalificaciones;
+	private JPanel panel;
 
 	public VentanaCalificaciones() {
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -28,17 +28,17 @@ public class VentanaCalificaciones extends JFrame {
 		labelCalificaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(labelCalificaciones, BorderLayout.NORTH);
 		
-		panelScroll = new JScrollPane();
-		panelScroll.setOpaque(false);
-		panelScroll.setViewportView(tablaCalificaciones);
-		getContentPane().add(panelScroll);
+		panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout(0, 0));
 		
 		tablaCalificaciones = new JTable();
+		panel.add(tablaCalificaciones);
+		tablaCalificaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaCalificaciones.setOpaque(false);
-		panelScroll.add(tablaCalificaciones);
 	}
-	public void setUsuario(Usuario usuarioActual) {
-		tablaCalificaciones = new JTable(new ModeloTablaCalificaciones(usuarioActual.getCalificaciones()));
+	public void setUsuario(Usuario usuarioACalificar) {
+		tablaCalificaciones.setModel(new ModeloTablaCalificaciones(usuarioACalificar.getCalificaciones()));
 	}
 }
 	

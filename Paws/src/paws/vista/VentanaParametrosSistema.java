@@ -217,10 +217,19 @@ public class VentanaParametrosSistema extends JFrame {
 		getContentPane().add(marcoInferior, BorderLayout.SOUTH);
 		
 		JButton botonCerrar = new JButton("Cerrar");
+		botonCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				close();
+			}
+		});
 		botonCerrar.setOpaque(false);
 		marcoInferior.add(botonCerrar);
 	}
 	
+	protected void close() {
+		this.dispose();
+	}
+
 	public void setDatosIniciales() {
 		calendar.setEnabled(fechaEstablecida);
 		mensajeCorreoNuevo.setText(Correo.getMensaje());
