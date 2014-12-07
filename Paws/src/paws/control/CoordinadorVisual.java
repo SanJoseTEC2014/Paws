@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import paws.modelo.Mascota;
 import paws.modelo.Usuario;
+import paws.modelo.Organizacion;
 import paws.vista.*;
 
 public class CoordinadorVisual {
@@ -27,6 +28,9 @@ public class CoordinadorVisual {
 	private VentanaInicioSesion inicioSesion;
 	private VentanaCondicionesRefugio condicionesRefugio;
 	private VentanaMascotasDeUsuario mascotasAsociadas;
+	private VentanaListaAsociaciones asociaciones;
+	private VentanaDonaciones donaciones;
+	private VentanaDetallesAsociacion detallesAsociacion;
 
 	public CoordinadorVisual(){
 		inicioSesion = new VentanaInicioSesion();
@@ -78,6 +82,16 @@ public class CoordinadorVisual {
 		busqueda.setVisible(true);
 	}
 	
+	public synchronized void mostrarListaAsociaciones() {
+		VentanaListaAsociaciones organizaciones = new VentanaListaAsociaciones();
+		organizaciones.setVisible(true);
+	}
+	
+	public synchronized void mostrarRealizarDonacion() {
+		VentanaDonaciones donacionesAsociaciones = new VentanaDonaciones();
+		donacionesAsociaciones.setVisible(true);
+	}
+	
 	public synchronized void mostrarAgregarComentario(Usuario usuarioACalificar){
 		VentanaAgregarComentario agregarComentario = new VentanaAgregarComentario();
 		agregarComentario.setUsuarioACalificar(usuarioACalificar);
@@ -94,6 +108,9 @@ public class CoordinadorVisual {
 		menuPrincipal.setVisible(false);
 		detallesUsuario.setVisible(false);
 		detallesMascota.setVisible(false);
+		detallesAsociacion.setVisible(false);
+		asociaciones.setVisible(false);
+		donaciones.setVisible(false);
 	}
 	
 	public synchronized void mostrarVentanas() {
@@ -101,7 +118,11 @@ public class CoordinadorVisual {
 		menuPrincipal.setVisible(true);
 		detallesUsuario.setVisible(true);
 		detallesMascota.setVisible(true);
+		detallesAsociacion.setVisible(true);
+		asociaciones.setVisible(true);
+		donaciones.setVisible(true);
 	}
+	
 
 	public void mostrarCondicionesRefugio(Usuario usuarioActual) {
 		condicionesRefugio.setDatos(usuarioActual);
@@ -124,4 +145,10 @@ public class CoordinadorVisual {
 		detallesMascota.setDatosIniciales(mascota);
 		detallesMascota.setVisible(true);
 	}
+	
+	public void mostrarDetallesAsociaciones(Organizacion organizacion) {
+		detallesAsociacion.setDatosIniciales(organizacion);
+		detallesAsociacion.setVisible(true);
+	}
+	
 }

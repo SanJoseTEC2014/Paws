@@ -15,14 +15,19 @@ package paws.control;
  *  
  */
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import javax.swing.JOptionPane;
 
 import paws.control.excepciones.*;
 import paws.modelo.*;
-import paws.recursos.*;
+import paws.recursos.CasosPrueba;
+import paws.recursos.Diseno;
+import paws.recursos.RutasArchivo;
 
 public class Principal {
 	public static ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
@@ -44,6 +49,12 @@ public class Principal {
 		for (Mascota mascota : mascotas) if (IDmascota == mascota.getID()) return mascota;
 		throw new MascotaNoEncontradaException("Error inesperado no se encuentra la mascota");
 	}
+	public static Organizacion getOrganizacionID(Integer IDOrganizacion) throws OrganizacionNoEncontradaException {
+		// TODO búsqueda binaria
+		for (Organizacion organizacion : organizaciones) if (IDOrganizacion == organizacion.getId()) return organizacion;
+		throw new OrganizacionNoEncontradaException("Error inesperado no se encuentra la organización");
+	}
+	
 	
 	public static void cargarBaseDatosMascotas() {
 		try(BufferedReader lector =

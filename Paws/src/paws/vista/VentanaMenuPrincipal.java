@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-@SuppressWarnings("serial")
 public class VentanaMenuPrincipal extends JFrame {
 	private JFlowPanel coverflowPanel;
 	private JLabel labelBienvenido;
@@ -173,10 +172,15 @@ public class VentanaMenuPrincipal extends JFrame {
 		menuBar.add(mnAsociaciones);
 		
 		JMenuItem mntmListaDeAsociaciones = new JMenuItem("Lista de Asociaciones");
+		mntmListaDeAsociaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarListaAsociaciones();
+			}
+		});
 		mnAsociaciones.add(mntmListaDeAsociaciones);
 		
-		JMenuItem mntmRealizarUnaDonacin = new JMenuItem("Realizar una donaci\u00F3n");
-		mnAsociaciones.add(mntmRealizarUnaDonacin);
+		/*JMenuItem mntmRealizarUnaDonacin = new JMenuItem("Realizar una donaci\u00F3n");
+		mnAsociaciones.add(mntmRealizarUnaDonacin);*/
 		
 		mnCuenta = new JMenu("Cuenta");
 		menuBar.add(mnCuenta);
