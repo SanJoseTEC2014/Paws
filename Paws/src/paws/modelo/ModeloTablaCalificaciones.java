@@ -1,21 +1,38 @@
 package paws.modelo;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.table.AbstractTableModel;
 
 import paws.control.Imagenes;
+import paws.control.excepciones.ImagenNoEncontradaException;
 
 @SuppressWarnings("serial")
 public class ModeloTablaCalificaciones extends AbstractTableModel {
 
-	private ArrayList<Calificacion> listaCalificaciones;
+	private Object[][] calificaciones;
 	private String[] titulos = {"Nickname Calificante", "Mensaje", "Estrellas"};
 	
-	public ModeloTablaCalificaciones(ArrayList<Calificacion> pCalificaciones) {
-		listaCalificaciones = pCalificaciones;
+	public ModeloTablaCalificaciones(ArrayList<Calificacion> pCalificaciones) throws IOException {
+		calificaciones = new Object[pCalificaciones.size()][3];
+		for (int i = 0; i < pCalificaciones.size(); i++){
+			BufferedImage estrellas = Imagenes.getEstrellas(pCalificaciones.get(i).getEstrellas());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(estrellas, "png", baos);
+			baos.flush();
+			calificaciones[i] = new Object[]
+			{
+				pCalificaciones.get(i).getNicknameCalificante(),
+				pCalificaciones.get(i).getMensaje(),
+				baos.toByteArray()
+			};
+			baos.close();
+		}
+		
 	}
 
 	public String getColumnName(int column) {
@@ -24,27 +41,12 @@ public class ModeloTablaCalificaciones extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		switch (columnIndex) {
-		
-		case 0:
-			return listaCalificaciones.get(rowIndex).getNicknameCalificante();
-		case 1:
-			return listaCalificaciones.get(rowIndex).getMensaje();
-		case 2:
-			try {
-				return new ImageIcon(Imagenes.getEstrellas(listaCalificaciones.get(rowIndex).getEstrellas()));
-			} catch (IOException e) {
-				return listaCalificaciones.get(rowIndex).getEstrellas();
-			}
-			
-		default:
-			return null;
-		}
+		return calificaciones[rowIndex][columnIndex];
 	}
 	
 	@Override
 	public int getRowCount() {
-		return listaCalificaciones.size();
+		return calificaciones.length;
 	}
 	
 	@Override

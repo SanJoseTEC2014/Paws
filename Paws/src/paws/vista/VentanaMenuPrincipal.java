@@ -27,22 +27,6 @@ import java.util.LinkedList;
 
 @SuppressWarnings("serial")
 public class VentanaMenuPrincipal extends JFrame {
-	private JFlowPanel coverflowPanel;
-	private JLabel labelBienvenido;
-	private JMenuItem mntmSolicitarSerRefugiante;
-	private JMenu mnAyuda;
-	private JMenuItem mntmParametrosSistema;
-	private JMenu mnCuenta;
-	private JMenuItem mntmCondicionesDeRefugio;
-	private JMenuItem mntmCerrarSesion;
-	private JMenuItem mntmVerMisDetalles;
-	private JMenuItem mntmVerMisCalificaciones;
-	private JMenuItem mntmRegistraTuMascota;
-	private JMenuItem mntmMisMascotas;
-	private JMenuItem mntmVerDesaparecidas;
-	private JMenuItem mntmVerEncontradas;
-	private JMenuItem mntmVerRefugiadas;
-	private JMenuItem mntmBuscar;
 
 	public VentanaMenuPrincipal() {
 		setTitle("Paws");
@@ -53,7 +37,7 @@ public class VentanaMenuPrincipal extends JFrame {
                 	"Desea cerrar su sesión activa?",
                 	"Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
-                   Principal.coordinador.ocultarMenuPrincipal();
+                   dispose();
                    Principal.coordinador.mostrarInicioSesion();
                 }
             }
@@ -62,15 +46,16 @@ public class VentanaMenuPrincipal extends JFrame {
         int anchoVentana = 700;
         int altoVentana = 600;
 		setSize(anchoVentana, altoVentana);
+		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		
 		JPanel marcoContenido = new JPanel();
 		marcoContenido.setOpaque(false);
-		getContentPane().add(marcoContenido, BorderLayout.NORTH);
 		marcoContenido.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+		getContentPane().add(marcoContenido, BorderLayout.NORTH);
 		
-		labelBienvenido = new JLabel();
+		JLabel labelBienvenido = new JLabel(Acceso.getUsuarioActivo().getNombre() + ", \n bienvenid@ a ");
 		labelBienvenido.setFont(Diseno.fuenteTitulosVentanas);
 		marcoContenido.add(labelBienvenido);
 		
@@ -92,9 +77,11 @@ public class VentanaMenuPrincipal extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JMenu mnMascotas = new JMenu("Mascotas");
+		mnMascotas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnMascotas);
 		
-		mntmRegistraTuMascota = new JMenuItem("Registra tu mascota");
+		JMenuItem mntmRegistraTuMascota = new JMenuItem("Registra tu mascota");
+		mntmRegistraTuMascota.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmRegistraTuMascota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarRegistroMascotas();
@@ -102,7 +89,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmRegistraTuMascota);
 		
-		mntmMisMascotas = new JMenuItem("Mis mascotas");
+		JMenuItem mntmMisMascotas = new JMenuItem("Mis mascotas");
+		mntmMisMascotas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmMisMascotas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarMascotasAsociadas(Acceso.getUsuarioActivo());
@@ -110,7 +98,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmMisMascotas);
 		
-		mntmVerDesaparecidas = new JMenuItem("Desaparecidas registradas en Paws");
+		JMenuItem mntmVerDesaparecidas = new JMenuItem("Desaparecidas registradas en Paws");
+		mntmVerDesaparecidas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerDesaparecidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
@@ -126,7 +115,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmVerDesaparecidas);
 		
-		mntmVerEncontradas = new JMenuItem("Encontradas registradas en Paws");
+		JMenuItem mntmVerEncontradas = new JMenuItem("Encontradas registradas en Paws");
+		mntmVerEncontradas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerEncontradas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
@@ -142,7 +132,8 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnMascotas.add(mntmVerEncontradas);
 		
-		mntmVerRefugiadas = new JMenuItem("Refugiadas registradas en Paws");
+		JMenuItem mntmVerRefugiadas = new JMenuItem("Refugiadas registradas en Paws");
+		mntmVerRefugiadas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerRefugiadas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
@@ -159,9 +150,11 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnMascotas.add(mntmVerRefugiadas);
 		
 		JMenu mnBusqueda = new JMenu("B\u00FAsqueda");
+		mnBusqueda.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnBusqueda);
 		
-		mntmBuscar = new JMenuItem("Herramienta de B\u00FAsqueda");
+		JMenuItem mntmBuscar = new JMenuItem("Herramienta de B\u00FAsqueda");
+		mntmBuscar.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarBusqueda();
@@ -170,18 +163,23 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnBusqueda.add(mntmBuscar);
 		
 		JMenu mnAsociaciones = new JMenu("Asociaciones");
+		mnAsociaciones.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnAsociaciones);
 		
 		JMenuItem mntmListaDeAsociaciones = new JMenuItem("Lista de Asociaciones");
+		mntmListaDeAsociaciones.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mnAsociaciones.add(mntmListaDeAsociaciones);
 		
-		JMenuItem mntmRealizarUnaDonacin = new JMenuItem("Realizar una donaci\u00F3n");
-		mnAsociaciones.add(mntmRealizarUnaDonacin);
+		JMenuItem mntmRealizarUnaDonacion = new JMenuItem("Realizar una donaci\u00F3n");
+		mntmRealizarUnaDonacion.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+		mnAsociaciones.add(mntmRealizarUnaDonacion);
 		
-		mnCuenta = new JMenu("Cuenta");
+		JMenu mnCuenta = new JMenu("Cuenta");
+		mnCuenta.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnCuenta);
 		
-		mntmVerMisDetalles = new JMenuItem("Detalles de mi cuenta");
+		JMenuItem mntmVerMisDetalles = new JMenuItem("Detalles de mi cuenta");
+		mntmVerMisDetalles.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerMisDetalles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarDetallesUsuario(Acceso.getUsuarioActivo());
@@ -189,14 +187,19 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnCuenta.add(mntmVerMisDetalles);
 		
-		mntmParametrosSistema = new JMenuItem("Parametros Sistema");
+		if(Acceso.isAdministradorActivo()) {
+			JMenuItem mntmParametrosSistema = new JMenuItem("Parametros Sistema");
+			mntmParametrosSistema.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 			mntmParametrosSistema.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					Principal.coordinador.mostrarParametrosSistema();
 				}
 			});
+			mnCuenta.add(mntmParametrosSistema);
+		}
 		
-		mntmVerMisCalificaciones = new JMenuItem("Ver mis calificaciones");
+		JMenuItem mntmVerMisCalificaciones = new JMenuItem("Ver mis calificaciones");
+		mntmVerMisCalificaciones.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerMisCalificaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarCalificaciones(Acceso.getUsuarioActivo());
@@ -204,30 +207,37 @@ public class VentanaMenuPrincipal extends JFrame {
 		});
 		mnCuenta.add(mntmVerMisCalificaciones);
 		
-		mntmCondicionesDeRefugio = new JMenuItem("Editar condiciones de refugio");
-		mnCuenta.add(mntmCondicionesDeRefugio);
-		
-		mntmSolicitarSerRefugiante = new JMenuItem("Enviar Solicitud Refugiante");
-		
-		mntmCerrarSesion = new JMenuItem("Cerrar sesi\u00F3n");
-		mntmCerrarSesion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Principal.coordinador.ocultarMenuPrincipal();
-				Principal.coordinador.mostrarInicioSesion();
-			}
-		});
-		mnCuenta.add(mntmCerrarSesion);
+		JMenuItem mntmCondicionesDeRefugio = new JMenuItem("Editar condiciones de refugio");
+		mntmCondicionesDeRefugio.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmCondicionesDeRefugio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.coordinador.mostrarCondicionesRefugio(Acceso.getUsuarioActivo());
 			}
 		});
+		mnCuenta.add(mntmCondicionesDeRefugio);
 		
-		mnAyuda = new JMenu("Ayuda");
+		if(!Acceso.getUsuarioActivo().isRefugiante()) {
+			JMenuItem mntmSolicitarSerRefugiante = new JMenuItem("Enviar Solicitud Refugiante");
+			mntmSolicitarSerRefugiante.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+			mnCuenta.add(mntmSolicitarSerRefugiante);
+		}
+		
+		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesi\u00F3n");
+		mntmCerrarSesion.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				Principal.coordinador.mostrarInicioSesion();
+			}
+		});
+		mnCuenta.add(mntmCerrarSesion);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		mnAyuda.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnAyuda);
 		
-		
 		JMenuItem mntmManualDeUso = new JMenuItem("Manual de Uso");
+		mntmManualDeUso.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmManualDeUso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -242,6 +252,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnAyuda.add(mntmManualDeUso);
 		
 		JMenuItem mntmContctenos = new JMenuItem("Cont\u00E1ctenos");
+		mntmContctenos.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmContctenos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(getContentPane(),
@@ -267,23 +278,9 @@ public class VentanaMenuPrincipal extends JFrame {
 			}
 		}
 		
-		coverflowPanel = new JFlowPanel(configTest);
+		JFlowPanel coverflowPanel = new JFlowPanel(configTest);
 		coverflowPanel.setOpaque(false);
 		getContentPane().add(coverflowPanel);
 	}
-
-	protected void close() {
-		this.dispose();
-	}
-
-	public void setUsuario(){
-		labelBienvenido.setText(Acceso.getUsuarioActivo().getNombre() + ", \n bienvenid@ a ");
-		if(Acceso.isAdministradorActivo()) {
-			mnCuenta.add(mntmParametrosSistema);
-		}
-		if(!Acceso.getUsuarioActivo().isRefugiante()) {
-			mnCuenta.add(mntmSolicitarSerRefugiante);
-		}
-
-	}
+	
 }

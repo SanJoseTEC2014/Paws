@@ -33,7 +33,7 @@ public class Diseno {
 			JOptionPane.showMessageDialog(null, ex.getMessage(),
 				"Problema al cargar fuente de los botones", JOptionPane.WARNING_MESSAGE,
 				Imagenes.getIconoSistema());
-			fuenteBotones = new Font("Tahoma", Font.PLAIN, 12);
+			fuenteBotones = new Font("Tahoma", Font.PLAIN, 11);
 		}
 	}
 	

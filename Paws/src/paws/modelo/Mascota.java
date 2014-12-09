@@ -331,8 +331,8 @@ public class Mascota implements Serializable {
 	// Recibe la especie seleccionada en el JComboBox para que e'ste pueda refrescarse
 	// cuando se esta' editando la especie de una Mascota.
 	public static DefaultComboBoxModel<String> getModeloRazas(String pEspecie) {
-		//int size = razas.get(especies.indexOf(pEspecie)).size();
-		//return new DefaultComboBoxModel<String>(razas.get(especies.indexOf(pEspecie)).toArray(new String[size]));
+		int size = razas.get(especies.indexOf(pEspecie)).size();
+		return new DefaultComboBoxModel<String>(razas.get(especies.indexOf(pEspecie)).toArray(new String[size]));
 	}
 	
 	public static DefaultComboBoxModel<String> getModeloTamanios() {

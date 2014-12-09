@@ -1,8 +1,10 @@
 package paws.vista;
 
 import java.awt.*;
+import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import paws.control.Imagenes;
 import paws.modelo.ModeloTablaCalificaciones;
@@ -11,15 +13,12 @@ import paws.recursos.Diseno;
 
 @SuppressWarnings("serial")
 public class VentanaCalificaciones extends JFrame {
-
-	private JTable tablaCalificaciones;
-	String Titulos[] = {"Nick Calificante", "Calificación", "Comentario"};
 	private JLabel labelCalificaciones;
-	private JPanel panel;
+	private JTable tablaCalificaciones;
 
 	public VentanaCalificaciones() {
+		setSize(400, 400);
 		getContentPane().setBackground(Diseno.fondoVentanas);
-		setSize(400,400);
 		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -28,17 +27,40 @@ public class VentanaCalificaciones extends JFrame {
 		labelCalificaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(labelCalificaciones, BorderLayout.NORTH);
 		
-		panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new BorderLayout(0, 0));
-		
 		tablaCalificaciones = new JTable();
-		panel.add(tablaCalificaciones);
 		tablaCalificaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablaCalificaciones.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaCalificaciones.setOpaque(false);
+		JScrollPane barras = new javax.swing.JScrollPane(tablaCalificaciones,
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		barras.setBackground(Diseno.fondoVentanas);
+		barras.setOpaque(false);
+		getContentPane().add(barras, BorderLayout.CENTER);
 	}
 	public void setUsuario(Usuario usuarioACalificar) {
-		tablaCalificaciones.setModel(new ModeloTablaCalificaciones(usuarioACalificar.getCalificaciones()));
+		try {
+			tablaCalificaciones.setModel(new ModeloTablaCalificaciones(usuarioACalificar.getCalificaciones()));
+			tablaCalificaciones.getColumnModel().getColumn(2).setCellRenderer(new ImageIconCellRenderer());
+			tablaCalificaciones.setRowHeight(Imagenes.getEstrellas(0).getSampleModel().getHeight());
+			setSize((Imagenes.getEstrellas(0).getSampleModel().getWidth() * 3) + 50, 400);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(getContentPane(),
+			"Error inesperado.\nNo se pueden cargar las estrellas.");
+			
+			// En caso de que ocurra un error con las imágenes de las estrellas,
+			// se construye un modelo de tabla en el instante. 
+			String[][] calificaciones = new String[usuarioACalificar.getCalificaciones().size()][3];
+			for (int i = 0; i < usuarioACalificar.getCalificaciones().size(); i++){
+				calificaciones[i] = new String[]{
+					usuarioACalificar.getCalificaciones().get(i).getNicknameCalificante(),
+					usuarioACalificar.getCalificaciones().get(i).getMensaje(),
+					usuarioACalificar.getCalificaciones().get(i).getEstrellas().toString()
+				};
+			}
+			tablaCalificaciones.setModel(
+				new DefaultTableModel(
+					calificaciones, new String[]{"Nickname Calificante", "Mensaje", "Estrellas"}));
+		}
 	}
 }
-	

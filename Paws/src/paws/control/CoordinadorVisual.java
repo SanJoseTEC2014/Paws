@@ -13,25 +13,17 @@ package paws.control;
  *  
  */
 
-import javax.swing.JFrame;
-
 import paws.modelo.Mascota;
 import paws.modelo.Usuario;
 import paws.vista.*;
 
 public class CoordinadorVisual {
-	private VentanaParametrosSistema parametrosSistema;
-	private VentanaMenuPrincipal menuPrincipal;
 	private VentanaDetallesUsuario detallesUsuario;
 	private VentanaDetallesMascota detallesMascota;
-	private VentanaInicioSesion inicioSesion;
 	private VentanaCondicionesRefugio condicionesRefugio;
 	private VentanaMascotasDeUsuario mascotasAsociadas;
 
 	public CoordinadorVisual(){
-		inicioSesion = new VentanaInicioSesion();
-		menuPrincipal = new VentanaMenuPrincipal();
-		parametrosSistema = new VentanaParametrosSistema();
 		detallesUsuario = new VentanaDetallesUsuario();
 		detallesMascota = new VentanaDetallesMascota();
 		condicionesRefugio = new VentanaCondicionesRefugio();
@@ -39,22 +31,19 @@ public class CoordinadorVisual {
 	}
 	
 	public synchronized void mostrarInicioSesion() {
+		VentanaInicioSesion inicioSesion = new VentanaInicioSesion();
 		inicioSesion.setVisible(true);
 		inicioSesion.cargarLogo();
 	}
 
 	public synchronized void mostrarParametrosSistema() {
-		parametrosSistema.setVisible(Acceso.isAdministradorActivo());
+		VentanaParametrosSistema parametrosSistema = new VentanaParametrosSistema();
 		parametrosSistema.setVisible(true);
 	}
 
 	public synchronized void mostrarMenuPrincipal() {
+		VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal();
 		menuPrincipal.setVisible(true);
-		menuPrincipal.setUsuario();
-	}
-	
-	public synchronized void ocultarMenuPrincipal() {
-		menuPrincipal.setVisible(false);
 	}
 
 	public synchronized void mostrarDetallesUsuario(Usuario usuarioActual) {
@@ -84,21 +73,12 @@ public class CoordinadorVisual {
 		agregarComentario.setVisible(true);		
 	}
 	
-	public synchronized void ocultarInicioSesion(){
-		inicioSesion.setVisible(false);
-		inicioSesion.limpiarCampos();
-	}
-	
 	public synchronized void ocultarVentanas() {
-		parametrosSistema.setVisible(false);
-		menuPrincipal.setVisible(false);
 		detallesUsuario.setVisible(false);
 		detallesMascota.setVisible(false);
 	}
 	
 	public synchronized void mostrarVentanas() {
-		parametrosSistema.setVisible(true);
-		menuPrincipal.setVisible(true);
 		detallesUsuario.setVisible(true);
 		detallesMascota.setVisible(true);
 	}

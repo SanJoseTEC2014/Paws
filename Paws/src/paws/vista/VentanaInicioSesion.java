@@ -59,28 +59,32 @@ public class VentanaInicioSesion extends JFrame {
 		panelNickname = new JPanel();
 		marcoContenido.add(panelNickname);
 		panelNickname.setOpaque(false);
-		panelNickname.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ingrese su Nickname:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelNickname.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
+				"Ingrese su Nickname:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
 		panelNickname.setLayout(new BorderLayout(0, 0));
 		
 		nicknameTextBox = new JTextField();
+		nicknameTextBox.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 20f));
 		panelNickname.add(nicknameTextBox, BorderLayout.CENTER);
-		nicknameTextBox.setFont(new Font("Calibri", Font.PLAIN, 20));
 		
 		labelNicknameError = new JLabel("");
+		labelNicknameError.setFont(Diseno.fuenteBotones);
 		panelNickname.add(labelNicknameError, BorderLayout.SOUTH);
 		
 		panelPassword = new JPanel();
-		marcoContenido.add(panelPassword);
 		panelPassword.setOpaque(false);
-		panelPassword.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ingrese su contrase\u00F1a:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelPassword.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
+				"Ingrese su contrase\u00F1a:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
 		panelPassword.setLayout(new BorderLayout(0, 0));
+		marcoContenido.add(panelPassword);
 		
 		passwordTextBox = new JPasswordField();
-		panelPassword.add(passwordTextBox, BorderLayout.CENTER);
-		passwordTextBox.setFont(new Font("Calibri", Font.PLAIN, 20));
+		passwordTextBox.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 20f));
 		passwordTextBox.setHorizontalAlignment(SwingConstants.LEFT);
+		panelPassword.add(passwordTextBox, BorderLayout.CENTER);
 		
 		labelPasswordError = new JLabel("");
+		labelPasswordError.setFont(Diseno.fuenteBotones);
 		panelPassword.add(labelPasswordError, BorderLayout.SOUTH);
 		
 		panelBotones = new JPanel();
@@ -92,7 +96,7 @@ public class VentanaInicioSesion extends JFrame {
 				try {
 					Acceso.validarCredenciales(nicknameTextBox.getText(),
 							new String(passwordTextBox.getPassword()));
-					Principal.coordinador.ocultarInicioSesion();
+					dispose();
 					Principal.coordinador.mostrarMenuPrincipal();
 				} catch (UsuarioNoExisteException e) {
 					labelNicknameError.setText(e.getMessage());
@@ -150,10 +154,4 @@ public class VentanaInicioSesion extends JFrame {
 		}
 	}
 	
-	public void limpiarCampos() {
-		nicknameTextBox.setText("");
-		labelNicknameError.setText("");
-		passwordTextBox.setText("");
-		labelPasswordError.setText("");
-	}
 }
