@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import paws.control.excepciones.*;
 import paws.modelo.*;
 import paws.recursos.CasosPrueba;
+import paws.recursos.Dialogos;
 import paws.recursos.Diseno;
 import paws.recursos.RutasArchivo;
 
@@ -56,7 +57,7 @@ public class Principal {
 	}
 	
 	
-	public static void cargarBaseDatosMascotas() {
+	private static void cargarBaseDatosMascotas() {
 		try(BufferedReader lector =
 			new BufferedReader(
 				new InputStreamReader(
@@ -78,9 +79,20 @@ public class Principal {
 			// JOptionPane.showMessageDialog(null,	"Base de datos de especies y razas de Mascotas cargada satisfactoriamente.");
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,
-					"Hubo un error que no permite que el programa pueda arrancar.",
-					"ERROR CRÍTICO DEL SISTEMA PAWS", JOptionPane.ERROR_MESSAGE);
-					System.exit(1);
+				"No se puedo cargar la base de datos de especies/razas de mascotas.",
+				"ERROR CRÍTICO DEL SISTEMA PAWS", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+		}
+	}
+	
+	private static void cargarMensajeCorreo(){
+		try {
+			Correo.setMensaje(Dialogos.getMensajeCorreo());
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+				"No se pudo cargar el mensaje que obtienen por defecto los usuarios al correo.",
+				"ERROR CRÍTICO DEL SISTEMA PAWS", JOptionPane.ERROR_MESSAGE);
+				// System.exit(1);
 		}
 	}
 	
@@ -89,7 +101,9 @@ public class Principal {
 		Diseno.inicializarLookAndFeel();
 		Diseno.inicializarFuentes();
 		cargarBaseDatosMascotas();
+		cargarMensajeCorreo();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() { 

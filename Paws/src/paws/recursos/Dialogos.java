@@ -6,29 +6,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Dialogos {
-	public static String getCondicionesUso() throws IOException {
-		FileInputStream archivo = new FileInputStream(RutasArchivo.recursosRoot + "condiciones.nfo");
+	private static String getDialogo(String pNombreArchivo) throws IOException {
+		FileInputStream archivo = new FileInputStream(RutasArchivo.recursosRoot + pNombreArchivo);
 		BufferedReader lector = new BufferedReader(new InputStreamReader(archivo, "UTF-8"));
-		String condiciones = new String();
+		String resultado = new String();
 		
 		String lineaActual;
 		while ((lineaActual = lector.readLine()) != null ) {
-			condiciones += lineaActual + "\n";
+			resultado += lineaActual + "\n";
 		}
 		archivo.close();
-		return condiciones;
+		return resultado;
+	}
+	
+	public static String getCondicionesUso() throws IOException {
+		return getDialogo("condiciones.nfo");
 	}
 	
 	public static String getAyudaBusqueda() throws IOException {
-		FileInputStream archivo = new FileInputStream(RutasArchivo.recursosRoot + "ayudabusqueda.nfo");
-		BufferedReader lector = new BufferedReader(new InputStreamReader(archivo, "UTF-8"));
-		String ayuda = new String();
-		
-		String lineaActual;
-		while ( (lineaActual = lector.readLine()) != null ) {
-			ayuda += lineaActual + "\n";
-		}
-		archivo.close();
-		return ayuda;
+		return getDialogo("ayudabusqueda.nfo");
+	}
+	
+	public static String getMensajeCorreo() throws IOException {
+		return getDialogo("correo_coincidencias.nfo");
 	}
 }

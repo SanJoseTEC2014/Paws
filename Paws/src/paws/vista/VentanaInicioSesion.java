@@ -60,7 +60,7 @@ public class VentanaInicioSesion extends JFrame {
 		marcoContenido.add(panelNickname);
 		panelNickname.setOpaque(false);
 		panelNickname.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
-				"Ingrese su Nickname:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
+				"Ingrese su Nickname:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones, new Color(0, 0, 0)));
 		panelNickname.setLayout(new BorderLayout(0, 0));
 		
 		nicknameTextBox = new JTextField();
@@ -68,13 +68,13 @@ public class VentanaInicioSesion extends JFrame {
 		panelNickname.add(nicknameTextBox, BorderLayout.CENTER);
 		
 		labelNicknameError = new JLabel("");
-		labelNicknameError.setFont(Diseno.fuenteBotones);
+		labelNicknameError.setFont(Diseno.fuenteBotones.deriveFont(Font.BOLD));
 		panelNickname.add(labelNicknameError, BorderLayout.SOUTH);
 		
 		panelPassword = new JPanel();
 		panelPassword.setOpaque(false);
 		panelPassword.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
-				"Ingrese su contrase\u00F1a:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
+				"Ingrese su contrase\u00F1a:", TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones, new Color(0, 0, 0)));
 		panelPassword.setLayout(new BorderLayout(0, 0));
 		marcoContenido.add(panelPassword);
 		
@@ -84,7 +84,7 @@ public class VentanaInicioSesion extends JFrame {
 		panelPassword.add(passwordTextBox, BorderLayout.CENTER);
 		
 		labelPasswordError = new JLabel("");
-		labelPasswordError.setFont(Diseno.fuenteBotones);
+		labelPasswordError.setFont(Diseno.fuenteBotones.deriveFont(Font.BOLD));
 		panelPassword.add(labelPasswordError, BorderLayout.SOUTH);
 		
 		panelBotones = new JPanel();
@@ -108,7 +108,7 @@ public class VentanaInicioSesion extends JFrame {
 				}
 			}
 		});
-		botonInicioSesion.setFont(Diseno.fuenteBotones);
+		botonInicioSesion.setFont(Diseno.fuenteBotones.deriveFont(15f));
 		botonInicioSesion.setOpaque(false);
 		panelBotones.add(botonInicioSesion);
 		
@@ -119,7 +119,7 @@ public class VentanaInicioSesion extends JFrame {
 			window.setVisible(true);	
 			}
 		});
-		botonRegistrarNuevoUsuario.setFont(Diseno.fuenteBotones);
+		botonRegistrarNuevoUsuario.setFont(Diseno.fuenteBotones.deriveFont(15f));
 		botonRegistrarNuevoUsuario.setOpaque(false);
 		panelBotones.add(botonRegistrarNuevoUsuario);
 		
@@ -131,7 +131,7 @@ public class VentanaInicioSesion extends JFrame {
 			}
 		});
 		botonSalir.setOpaque(false);
-		botonSalir.setFont(Diseno.fuenteBotones);
+		botonSalir.setFont(Diseno.fuenteBotones.deriveFont(15f));
 		panelBotones.add(botonSalir);
 		
 		marcoContenido.add(panelBotones);

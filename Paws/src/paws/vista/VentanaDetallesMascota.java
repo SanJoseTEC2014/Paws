@@ -324,7 +324,7 @@ public class VentanaDetallesMascota extends JFrame {
 	
 	public void setDatosIniciales(Mascota mascota){
 		
-		// El boton soy dueï¿½o aparece sii la mascota esta encontrada, adoptable o refugiada
+		// El boton soy dueño aparece sii la mascota esta encontrada, adoptable o refugiada
 		botonSoyDuenio.setVisible(mascota.getMarcadoresEstado()[1] || // Encontrada
 								  mascota.getMarcadoresEstado()[2] ); // Refugiada
 
@@ -336,7 +336,7 @@ public class VentanaDetallesMascota extends JFrame {
 		campoMontoRecompensa.setVisible(mascota.getMarcadoresEstado()[0]); // Desaparecida
 		campoMontoRecompensa.setText(mascota.getRecompensa() == null ? "0" : mascota.getRecompensa().toString());
 		
-		// pone el boton de adoptar visible si la mascota estï¿½ encontrada o refugiada
+		// Pone el boton de adoptar visible si la mascota está encontrada o refugiada
 		botonQuieroAdoptarla.setVisible(mascota.getMarcadoresEstado()[1] || // Encontrada
 				  						  mascota.getMarcadoresEstado()[2] ); // Refugiada
 		

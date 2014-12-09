@@ -46,9 +46,4 @@ public class ModeloTablaMascotas extends AbstractTableModel {
 	public int getRowCount() {
 		return listaMascotas.size();
 	}
-	
-	public int getCantidadResultados(){
-		return listaMascotas.size();
-	}
-
 }

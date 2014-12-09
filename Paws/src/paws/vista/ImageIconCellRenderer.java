@@ -1,15 +1,8 @@
 package paws.vista;
 
-import java.awt.Component;
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import paws.control.Imagenes;
-import paws.control.excepciones.ImagenNoEncontradaException;
 
 @SuppressWarnings("serial")
 public class ImageIconCellRenderer extends DefaultTableCellRenderer {
