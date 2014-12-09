@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-@SuppressWarnings("serial")
 public class VentanaMenuPrincipal extends JFrame {
 
 	public VentanaMenuPrincipal() {
@@ -167,13 +166,18 @@ public class VentanaMenuPrincipal extends JFrame {
 		menuBar.add(mnAsociaciones);
 		
 		JMenuItem mntmListaDeAsociaciones = new JMenuItem("Lista de Asociaciones");
-		mntmListaDeAsociaciones.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+        mntmListaDeAsociaciones.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+		mntmListaDeAsociaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarListaAsociaciones();
+			}
+		});
 		mnAsociaciones.add(mntmListaDeAsociaciones);
 		
-		JMenuItem mntmRealizarUnaDonacion = new JMenuItem("Realizar una donaci\u00F3n");
-		mntmRealizarUnaDonacion.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
-		mnAsociaciones.add(mntmRealizarUnaDonacion);
-		
+		/*JMenuItem mntmRealizarUnaDonacin = new JMenuItem("Realizar una donaci\u00F3n");
+        mntmRealizarUnaDonacion.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
+		mnAsociaciones.add(mntmRealizarUnaDonacin);*/
+        
 		JMenu mnCuenta = new JMenu("Cuenta");
 		mnCuenta.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		menuBar.add(mnCuenta);

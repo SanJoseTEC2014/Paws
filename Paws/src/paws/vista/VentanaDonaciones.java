@@ -1,18 +1,36 @@
 package paws.vista;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.GroupLayout.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import java.awt.BorderLayout;
+
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+
+import java.awt.Panel;
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+
 import paws.recursos.Diseno;
 
-@SuppressWarnings("serial")
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class VentanaDonaciones extends JFrame {
 	private JTextField textField;
 	public VentanaDonaciones() {
-		setSize(400, 216);
+		setSize(400, 300);
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		JLabel lblRealizarUnaDonacin = new JLabel("Realizar una donaci\u00F3n");
-		lblRealizarUnaDonacin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRealizarUnaDonacin.setFont(Diseno.fuenteTitulosVentanas);
 		lblRealizarUnaDonacin.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		Panel panel = new Panel();
@@ -21,7 +39,15 @@ public class VentanaDonaciones extends JFrame {
 		panel.add(btnOk);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				close();
+			}		
+		   });
 		panel.add(btnCancelar);
+		btnCancelar.setOpaque(false);
+		
+		
 		
 		JLabel lblIngreseElMonto = new JLabel("Ingrese el monto que desea donar:");
 		
@@ -50,5 +76,9 @@ public class VentanaDonaciones extends JFrame {
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		getContentPane().setLayout(groupLayout);
+	}
+	protected void close() {
+		this.dispose();
+		
 	}
 }
