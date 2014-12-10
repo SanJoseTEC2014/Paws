@@ -30,12 +30,12 @@ public class Busqueda {
 			String criterio = pTerminos.get(numeroTermino);
 			if (criterio != "") {
 				for (Mascota porFiltrar : Principal.mascotas) {
-					if ((pEstadosBusqueda[0] && porFiltrar.getMarcadoresEstado()[0]) ||
-						(pEstadosBusqueda[1] && porFiltrar.getMarcadoresEstado()[1]) ||
-						(pEstadosBusqueda[2] && porFiltrar.getMarcadoresEstado()[2]) ||
-						(pEstadosBusqueda[3] && porFiltrar.getMarcadoresEstado()[3]) ||
-						(pEstadosBusqueda[4] && porFiltrar.getMarcadoresEstado()[4]) ||
-						(pEstadosBusqueda[5] && porFiltrar.getMarcadoresEstado()[5]))
+					if ((pEstadosBusqueda[0] && porFiltrar.isDesaparecida()) ||
+						(pEstadosBusqueda[1] && porFiltrar.isEncontrada()) ||
+						(pEstadosBusqueda[2] && porFiltrar.isRefugiada()) ||
+						(pEstadosBusqueda[3] && porFiltrar.isLocalizada()) ||
+						(pEstadosBusqueda[4] && porFiltrar.isAdoptada()) ||
+						(pEstadosBusqueda[5] && porFiltrar.isMuerta()))
 					{   // Las mascotas que están siendo filtradas deben tener uno de los estados de la búsqueda						
 						// Verificación de los resultados de una búsqueda
 						/*
@@ -86,14 +86,14 @@ public class Busqueda {
 	}
 	
 	private static boolean lugarPerdidaCoincide(Mascota pMascota, String pCriterio){
-		if (pMascota.getMarcadoresEstado()[0]) { // Desaparecida
+		if (pMascota.isDesaparecida()) { // Desaparecida
 			return pMascota.getTodosSucesos()[0].getLugar().toLowerCase().contains(pCriterio.toLowerCase());
 		}
 		return false;
 	}
 	
 	private static boolean lugarEncuentroCoincide(Mascota pMascota, String pCriterio){
-		if (pMascota.getMarcadoresEstado()[1]) { // Encontrada
+		if (pMascota.isEncontrada()) { // Encontrada
 			return pMascota.getTodosSucesos()[1].getLugar().toLowerCase().contains(pCriterio.toLowerCase());
 		}
 		return false;

@@ -25,23 +25,29 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+@SuppressWarnings("serial")
 public class VentanaMenuPrincipal extends JFrame {
 
 	public VentanaMenuPrincipal() {
 		setTitle("Paws");
-		WindowListener exitListener = new WindowAdapter() {
-            @Override
+		// PREVIENE QUE SE CIERRE LA VENTANA
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // NO QUITAR.
+		addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showOptionDialog(getContentPane(),
-                	"Desea cerrar su sesión activa?",
-                	"Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == 0) {
-                   dispose();
-                   Principal.coordinador.mostrarInicioSesion();
+            	Integer option = JOptionPane.showConfirmDialog(getContentPane(),
+            		"Desea cerrar su sesión activa?",
+            		"Confirmación de salida",
+            		JOptionPane.YES_NO_OPTION,
+            		JOptionPane.WARNING_MESSAGE,
+            		Imagenes.getIconoSistema());
+                if (option.equals(0)) {
+                	dispose();
+                	Principal.coordinador.mostrarInicioSesion();
                 }
             }
-        };
-        addWindowListener(exitListener);
+        });
+		// PREVIENE QUE SE CIERRE LA VENTANA
+		
         int anchoVentana = 700;
         int altoVentana = 600;
 		setSize(anchoVentana, altoVentana);
@@ -101,10 +107,10 @@ public class VentanaMenuPrincipal extends JFrame {
 		mntmVerDesaparecidas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerDesaparecidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
+				VentanaMascotasRegistradas window = new VentanaMascotasRegistradas();
 				ArrayList<Mascota> desaparecidas = new ArrayList<Mascota>();
 				for (Mascota x : Principal.mascotas){
-					if (x.getMarcadoresEstado()[0]){
+					if (x.isDesaparecida()){
 						desaparecidas.add(x.clone());
 					}
 				}
@@ -118,10 +124,10 @@ public class VentanaMenuPrincipal extends JFrame {
 		mntmVerEncontradas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerEncontradas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
+				VentanaMascotasRegistradas window = new VentanaMascotasRegistradas();
 				ArrayList<Mascota> encontradas = new ArrayList<Mascota>();
 				for (Mascota x : Principal.mascotas){
-					if (x.getMarcadoresEstado()[1]){
+					if (x.isEncontrada()){
 						encontradas.add(x.clone());
 					}
 				}
@@ -135,10 +141,10 @@ public class VentanaMenuPrincipal extends JFrame {
 		mntmVerRefugiadas.setFont(Diseno.fuenteBotones.deriveFont(Font.PLAIN, 11f));
 		mntmVerRefugiadas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListaTodasMascotas window = new VentanaListaTodasMascotas();
+				VentanaMascotasRegistradas window = new VentanaMascotasRegistradas();
 				ArrayList<Mascota> refugiadas = new ArrayList<Mascota>();
 				for (Mascota x : Principal.mascotas){
-					if (x.getMarcadoresEstado()[2]){
+					if (x.isRefugiada()){
 						refugiadas.add(x.clone());
 					}
 				}

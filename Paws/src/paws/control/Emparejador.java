@@ -91,8 +91,8 @@ public class Emparejador {
 		
 		// Empareja una mascota escogida por pUsuario con todas
 		// las mascotas reportadas en el sistema como:
-		// "encontradas", "perdidas", "refugiadas", "adoptadas", "localizadas" o "muertas",
-		// segï¿½n el estado actual de la mascota.
+		// "desaparecidas", "encontradas", "refugiadas", "localizadas", "adoptadas" o "muertas",
+		// según el estado actual de la mascota.
 				
 		ArrayList<Mascota> coincidencias = new ArrayList<Mascota>();
 		
@@ -100,17 +100,14 @@ public class Emparejador {
 			// Para evitar un duplicado de la misma mascota que se está buscando
 			if (pMascotaSeleccionada != posibleHit) {
 				
-				if ( (pMascotaSeleccionada.getMarcadoresEstado()[0] && posibleHit.getMarcadoresEstado()[1]) ||
-					 // Seleccionada: Desaparecida;  Posible Hit: Encontrada
+				if ( (pMascotaSeleccionada.isDesaparecida() && posibleHit.isEncontrada()) ||
 						
-					 (pMascotaSeleccionada.getMarcadoresEstado()[0] && posibleHit.getMarcadoresEstado()[2]) ||
-					 // Seleccionada: Desaparecida;  Posible Hit: Refugiada
+					 (pMascotaSeleccionada.isDesaparecida() && posibleHit.isRefugiada()) ||
 					 
-					 (pMascotaSeleccionada.getMarcadoresEstado()[1] && posibleHit.getMarcadoresEstado()[0]) ||
-					 // Seleccionada: Encontrada;  Posible Hit: Desaparecida
+					 (pMascotaSeleccionada.isEncontrada() && posibleHit.isDesaparecida()) ||
 					 
-					 (pMascotaSeleccionada.getMarcadoresEstado()[2] && posibleHit.getMarcadoresEstado()[0]))  
-					 // Seleccionada: Refugiada;  Posible Hit: Desaparecida
+					 (pMascotaSeleccionada.isRefugiada() && posibleHit.isDesaparecida()))  
+
 				{
 					if (pMascotaSeleccionada.getNumeroChip().equals(posibleHit.getNumeroChip())) {
 						coincidencias.add(posibleHit);

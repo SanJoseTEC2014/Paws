@@ -1,12 +1,15 @@
 package paws.modelo;
 
 import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
+
+import paws.control.EstadosMascotas;
 
 @SuppressWarnings("serial")
 public class ModeloTablaMascotas extends AbstractTableModel {
 	private ArrayList<Mascota> listaMascotas;
-	private String[] titulos = {"ID", "Nombre", "Especie", "Raza", "Estado Actual (registrado por)"};
+	private String[] titulos = {"ID", "Nombre", "Especie", "Raza", "Estado Actual", "Registrado por..."};
 
 	public ModeloTablaMascotas(ArrayList<Mascota> pListaMascotas){
 		listaMascotas = pListaMascotas;
@@ -16,27 +19,26 @@ public class ModeloTablaMascotas extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		System.out.println(Integer.toString(rowIndex) + " " + Integer.toString(columnIndex));
+		System.out.println(listaMascotas.get(rowIndex).toString());
 		switch (columnIndex) {
-		case 0:
-			return listaMascotas.get(rowIndex).getID();
-		case 1:
-			return listaMascotas.get(rowIndex).getNombre();
-		case 3:
-			return listaMascotas.get(rowIndex).getEspecie();
-		case 4:
-			return listaMascotas.get(rowIndex).getRaza();
-		case 5:
-			int estado = 0;
-			while (!listaMascotas.get(rowIndex).getMarcadoresEstado()[estado] && estado < 6){
-				estado++; // Busca el estado actual
-			}
-			return listaMascotas.get(rowIndex).getTodosSucesos()[estado].getEstado()
-				+ "(" + listaMascotas.get(rowIndex).getTodosSucesos()[estado].getNick() + ")";
-		default:
-			return null;
+			case 0:
+				return listaMascotas.get(rowIndex).getID().toString();
+			case 1:
+				return listaMascotas.get(rowIndex).getNombre();
+			case 2:
+				return listaMascotas.get(rowIndex).getEspecie();
+			case 3:
+				return listaMascotas.get(rowIndex).getRaza();
+			case 4:
+				return listaMascotas.get(rowIndex).getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMascotas.get(rowIndex))].getEstado();
+			case 5:
+				return listaMascotas.get(rowIndex).getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMascotas.get(rowIndex))].getNick();
+			default:
+				return null;
 		}
 	}
-
+	
 	@Override
 	public int getColumnCount() {
 		return titulos.length;

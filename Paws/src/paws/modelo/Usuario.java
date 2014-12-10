@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
+import paws.control.EstadosMascotas;
 import paws.control.Principal;
 import paws.control.excepciones.EventoNoExisteException;
 import paws.control.excepciones.TiempoSinEstablecerException;
@@ -193,8 +194,9 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasPerdidas() {
 		ArrayList<Mascota> perdidas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.getMarcadoresEstado()[0]) {
-				if (mascota.getTodosSucesos()[0].getNick().equals(nickname))
+			if (mascota.isDesaparecida()) {
+				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
+					.getNick().equals(nickname))
 				perdidas.add(mascota);
 			}
 		}
@@ -204,8 +206,9 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasEncontradas() {
 		ArrayList<Mascota> encontradas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.getMarcadoresEstado()[1]) {
-				if (mascota.getTodosSucesos()[1].getNick().equals(nickname))
+			if (mascota.isEncontrada()) {
+				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
+					.getNick().equals(nickname))
 				encontradas.add(mascota);
 			}
 		}
@@ -215,8 +218,9 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasRefugiadas() {
 		ArrayList<Mascota> refugiadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.getMarcadoresEstado()[2]) {
-				if (mascota.getTodosSucesos()[2].getNick().equals(nickname))
+			if (mascota.isRefugiada()) {
+				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
+					.getNick().equals(nickname))
 				refugiadas.add(mascota);
 			}
 		}
@@ -226,8 +230,9 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasLocalizadas() {
 		ArrayList<Mascota> localizadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.getMarcadoresEstado()[3]) {
-				if (mascota.getTodosSucesos()[3].getNick().equals(nickname))
+			if (mascota.isLocalizada()) {
+				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
+					.getNick().equals(nickname))
 				localizadas.add(mascota);
 			}
 		}
@@ -237,8 +242,9 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasAdoptadas() {
 		ArrayList<Mascota> adoptadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.getMarcadoresEstado()[4]) {
-				if (mascota.getTodosSucesos()[4].getNick().equals(nickname))
+			if (mascota.isAdoptada()) {
+				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
+					.getNick().equals(nickname))
 				adoptadas.add(mascota);
 			}
 		}
@@ -276,7 +282,8 @@ public class Usuario implements Serializable, Comunicable {
 	
 	public String toString(){
 		return "Nombre: " + nombre + "\nNickname: " + nickname +
-			   "\nContraseï¿½a: " + contrasenia + "\nAdmin?: " + (administrador ? "Sï¿½" : "No");
+			   "\nContraseña: " + contrasenia + "\nAdmin?: " + (administrador ? "Sí" : "No") +
+			   "\nBloqueado?: " + (bloqueado ? "Sí" : "No");
 	}
 	
 	public boolean isBloqueado() {
@@ -349,6 +356,7 @@ public class Usuario implements Serializable, Comunicable {
 	
 	public Usuario clone() {
 		  Usuario clone = new Usuario(nickname, nombre, apellidos, cedula, "", telefono, correo, direccion);
+		  // En el campo contraseña, se pone "" y se omite por seguridad.
 		  return clone;
 	}
 	

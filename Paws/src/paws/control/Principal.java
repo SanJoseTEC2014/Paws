@@ -103,7 +103,7 @@ public class Principal {
 		cargarBaseDatosMascotas();
 		cargarMensajeCorreo();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
-		
+		CasosPrueba.setCargados(false);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() { 

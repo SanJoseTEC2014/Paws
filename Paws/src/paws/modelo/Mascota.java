@@ -15,7 +15,9 @@ package paws.modelo;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +33,7 @@ public class Mascota implements Serializable {
 
 	private static final long serialVersionUID = 111L;
 	
-	private static LinkedList<String> tamanios = new LinkedList<String>();
+	private static final List<String> tamanios = Arrays.asList("Pequeño", "Mediano", "Grande");
 	private static LinkedList<String> colores = new LinkedList<String>();
 	private static LinkedList<String> especies = new LinkedList<String>();
 	private static LinkedList<LinkedList<String>> razas = new LinkedList<LinkedList<String>>();
@@ -52,6 +54,7 @@ public class Mascota implements Serializable {
 	private String tamanio;
 	
 	private Suceso[] sucesos = new Suceso[6]; // Para cada suceso del array corresponde un estado
+	// 0 = Desaparecida; 1 = Encontrada; 2 = Refugiada; 3 = Localizada; 4 = Adoptada; 5 = Muerta
 	private boolean[] marcadoresEstado = new boolean[6];
 	private boolean[] marcadoresEspera = new boolean[3]; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
 	private Integer recompensa;
@@ -157,75 +160,20 @@ public class Mascota implements Serializable {
 	}
 
 	public void addNuevoSuceso(Suceso pSuceso) {
-		switch(pSuceso.getEstado())
-		{
-			case EstadosMascotas.estadoDESAPARECIDA:
-			{
-				sucesos[0] = pSuceso;
-				marcadoresEstado[0] = true;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
+		String estados[] = {EstadosMascotas.estadoDESAPARECIDA,
+                EstadosMascotas.estadoENCONTRADA,
+                EstadosMascotas.estadoREFUGIADA,
+                EstadosMascotas.estadoLOCALIZADA,
+                EstadosMascotas.estadoADOPTADA,
+                EstadosMascotas.estadoMUERTA};
+
+		for (int i = 0; i < marcadoresEstado.length; i++){
+			if (pSuceso.getEstado().equals(estados[i])) {
+				marcadoresEstado[i] = true; // Añade el último estado
+				sucesos[i] = pSuceso; // Añade el nuevo suceso (lo sobreescribe)
+			} else {
+				marcadoresEstado[i] = false; // Resetea el último estado
 			}
-			break;
-			case EstadosMascotas.estadoENCONTRADA:
-			{
-				sucesos[1] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = true;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoREFUGIADA:
-			{
-				sucesos[2] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = true;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoLOCALIZADA:
-			{
-				sucesos[3] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = true;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoADOPTADA:
-			{
-				sucesos[4] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = true;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoMUERTA:
-			{
-				sucesos[5] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = true;
-			}
-			break;
-			
 		}
 	}
 	
@@ -282,8 +230,23 @@ public class Mascota implements Serializable {
 		return sucesos;
 	}
 	
-	public boolean[] getMarcadoresEstado() {
-		return marcadoresEstado;
+	public boolean isDesaparecida() {
+		return marcadoresEstado[0];
+	}
+	public boolean isEncontrada() {
+		return marcadoresEstado[1];
+	}
+	public boolean isRefugiada() {
+		return marcadoresEstado[2];
+	}
+	public boolean isLocalizada() {
+		return marcadoresEstado[3];
+	}
+	public boolean isAdoptada() {
+		return marcadoresEstado[4];
+	}
+	public boolean isMuerta() {
+		return marcadoresEstado[5];
 	}
 
 	public BufferedImage getImagen() throws ImagenNoEncontradaException{
@@ -291,13 +254,26 @@ public class Mascota implements Serializable {
 	}
 	
 	public String toString() {
-		String msg = "Nombre de la mascota: " + getNombre();
+		String msg = "ID: " + id;
+		msg += "\nNombre de la mascota: " + nombre;
+		msg += "\nChip: " + numeroChip;
+		msg += "\nEspecie: " + especie;
+		msg += "\nRaza: " + raza;
+		msg += "\nColor: " + color;
+		msg += "\nEdad: " + edad;
+		msg += "\nSexo: " + sexo;
+		msg += "\nCastrada: " + (castrada ? "Sí" : "No");
+		msg += "\nVacunada: " + (vacunada ? "Sí" : "No");
+		msg += "\nDesparacitada: " + (desparacitada ? "Sí" : "No");
+		msg += "\nTamaño: " + tamanio;
+		
 		for (int i = 0; i < 5; i++){
-			if (marcadoresEstado[i]) msg += "\nEstado: " + sucesos[i].getEstado();
+			if (marcadoresEstado[i]) msg += "\nEstado Actual: " + sucesos[i].getEstado();
 		}
-		msg += "\nEspecie: " + getEspecie();
-		msg += "\nRaza: " + getRaza();
-		msg += "\n";
+		msg += "\nEsperando Localización: " + (marcadoresEspera[0] ? "Sí" : "No");
+		msg += "\nEsperando Refugio: " 		+ (marcadoresEspera[1] ? "Sí" : "No");
+		msg += "\nEsperando Adopción: " 	+ (marcadoresEspera[2] ? "Sí" : "No");
+		
 		return msg;
 	}
 

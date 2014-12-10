@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import paws.control.EstadosMascotas;
+
 @SuppressWarnings("serial")
 public class ModeloTablaMensajes extends AbstractTableModel {
 	private ArrayList<Mascota> listaMensajes;
@@ -23,11 +25,9 @@ public class ModeloTablaMensajes extends AbstractTableModel {
 		case 1:
 			return listaMensajes.get(rowIndex).getNombre();
 		case 2:
-			int estado = 0;
-			while (!listaMensajes.get(rowIndex).getMarcadoresEstado()[estado] && estado < 6){
-				estado++; // Busca el estado actual
-			}
-			return listaMensajes.get(rowIndex).getTodosSucesos()[estado].getLugar();
+			return listaMensajes.get(rowIndex)
+				.getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMensajes.get(rowIndex))]
+				.getLugar();
 		case 3:
 			return listaMensajes.get(rowIndex).getEspecie();
 		case 4:

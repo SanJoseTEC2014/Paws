@@ -15,18 +15,28 @@ public class EstadosMascotas {
 	public static final String estadoADOPTADA = "Adoptada";
 	public static final String estadoMUERTA = "Muerta";
 	
-	private static String getEstadoActual(boolean[] pSucesos){
-		if (pSucesos[0]) return estadoDESAPARECIDA;
-		if (pSucesos[1]) return estadoENCONTRADA;
-		if (pSucesos[2]) return estadoREFUGIADA;
-		if (pSucesos[3]) return estadoLOCALIZADA;
-		if (pSucesos[4]) return estadoADOPTADA;
-		if (pSucesos[5]) return estadoMUERTA;
+	public static String getEstadoActual(Mascota pMascotaActual){
+		if (pMascotaActual.isDesaparecida()) return estadoDESAPARECIDA;
+		if (pMascotaActual.isEncontrada()) return estadoENCONTRADA;
+		if (pMascotaActual.isRefugiada()) return estadoREFUGIADA;
+		if (pMascotaActual.isLocalizada()) return estadoLOCALIZADA;
+		if (pMascotaActual.isAdoptada()) return estadoADOPTADA;
+		if (pMascotaActual.isMuerta()) return estadoMUERTA;
 		return "INDEFINIDO";
 	}
 	
+	public static Integer getEstadoInteger(Mascota pMascotaActual){
+		if (pMascotaActual.isDesaparecida()) return 0;
+		if (pMascotaActual.isEncontrada()) return 1;
+		if (pMascotaActual.isRefugiada()) return 2;
+		if (pMascotaActual.isLocalizada()) return 3;
+		if (pMascotaActual.isAdoptada()) return 4;
+		if (pMascotaActual.isMuerta()) return 5;
+		return -1;
+	}
+	
 	public static Suceso reportarEvento(Mascota pMascotaActual, String pNickEmisor, String pMensaje) throws EventoNoExisteException, TiempoSinEstablecerException {
-		String estadoActual = getEstadoActual(pMascotaActual.getMarcadoresEstado());
+		String estadoActual = getEstadoActual(pMascotaActual);
 		switch (pMensaje)
 		{
 																										// Eventos de Localizacion

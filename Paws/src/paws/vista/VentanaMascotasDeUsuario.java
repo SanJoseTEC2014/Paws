@@ -124,7 +124,7 @@ public class VentanaMascotasDeUsuario extends JFrame {
 					Integer IDMascota = (Integer) tablaMascotas.getValueAt(fila, 0);
 					try {
 						ArrayList<Mascota> resultadosMascota = Emparejador.emparejarBajoDemanda(Principal.getMascotaID(IDMascota));
-						VentanaListaTodasMascotas ventanaResultados = new VentanaListaTodasMascotas();
+						VentanaMascotasRegistradas ventanaResultados = new VentanaMascotasRegistradas();
 						ventanaResultados.setDatosIniciales(resultadosMascota, true);
 						ventanaResultados.setVisible(true);
 					} catch (MascotaNoEncontradaException e1) {

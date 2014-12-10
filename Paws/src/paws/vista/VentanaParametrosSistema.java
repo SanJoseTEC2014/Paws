@@ -15,69 +15,64 @@ import paws.recursos.*;
 
 @SuppressWarnings("serial")
 public class VentanaParametrosSistema extends JFrame {
-	private static String[] calificaciones = new String[]{"5.0",
+	private final String[] calificaciones = new String[]{"5.0",
 							"4.5", "4.0", "3.5", "3.0", "2.5",
 							"2.0", "1.5", "1.0", "0.5", "0.0"};
 	
 	private JButton botonGuardarFecha;
-	private JComboBox<String> comboCalificaciones;
 	private JButton boton1Dia;
 	private JButton boton7Dias;
 	private JButton boton30Dias;
-	private JButton botonCalificacion;
-	private JLabel labelTitulo;
-	private JPanel marcoInferior;
+	private JButton botonGuardarCalificacion;
 	private JPanel pestaniaFecha;
 	private JCalendar calendar;
-	private JPanel pestaniaGeneral;
 	private JPanel panelCalendar;
-	private JTabbedPane marcoPestanias;
-	private JButton botonCasos;
 	private JButton botonColorFondoCambiar;
-	private JTextField textFecha;
 	private JPanel panelMensajeNuevo;
 	private JTextArea mensajeCorreoNuevo;
 	private JButton btnGuardarMensaje;
 	private JButton botonColorFondoGuardar;
 	private JPanel panelCalificacion;
-	private JPanel panelSecundario;
 	private JPanel panelColorFondo;
-	private JPanel panelFechaActual;
 	
 	private Color nuevoColorFondo;
+	private JButton botonCerrar;
+	private JTextField textFecha;
+	private JComboBox<String> comboCalificaciones;
 	
 	public VentanaParametrosSistema() {
-		setSize(700, 450);
+		setSize(435, 420);
+		setResizable(false);
 		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		labelTitulo = new JLabel("Par\u00E1metros del Sistema");
+		JLabel labelTitulo = new JLabel("Par\u00E1metros del Sistema");
+		labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		labelTitulo.setFont(Diseno.fuenteTitulosVentanas);
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(labelTitulo, BorderLayout.NORTH);
 		
-		marcoPestanias = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(marcoPestanias, BorderLayout.CENTER);
+		JTabbedPane marcoPestanias = new JTabbedPane(JTabbedPane.TOP);
+		marcoPestanias.setBorder(new EmptyBorder(0, 0, 5, 0));
+		marcoPestanias.setBackground(Diseno.fondoVentanas);
+		marcoPestanias.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		pestaniaGeneral = new JPanel();
-		marcoPestanias.addTab("General", null, pestaniaGeneral, null);
-		pestaniaGeneral.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		JPanel pestaniaGeneral = new JPanel();
+		pestaniaGeneral.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pestaniaGeneral.setOpaque(false);
-		pestaniaGeneral.setLayout(new BorderLayout(20, 0));
+		marcoPestanias.addTab("General", pestaniaGeneral);
+		pestaniaGeneral.setLayout(new BoxLayout(pestaniaGeneral, BoxLayout.PAGE_AXIS));
 		
-		panelSecundario = new JPanel();
-		panelSecundario.setOpaque(false);
-		pestaniaGeneral.add(panelSecundario, BorderLayout.WEST);
-		panelSecundario.setLayout(new BoxLayout(panelSecundario, BoxLayout.Y_AXIS));
-		
-		botonCasos = new JButton("Cargar Casos de Prueba");
+		JButton botonCasos = new JButton("Cargar Casos de Prueba");
 		botonCasos.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		botonCasos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					CasosPrueba.cargarDocumentoMascotasPrueba();
 					CasosPrueba.cargarDocumentoUsuariosPrueba();
+					CasosPrueba.setCargados(true);
+					botonCasos.setEnabled(false);
 				} catch (TiempoSinEstablecerException ex) {
 					JOptionPane.showMessageDialog(null,
 						"No se pueden crear sucesos.\n" + ex.getMessage(),
@@ -87,105 +82,103 @@ public class VentanaParametrosSistema extends JFrame {
 			}
 		});
 		botonCasos.setFont(Diseno.fuenteBotones);
-		panelSecundario.add(botonCasos);
+		botonCasos.setEnabled(!CasosPrueba.isCargadosAmbosCasos());
+		pestaniaGeneral.add(botonCasos);
 		
-		panelFechaActual = new JPanel();
-		panelSecundario.add(panelFechaActual);
+		JPanel panelFechaActual = new JPanel();
+		pestaniaGeneral.add(panelFechaActual);
 		panelFechaActual.setOpaque(false);
 		panelFechaActual.setBorder(new TitledBorder(null, "Fecha Actual:",
-				TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
+			TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
 		panelFechaActual.setLayout(new BoxLayout(panelFechaActual, BoxLayout.Y_AXIS));
 		
 		textFecha = new JTextField();
-		textFecha.setEnabled(Tiempo.isFechaEstablecida());
-		textFecha.setEditable(false);
-		textFecha.setColumns(10);
-		textFecha.setFont(Diseno.fuenteBotones);
+		textFecha.setHorizontalAlignment(SwingConstants.CENTER);
+		if (Tiempo.isFechaEstablecida()){
+			textFecha.setText(Tiempo.getStringFechaSistema());
+		} else {
+			textFecha.setEnabled(false);
+		}
 		panelFechaActual.add(textFecha);
 		
-		JPanel panelBotones = new JPanel();
-		panelBotones.setOpaque(false);
-		panelFechaActual.add(panelBotones);
-		
 		boton1Dia = new JButton("Avanzar un D\u00EDa");
-		panelBotones.add(boton1Dia);
-		boton1Dia.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		boton1Dia.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelFechaActual.add(boton1Dia);
 		boton1Dia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Tiempo.avanzarDia();
 				textFecha.setText(Tiempo.getStringFechaSistema());
-				textFecha.setEnabled(true);
 			}
 		});
-		boton1Dia.setOpaque(false);
 		boton1Dia.setFont(Diseno.fuenteBotones);
 		boton1Dia.setEnabled(Tiempo.isFechaEstablecida());
 		
 		boton7Dias = new JButton("Avanzar 7 D\u00EDas");
-		panelBotones.add(boton7Dias);
+		boton7Dias.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelFechaActual.add(boton7Dias);
 		boton7Dias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < 7; i++) { Tiempo.avanzarDia(); }
 				textFecha.setText(Tiempo.getStringFechaSistema());
-				textFecha.setEnabled(true);
 			}
 		});
-		boton7Dias.setOpaque(false);
 		boton7Dias.setFont(Diseno.fuenteBotones);
 		boton7Dias.setEnabled(Tiempo.isFechaEstablecida());
-		boton7Dias.setAlignmentY(1.0f);
 		
 		boton30Dias = new JButton("Avanzar 30 D\u00EDas");
-		panelBotones.add(boton30Dias);
+		boton30Dias.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelFechaActual.add(boton30Dias);
 		boton30Dias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < 30; i++) { Tiempo.avanzarDia(); }
 				textFecha.setText(Tiempo.getStringFechaSistema());
-				textFecha.setEnabled(true);
 			}
 		});
-		boton30Dias.setOpaque(false);
 		boton30Dias.setFont(Diseno.fuenteBotones);
 		boton30Dias.setEnabled(Tiempo.isFechaEstablecida());
-		boton30Dias.setAlignmentY(1.0f);
 		
 		panelCalificacion = new JPanel();
-		panelSecundario.add(panelCalificacion);
+		pestaniaGeneral.add(panelCalificacion);
 		panelCalificacion.setOpaque(false);
-		panelCalificacion.setBorder(new TitledBorder(null, "Calificaci\u00F3n M\u00EDnima para bloquear a un Usuario:",
+		panelCalificacion.setBorder(new TitledBorder(null, "Bloquear Usuarios con Nota Menor a:",
 			TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
+		panelCalificacion.setLayout(new BorderLayout(0, 0));
 		
 		comboCalificaciones = new JComboBox<String>();
-		panelCalificacion.add(comboCalificaciones);
+		comboCalificaciones.setFont(Diseno.fuenteBotones);
 		comboCalificaciones.setModel(new DefaultComboBoxModel<String>(calificaciones));
+		panelCalificacion.add(comboCalificaciones, BorderLayout.CENTER);
 		
-		botonCalificacion = new JButton("Guardar");
-		panelCalificacion.add(botonCalificacion);
-		botonCalificacion.addActionListener(new ActionListener() {
+		botonGuardarCalificacion = new JButton("Guardar");
+		botonGuardarCalificacion.setFont(Diseno.fuenteBotones);
+		botonGuardarCalificacion.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botonGuardarCalificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario.setCalificacionMinimaPermitidaUsuarios(
-						Double.valueOf((String) comboCalificaciones.getSelectedItem()));
+					Double.valueOf((String) comboCalificaciones.getSelectedItem()));
 			}
 		});
-		botonCalificacion.setOpaque(false);
-		botonCalificacion.setFont(Diseno.fuenteBotones);
+		panelCalificacion.add(botonGuardarCalificacion, BorderLayout.EAST);
 		
 		panelColorFondo = new JPanel();
-		panelSecundario.add(panelColorFondo);
+		pestaniaGeneral.add(panelColorFondo);
 		panelColorFondo.setOpaque(false);
-		panelColorFondo.setBorder(new TitledBorder(null, "Color de Fondo de las Ventanas:",
+		panelColorFondo.setBorder(new TitledBorder(null, "Color de Fondo:",
 			TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
 		
 		botonColorFondoCambiar = new JButton("Cambiar");
+		botonColorFondoCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonColorFondoCambiar.setFont(Diseno.fuenteBotones);
 		botonColorFondoCambiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nuevoColorFondo = JColorChooser.showDialog(getContentPane(), "Seleccione un Color: ", Diseno.fondoVentanas);				
 			}
 		});
+		panelColorFondo.setLayout(new BoxLayout(panelColorFondo, BoxLayout.X_AXIS));
 		panelColorFondo.add(botonColorFondoCambiar);
 		
 		botonColorFondoGuardar = new JButton("Guardar");
+		botonColorFondoGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonColorFondoGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Diseno.fondoVentanas = nuevoColorFondo;
@@ -196,28 +189,6 @@ public class VentanaParametrosSistema extends JFrame {
 		});
 		botonColorFondoGuardar.setFont(Diseno.fuenteBotones);
 		panelColorFondo.add(botonColorFondoGuardar);
-		
-		panelMensajeNuevo = new JPanel();
-		panelMensajeNuevo.setOpaque(false);
-		panelMensajeNuevo.setBorder(new TitledBorder(null, "Mensaje del Correo de Coincidencias:",
-				TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
-		panelMensajeNuevo.setLayout(new BorderLayout(0, 0));
-		pestaniaGeneral.add(panelMensajeNuevo, BorderLayout.CENTER);
-		
-		mensajeCorreoNuevo = new JTextArea(Correo.getMensaje());
-		mensajeCorreoNuevo.setLineWrap(true);
-		panelMensajeNuevo.add(mensajeCorreoNuevo);
-		mensajeCorreoNuevo.setColumns(10);
-		
-		btnGuardarMensaje = new JButton("Guardar Mensaje");
-		btnGuardarMensaje.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Correo.setMensaje(mensajeCorreoNuevo.getText());
-				JOptionPane.showMessageDialog(getContentPane(), "Se guardó el mensaje satisfactoriamente.");
-			}
-		});
-		btnGuardarMensaje.setFont(Diseno.fuenteBotones);
-		panelMensajeNuevo.add(btnGuardarMensaje, BorderLayout.SOUTH);
 		
 		if (!Tiempo.isFechaEstablecida()) { 
 			pestaniaFecha = new JPanel();
@@ -254,8 +225,6 @@ public class VentanaParametrosSistema extends JFrame {
 			
 			botonGuardarFecha = new JButton("Guardar Fecha");
 			calendar.add(botonGuardarFecha, BorderLayout.SOUTH);
-			botonGuardarFecha.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-			botonGuardarFecha.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			botonGuardarFecha.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Tiempo.setFechaInicioProduccion(calendar.getCalendar());
@@ -275,11 +244,8 @@ public class VentanaParametrosSistema extends JFrame {
 			}
 		}
 		
-		marcoInferior = new JPanel();
-		marcoInferior.setOpaque(false);
-		getContentPane().add(marcoInferior, BorderLayout.SOUTH);
-		
-		JButton botonCerrar = new JButton("Cerrar");
+		botonCerrar = new JButton("Cerrar");
+		botonCerrar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -287,7 +253,33 @@ public class VentanaParametrosSistema extends JFrame {
 		});
 		botonCerrar.setOpaque(false);
 		botonCerrar.setFont(Diseno.fuenteBotones);
-		marcoInferior.add(botonCerrar);
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		getContentPane().add(labelTitulo);
+		getContentPane().add(marcoPestanias);
+		
+		panelMensajeNuevo = new JPanel();
+		marcoPestanias.addTab("Correos", null, panelMensajeNuevo, null);
+		panelMensajeNuevo.setOpaque(false);
+		panelMensajeNuevo.setBorder(new TitledBorder(null, "Mensaje del Correo de Coincidencias:",
+				TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
+		panelMensajeNuevo.setLayout(new BoxLayout(panelMensajeNuevo, BoxLayout.Y_AXIS));
+		
+		mensajeCorreoNuevo = new JTextArea(Correo.getMensaje());
+		mensajeCorreoNuevo.setWrapStyleWord(true);
+		mensajeCorreoNuevo.setLineWrap(true);
+		panelMensajeNuevo.add(mensajeCorreoNuevo);
+		
+		btnGuardarMensaje = new JButton("Guardar Mensaje");
+		btnGuardarMensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnGuardarMensaje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Correo.setMensaje(mensajeCorreoNuevo.getText());
+				JOptionPane.showMessageDialog(getContentPane(), "Se guardó el mensaje satisfactoriamente.");
+			}
+		});
+		btnGuardarMensaje.setFont(Diseno.fuenteBotones);
+		panelMensajeNuevo.add(btnGuardarMensaje);
+		getContentPane().add(botonCerrar);
 	}	
 }
 

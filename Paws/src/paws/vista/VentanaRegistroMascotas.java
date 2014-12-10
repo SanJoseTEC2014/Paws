@@ -44,7 +44,7 @@ public class VentanaRegistroMascotas extends JFrame {
 	private JCheckBox checkBoxVacunada;
 	private JCheckBox checkBoxDesparacitada;
 	private String imagenSeleccionada;
-	private JLabel lblRegistrarUnaMascota;
+	private JLabel labelRegistrarUnaMascota;
 	private JLabel labelEspacioIzq;
 	private JLabel labelEspacioDer;
 	private JPanel panelContenido;
@@ -74,10 +74,10 @@ public class VentanaRegistroMascotas extends JFrame {
 		setSize(660,660);
 		getContentPane().setLayout(new BorderLayout(20, 10));
 		
-		lblRegistrarUnaMascota = new JLabel("Registrar una mascota");
-		lblRegistrarUnaMascota.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistrarUnaMascota.setFont(Diseno.fuenteTitulosVentanas);
-		getContentPane().add(lblRegistrarUnaMascota, BorderLayout.NORTH);
+		labelRegistrarUnaMascota = new JLabel("Registrar una mascota");
+		labelRegistrarUnaMascota.setHorizontalAlignment(SwingConstants.CENTER);
+		labelRegistrarUnaMascota.setFont(Diseno.fuenteTitulosVentanas);
+		getContentPane().add(labelRegistrarUnaMascota, BorderLayout.NORTH);
 		
 		
 		MaskFormatter formatter = null;
@@ -317,8 +317,8 @@ public class VentanaRegistroMascotas extends JFrame {
 				labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
 				panelFoto.add(labelFoto);
 				
-				JButton btnSeleccionarImagen = new JButton("Seleccionar Imagen");
-				btnSeleccionarImagen.addActionListener(new ActionListener() {
+				JButton botonSeleccionarImagen = new JButton("Seleccionar Imagen");
+				botonSeleccionarImagen.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
 							imagenSeleccionada = Imagenes.seleccionarImagen();
@@ -337,8 +337,8 @@ public class VentanaRegistroMascotas extends JFrame {
 						}
 					}
 				});
-				btnSeleccionarImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
-				panelFoto.add(btnSeleccionarImagen, BorderLayout.SOUTH);
+				botonSeleccionarImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+				panelFoto.add(botonSeleccionarImagen, BorderLayout.SOUTH);
 		
 		JPanel panelOperaciones = new JPanel();
 		panelOperaciones.setOpaque(false);

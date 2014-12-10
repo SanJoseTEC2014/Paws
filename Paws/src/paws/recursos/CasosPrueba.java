@@ -21,12 +21,15 @@ import javax.swing.JOptionPane;
 
 import paws.control.EstadosMascotas;
 import paws.control.Principal;
+import paws.control.excepciones.EventoNoExisteException;
 import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Mascota;
 import paws.modelo.Suceso;
 import paws.modelo.Usuario;
 
 public class CasosPrueba {
+	private static boolean cargadosAmbosCasos;
+	
 	public static void cargarDocumentoUsuariosPrueba(){
 		try {
 			DocumentoCasosPrueba usuariosPrueba = new DocumentoCasosPrueba("usuarios.csv");
@@ -53,15 +56,27 @@ public class CasosPrueba {
 			for (int i = 0; i < mascotasPrueba.getDocumentoSize(); i++){
 				LinkedList<String> registro = mascotasPrueba.getRegistro(i);
 				
+				// Debugging
+				// /*
+				String msg = "";
+				for (String x : registro){
+					msg += x + "\n";
+				} JOptionPane.showMessageDialog(null, msg);
+				// */
+				
 				Mascota porRegistrar = new Mascota(registro.get(0), registro.get(1), registro.get(2), Integer.parseInt(registro.get(3)));
-				switch(registro.get(10)){
-				case "DESAPARECIDA":
-					porRegistrar.addNuevoSuceso(new Suceso(registro.get(4), EstadosMascotas.estadoDESAPARECIDA, registro.get(6), registro.get(5)));
-					break;
-				case "ENCONTRADA":
-					porRegistrar.addNuevoSuceso(new Suceso(registro.get(4), EstadosMascotas.estadoENCONTRADA, registro.get(6), registro.get(5)));
-					break;
+				Suceso temp = new Suceso();
+				switch(registro.get(10)) {
+					case "DESAPARECIDA":
+						temp = new Suceso(registro.get(4), EstadosMascotas.estadoDESAPARECIDA, registro.get(6), registro.get(5));
+						break;
+					case "ENCONTRADA":
+						temp = new Suceso(registro.get(4), EstadosMascotas.estadoENCONTRADA, registro.get(6), registro.get(5));
+						break;
+					default:
+						throw new EventoNoExisteException("Error al cargar el documento de prueba.");
 				}
+				porRegistrar.addNuevoSuceso(temp);
 				porRegistrar.setSexo(registro.get(7));
 				porRegistrar.setColor(registro.get(8));
 				porRegistrar.setTamanio(registro.get(9));
@@ -78,7 +93,15 @@ public class CasosPrueba {
 				e.getMessage(),
 				"Error de casos de prueba",
 				JOptionPane.ERROR_MESSAGE);
-		}		
+		}
+	}
+	
+	public static void setCargados(boolean opcion){
+		cargadosAmbosCasos = opcion;
+	}
+	
+	public static boolean isCargadosAmbosCasos(){
+		return cargadosAmbosCasos;
 	}
 }
 
