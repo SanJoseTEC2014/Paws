@@ -76,8 +76,9 @@ public class CoordinadorVisual {
 		organizaciones.setVisible(true);
 	}
 	
-	public synchronized void mostrarRealizarDonacion() {
+	public synchronized void mostrarRealizarDonacion(Organizacion organizacionADonar) {
 		VentanaDonaciones donacionesAsociaciones = new VentanaDonaciones();
+		donacionesAsociaciones.setOrganizacionADonar(organizacionADonar);
 		donacionesAsociaciones.setVisible(true);
 	}
 	

@@ -84,11 +84,14 @@ public class Principal {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		RutasArchivo.inicializar();
 		Diseno.inicializarLookAndFeel();
 		Diseno.inicializarFuentes();
 		cargarBaseDatosMascotas();
+		/*CasosPrueba.cargarDocumentoUsuariosPrueba();
+		CasosPrueba.cargarDocumentoMascotasPrueba();*/
+		CasosPrueba.cargarDocumentoOrganizacionesPrueba();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
 		
 		EventQueue.invokeLater(new Runnable() {

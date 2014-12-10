@@ -9,9 +9,10 @@ public class Organizacion implements Serializable {
 	
 	private static final long serialVersionUID = 888L;
 	
-	private Integer id;
+	private static Integer id;
 	private String nombre;
 	private String direccion;
+	private ArrayList<Donacion> donaciones;
 	private Integer numeroContacto;
 	private Double montoTotalDonaciones = 0.0;
 	
@@ -27,7 +28,7 @@ public class Organizacion implements Serializable {
 	public void setNumeroContacto(Integer numeroContacto) {
 		this.numeroContacto = numeroContacto;
 	}
-	public Integer getId() {
+	public static Integer getId() {
 		return id;
 	}
 	public String getNombre() {
@@ -42,13 +43,20 @@ public class Organizacion implements Serializable {
 		montoTotalDonaciones += pMonto;
 	}
 	
-	public ArrayList<Organizacion> getOrganizaciones(){
+	public static ArrayList<Organizacion> getOrganizaciones(){
 		ArrayList<Organizacion> asociaciones = new ArrayList<Organizacion>();
 		for(Organizacion organizacion : Principal.organizaciones){
 			asociaciones.add(organizacion);	
 		}
 		return asociaciones;
 	}
+	
+	public Organizacion(String pNombre, String pDireccion, Integer pNumeroContacto) {
+		nombre = pNombre;
+		numeroContacto = pNumeroContacto;
+		direccion = pDireccion;
+	}
+	
 	public Organizacion(String pNombre, Integer pID, Integer pNumeroContacto, String pDireccion) {
 		nombre = pNombre;
 		id = pID;
@@ -56,12 +64,16 @@ public class Organizacion implements Serializable {
 		direccion = pDireccion;
 	}
 	
-	public void recibirDonacion(Donacion pDonacion){
+	/*public void recibirDonacion(Donacion pDonacion){
 		Principal.donaciones.add(pDonacion);
+	}^*/
+	
+	public void addDonacion(Donacion pDonacion) {
+		this.donaciones.add(pDonacion);
 	}
 	
 	public void montoTotalDonaciones(Integer pOrganizacionID){
-		for(Donacion donacion : Principal.donaciones){
+		for(Donacion donacion : donaciones){
 			if(donacion.getOrganizacionID() == pOrganizacionID){
 				setMontoTotalDonaciones(donacion.getMonto());
 			}

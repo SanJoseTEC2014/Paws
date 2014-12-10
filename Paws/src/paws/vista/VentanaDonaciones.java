@@ -16,6 +16,11 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
+import paws.control.Acceso;
+import paws.modelo.Calificacion;
+import paws.modelo.Organizacion;
+import paws.modelo.Donacion;
+import paws.modelo.Usuario;
 import paws.recursos.Diseno;
 
 import java.awt.Label;
@@ -25,7 +30,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaDonaciones extends JFrame {
-	private JTextField textField;
+	private JTextField textMonto;
+	private Organizacion organizacionADonar;
 	public VentanaDonaciones() {
 		setSize(400, 300);
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -36,6 +42,12 @@ public class VentanaDonaciones extends JFrame {
 		Panel panel = new Panel();
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				organizacionADonar.addDonacion(new Donacion(Acceso.getUsuarioActivo().getNickname(),Double.parseDouble(textMonto.getText()),Organizacion.getId()));
+				close();
+			}
+		});
 		panel.add(btnOk);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -51,8 +63,8 @@ public class VentanaDonaciones extends JFrame {
 		
 		JLabel lblIngreseElMonto = new JLabel("Ingrese el monto que desea donar:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		textMonto = new JTextField();
+		textMonto.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -62,7 +74,7 @@ public class VentanaDonaciones extends JFrame {
 					.addContainerGap()
 					.addComponent(lblIngreseElMonto)
 					.addGap(18)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
+					.addComponent(textMonto, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -71,7 +83,7 @@ public class VentanaDonaciones extends JFrame {
 					.addGap(46)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblIngreseElMonto)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textMonto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(61)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
@@ -80,5 +92,9 @@ public class VentanaDonaciones extends JFrame {
 	protected void close() {
 		this.dispose();
 		
+	}
+	
+	public void setOrganizacionADonar(Organizacion pOrganizacionADonar) {
+		organizacionADonar= pOrganizacionADonar;
 	}
 }

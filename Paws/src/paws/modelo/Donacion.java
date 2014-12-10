@@ -11,13 +11,13 @@ public class Donacion implements Serializable {
 	
 	private Double monto;
 	private String nicknameDonante;
-	private Suceso detalle;
+	//private Suceso detalle;
 	private Integer organizacionID;
 	
-	public Donacion(String pNick, Double pMonto, Suceso pDetalle, Integer pOrganizacionID) {
+	public Donacion(String pNick, Double pMonto, Integer pOrganizacionID) {
 		nicknameDonante = pNick;
 		monto = pMonto;
-		detalle = pDetalle;
+		//detalle = pDetalle;
 		organizacionID = pOrganizacionID;
 	}
 	public String getNicknameDonante() {
@@ -26,9 +26,9 @@ public class Donacion implements Serializable {
 	public Double getMonto() {
 		return monto;
 	}
-	public Suceso getDetalle() {
+	/*public Suceso getDetalle() {
 		return detalle;
-	}
+	}*/
 	public Integer getOrganizacionID() {
 		return organizacionID;
 	}
