@@ -71,6 +71,7 @@ public class VentanaParametrosSistema extends JFrame {
 				try {
 					CasosPrueba.cargarDocumentoMascotasPrueba();
 					CasosPrueba.cargarDocumentoUsuariosPrueba();
+                    CasosPrueba.cargarDocumentoOrganizacionesPrueba();
 					CasosPrueba.setCargados(true);
 					botonCasos.setEnabled(false);
 				} catch (TiempoSinEstablecerException ex) {

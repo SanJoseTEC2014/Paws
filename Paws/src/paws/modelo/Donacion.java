@@ -11,34 +11,18 @@ public class Donacion implements Serializable {
 	
 	private Double monto;
 	private String nicknameDonante;
-	private Suceso detalle;
-	private Integer organizacionID;
 	
-	public Donacion(String pNick, Double pMonto, Suceso pDetalle, Integer pOrganizacionID) {
+	public Donacion(String pNick, Double pMonto) {
 		nicknameDonante = pNick;
 		monto = pMonto;
-		detalle = pDetalle;
-		organizacionID = pOrganizacionID;
 	}
+    
 	public String getNicknameDonante() {
 		return nicknameDonante;
 	}
+    
 	public Double getMonto() {
 		return monto;
 	}
-	public Suceso getDetalle() {
-		return detalle;
-	}
-	public Integer getOrganizacionID() {
-		return organizacionID;
-	}
 	
-	public ArrayList<Donacion> getDonaciones(){
-		ArrayList<Donacion> listaDonaciones = new ArrayList<Donacion>();
-		for(Donacion donacion : Principal.donaciones){
-			listaDonaciones.add(donacion);	
-		}
-		return listaDonaciones;
-	
-    }
 }

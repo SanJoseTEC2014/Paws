@@ -26,6 +26,7 @@ import paws.control.excepciones.TiempoSinEstablecerException;
 import paws.modelo.Mascota;
 import paws.modelo.Suceso;
 import paws.modelo.Usuario;
+import paws.modelo.Organizacion;
 
 public class CasosPrueba {
 	private static boolean cargadosAmbosCasos;
@@ -50,6 +51,25 @@ public class CasosPrueba {
 				JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	public static void cargarDocumentoOrganizacionesPrueba(){
+		try {
+			DocumentoCasosPrueba organizacionesPrueba = new DocumentoCasosPrueba("organizaciones.csv");
+			for (int i = 0; i < organizacionesPrueba.getDocumentoSize(); i++){
+				LinkedList<String> registro = organizacionesPrueba.getRegistro(i);
+				Organizacion porRegistrar = new Organizacion(registro.get(0), registro.get(1), Integer.parseInt(registro.get(2)));
+				Principal.organizaciones.add(porRegistrar);
+			}
+			JOptionPane.showMessageDialog(null,
+					"Organizaciones cargadas satisfactoriamente.");
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,
+				e.getMessage(),
+				"Error de casos de prueba",
+				JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	public static void cargarDocumentoMascotasPrueba() throws TiempoSinEstablecerException{
 		try {
 			DocumentoCasosPrueba mascotasPrueba = new DocumentoCasosPrueba("mascotas.csv");

@@ -61,13 +61,8 @@ public class CoordinadorVisual {
 	}
 	
 	public synchronized void mostrarListaAsociaciones() {
-		VentanaListaAsociaciones organizaciones = new VentanaListaAsociaciones();
+		VentanaListaOrganizaciones organizaciones = new VentanaListaOrganizaciones();
 		organizaciones.setVisible(true);
-	}
-	
-	public synchronized void mostrarRealizarDonacion() {
-		VentanaDonaciones donacionesAsociaciones = new VentanaDonaciones();
-		donacionesAsociaciones.setVisible(true);
 	}
 	
 	public synchronized void mostrarAgregarComentario(Usuario usuarioACalificar){
@@ -107,9 +102,9 @@ public class CoordinadorVisual {
 		detallesAsociacion.setVisible(true);
 	}
 	
-	public void mostrarDonaciones(Organizacion organizacion) {
-		VentanaDonaciones donaciones = new VentanaDonaciones();
-		donaciones.setVisible(true);
+	public void mostrarOrganizaciones(Organizacion organizacion) {
+		VentanaListaOrganizaciones organizaciones = new VentanaListaOrganizaciones();
+		organizaciones.setVisible(true);
 	}
 	
 }

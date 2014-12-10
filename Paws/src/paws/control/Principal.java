@@ -34,7 +34,6 @@ public class Principal {
 	public static ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
 	public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	public static ArrayList<Organizacion> organizaciones = new ArrayList<Organizacion>();
-	public static ArrayList<Donacion> donaciones = new ArrayList<Donacion>();
 	
 	public static CoordinadorVisual coordinador;
 	
@@ -56,8 +55,7 @@ public class Principal {
 		throw new OrganizacionNoEncontradaException("Error inesperado no se encuentra la organización");
 	}
 	
-	
-	private static void cargarBaseDatosMascotas() {
+	public static void cargarBaseDatosMascotas() {
 		try(BufferedReader lector =
 			new BufferedReader(
 				new InputStreamReader(
@@ -84,8 +82,8 @@ public class Principal {
 				System.exit(1);
 		}
 	}
-	
-	private static void cargarMensajeCorreo(){
+    
+    private static void cargarMensajeCorreo(){
 		try {
 			Correo.setMensaje(Dialogos.getMensajeCorreo());
 		} catch (IOException e) {
@@ -96,14 +94,14 @@ public class Principal {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		RutasArchivo.inicializar();
 		Diseno.inicializarLookAndFeel();
 		Diseno.inicializarFuentes();
 		cargarBaseDatosMascotas();
-		cargarMensajeCorreo();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
 		CasosPrueba.setCargados(false);
+        cargarMensajeCorreo();
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() { 
