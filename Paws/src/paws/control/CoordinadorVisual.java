@@ -97,7 +97,7 @@ public class CoordinadorVisual {
 	}
 	
 	public void mostrarDetallesAsociaciones(Organizacion organizacion) {
-		VentanaDetallesAsociacion detallesAsociacion = new VentanaDetallesAsociacion();
+		VentanaDetallesOrganizacion detallesAsociacion = new VentanaDetallesOrganizacion();
 		detallesAsociacion.setDatosIniciales(organizacion);
 		detallesAsociacion.setVisible(true);
 	}
