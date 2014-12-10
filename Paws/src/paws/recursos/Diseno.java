@@ -27,7 +27,7 @@ public class Diseno {
 		try {
 			fuenteBotones = Font.createFont(Font.TRUETYPE_FONT,
 				new File(RutasArchivo.fuentes + "telex.ttf"))
-				.deriveFont(Font.BOLD, 15f);
+				.deriveFont(Font.PLAIN, 12f);
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(fuenteBotones);
 		} catch (FontFormatException | IOException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(),

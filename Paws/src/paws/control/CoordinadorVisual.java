@@ -19,20 +19,8 @@ import paws.modelo.Organizacion;
 import paws.vista.*;
 
 public class CoordinadorVisual {
-	private VentanaDetallesUsuario detallesUsuario;
-	private VentanaDetallesMascota detallesMascota;
-	private VentanaCondicionesRefugio condicionesRefugio;
-	private VentanaMascotasDeUsuario mascotasAsociadas;
-	private VentanaListaAsociaciones asociaciones;
-	private VentanaDonaciones donaciones;
-	private VentanaDetallesAsociacion detallesAsociacion;
-
-	public CoordinadorVisual(){
-		detallesUsuario = new VentanaDetallesUsuario();
-		detallesMascota = new VentanaDetallesMascota();
-		condicionesRefugio = new VentanaCondicionesRefugio();
-		mascotasAsociadas = new VentanaMascotasDeUsuario();
-	}
+	
+	public CoordinadorVisual(){}
 	
 	public synchronized void mostrarInicioSesion() {
 		VentanaInicioSesion inicioSesion = new VentanaInicioSesion();
@@ -51,6 +39,7 @@ public class CoordinadorVisual {
 	}
 
 	public synchronized void mostrarDetallesUsuario(Usuario usuarioActual) {
+		VentanaDetallesUsuario detallesUsuario = new VentanaDetallesUsuario();
 		detallesUsuario.setDatosIniciales(usuarioActual);
 		detallesUsuario.setModoEdicion(usuarioActual == Acceso.getUsuarioActivo());
 		detallesUsuario.setVisible(true);
@@ -87,31 +76,16 @@ public class CoordinadorVisual {
 		agregarComentario.setUsuarioACalificar(usuarioACalificar);
 		agregarComentario.setVisible(true);		
 	}
-	
-	public synchronized void ocultarVentanas() {
-		detallesUsuario.setVisible(false);
-		detallesMascota.setVisible(false);
-		detallesAsociacion.setVisible(false);
-		asociaciones.setVisible(false);
-		donaciones.setVisible(false);
-	}
-	
-	public synchronized void mostrarVentanas() {
-		detallesUsuario.setVisible(true);
-		detallesMascota.setVisible(true);
-		detallesAsociacion.setVisible(true);
-		asociaciones.setVisible(true);
-		donaciones.setVisible(true);
-	}
-	
 
 	public void mostrarCondicionesRefugio(Usuario usuarioActual) {
+		VentanaCondicionesRefugio condicionesRefugio = new VentanaCondicionesRefugio();
 		condicionesRefugio.setDatos(usuarioActual);
-		condicionesRefugio.setVisible(true);
 		condicionesRefugio.setModoEdicion(usuarioActual == Acceso.getUsuarioActivo());
+		condicionesRefugio.setVisible(true);
 	}
 	
 	public void mostrarMascotasAsociadas(Usuario usuarioActual){
+		VentanaMascotasDeUsuario mascotasAsociadas = new VentanaMascotasDeUsuario();
 		mascotasAsociadas.setUsuario(usuarioActual);
 		mascotasAsociadas.setVisible(true);
 	}
@@ -123,13 +97,20 @@ public class CoordinadorVisual {
 	}
 
 	public void mostrarDetallesMascota(Mascota mascota) {
+		VentanaDetallesMascota detallesMascota = new VentanaDetallesMascota();
 		detallesMascota.setDatosIniciales(mascota);
 		detallesMascota.setVisible(true);
 	}
 	
 	public void mostrarDetallesAsociaciones(Organizacion organizacion) {
+		VentanaDetallesAsociacion detallesAsociacion = new VentanaDetallesAsociacion();
 		detallesAsociacion.setDatosIniciales(organizacion);
 		detallesAsociacion.setVisible(true);
+	}
+	
+	public void mostrarDonaciones(Organizacion organizacion) {
+		VentanaDonaciones donaciones = new VentanaDonaciones();
+		donaciones.setVisible(true);
 	}
 	
 }

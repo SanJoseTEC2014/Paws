@@ -16,8 +16,8 @@ import paws.recursos.*;
 @SuppressWarnings("serial")
 public class VentanaBusqueda extends JFrame {
 
-	private static final Integer altoVentanaContraida = 395;
-	private static final Integer anchoVentana = 750;
+	private final Integer altoVentanaContraida = 390;
+	private final Integer anchoVentana = 750;
 	private JButton btnAyuda;
 	private JButton btnBuscar;
 	private JButton btnContraerVentana;
@@ -112,60 +112,36 @@ public class VentanaBusqueda extends JFrame {
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LinkedList<String> terminos = new LinkedList<String>();
-				boolean[] estadosBusqueda = new boolean[6];
 				
-				if (checkNombreMascota.isSelected()) {
-					terminos.add(textNombre.getText());
-				} else {
-					terminos.add("");
-				}
-				if (checkLugar.isSelected()) {
-					terminos.add(textLugar.getText());
-				} else {
-					terminos.add("");
-				}
-				if (checkNumeroChip.isSelected()) {
-					terminos.add(textNumeroChip.getText());
-				} else {
-					terminos.add("");
-				}
-				if (checkEspecie.isSelected()) {
-					terminos.add((String) comboEspecies.getSelectedItem());
-					if (checkRaza.isSelected()) {
-						terminos.add((String) comboRazas.getSelectedItem());
-					} else {
-						terminos.add("");
-					}
-				} else {
-					// Sin especie y sin raza.
-					terminos.add("");
-					terminos.add("");
-				}
-
-				estadosBusqueda[0] = checkMascotasDesaparecidas.isSelected();
-				estadosBusqueda[1] = checkMascotasEncontradas.isSelected();
-				estadosBusqueda[2] = checkMascotasRefugiadas.isSelected();
-				estadosBusqueda[3] = checkMascotasLocalizadas.isSelected();
-				estadosBusqueda[4] = checkMascotasAdoptadas.isSelected();
-				estadosBusqueda[5] = checkMascotasMuertas.isSelected();
+				boolean[] estadosBusqueda = new boolean[]{
+					checkMascotasDesaparecidas.isSelected(),
+					checkMascotasEncontradas.isSelected(),
+					checkMascotasRefugiadas.isSelected(),
+					checkMascotasLocalizadas.isSelected(),
+					checkMascotasAdoptadas.isSelected(),
+					checkMascotasMuertas.isSelected()};
 
 				if (!estadosBusqueda[0] && !estadosBusqueda[1] && !estadosBusqueda[2] &&
-					!estadosBusqueda[3] && !estadosBusqueda[4] && !estadosBusqueda[5])
-				{
-					JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar al menos un estado posible para realizar la búsqueda.");
+					!estadosBusqueda[3] && !estadosBusqueda[4] && !estadosBusqueda[5]) {
+					JOptionPane.showMessageDialog(getContentPane(),
+						"Debe seleccionar al menos un estado posible para realizar la búsqueda.");
+					labelCantidadResultadosMascotas.setText("");
+				} else {
+					LinkedList<String> terminos = new LinkedList<String>();
+					terminos.add(checkNombreMascota.isSelected() 	? textNombre.getText() : "");
+					terminos.add(checkLugar.isSelected() 			? textLugar.getText() : "");
+					terminos.add(checkNumeroChip.isSelected() 		? textNumeroChip.getText() : "");
+					terminos.add(checkEspecie.isSelected() 			? (String) comboEspecies.getSelectedItem() : "");
+					terminos.add(checkRaza.isSelected() 			? (String) comboRazas.getSelectedItem() : "");
+					
 					modeloMascotas = new ModeloTablaMascotas(Busqueda.buscarMascotas(terminos, estadosBusqueda));
 					tablaResultadosMascotas.setModel(modeloMascotas);
 					tablaResultadosMascotas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 					tablaResultadosMascotas.setAutoCreateRowSorter(true);
 					tablaResultadosMascotas.setVisible(true);
-					labelCantidadResultadosMascotas.setText("Cantidad de resultados: " + modeloMascotas.getCantidadResultados());
-
-					if (ventanaContraida) {
-						expandirVentana();
-					}
-				} else {
-					labelCantidadResultadosMascotas.setText("");
+					labelCantidadResultadosMascotas.setText("Cantidad de resultados: " + modeloMascotas.getRowCount());
+					if (ventanaContraida) expandirVentana();
+					
 				}
 				SwingUtilities.updateComponentTreeUI(getContentPane());
 			}
@@ -286,10 +262,9 @@ public class VentanaBusqueda extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (checkRaza.isSelected()) {
 					comboRazas.setEnabled(true);
-					comboRazas.setModel(new DefaultComboBoxModel<String>( (String[]) Mascota.getRazas().get(comboEspecies
-							.getSelectedIndex()).toArray()));
+					comboRazas.setModel(Mascota.getModeloRazas((String) comboEspecies.getSelectedItem()));
 				} else {
-					comboRazas.setModel(new DefaultComboBoxModel<String>());
+					comboRazas.setModel(null);
 					comboRazas.setEnabled(false);
 				}
 			}
@@ -352,7 +327,6 @@ public class VentanaBusqueda extends JFrame {
 		pestaniaUsuarios.setOpaque(false);
 		pestaniaUsuarios.setLayout(new BorderLayout(0, 0));
 		pestaniaUsuarios.setBackground(Diseno.fondoVentanas);
-
 
 		marcoOperaciones = new JPanel();
 		marcoOperaciones.setOpaque(false);

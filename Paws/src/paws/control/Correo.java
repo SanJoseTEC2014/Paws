@@ -33,12 +33,10 @@ public class Correo {
 	// El puerto 587 nos permite utilizar STARTTLS para cifrar la conexión.
 	static final int puertoComunicacionServidor = 587;
 	
-	static String emisor = "pawsconsultas@gmail.com";
-	static String nombreUsuarioSMTP = "pawsconsultas@gmail.com";
-	static String passwordSMTP = "yhawfrxjuvadmjdx";
-	static String mensajeParametrizable = "Le notificamos que éstas son las mascotas que podrían coincidir con \n" +
-										  "la suya, según la descripción que ha ingresado en nuestro sistema, \n" + 
-										  "acorde a los datos disponibles al día de hoy: \n\n";
+	private static String emisor = "pawsconsultas@gmail.com";
+	private static String nombreUsuarioSMTP = "pawsconsultas@gmail.com";
+	private static String passwordSMTP = "yhawfrxjuvadmjdx";
+	private static String mensajeParametrizable = "";
 
 	static void enviarCorreo(String pReceptor, String pAsunto, String pCuerpo) throws MessagingException {
 		// props contendrá información de la conexión.
@@ -148,7 +146,8 @@ public class Correo {
 				
 		String cuerpoMsg = "Estimad@ " + nombre + ".\n\n" 
 		+ "Para completar el registro de su cuenta en Paws debe ingresar el siguiente código.\n\n"
-		+ "CODIGO ACTIVACIÓN: " + nick.hashCode() + "\n\n"
+		+ "CODIGO ACTIVACIÓN: " + nick.hashCode() + "\n"
+		+ "Tome en cuenta que puede estar incluído un signo negativo, el cual NO DEBE OMITIRSE.\n\n"
 		+ "Si usted no solicitó activar una cuenta en Paws por favor ignorar este mensaje.";
 		enviarCorreo(correo, asunto, cuerpoMsg);	
 	}

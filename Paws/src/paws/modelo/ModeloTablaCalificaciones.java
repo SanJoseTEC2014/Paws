@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.swing.table.AbstractTableModel;
 
 import paws.control.Imagenes;
-import paws.control.excepciones.ImagenNoEncontradaException;
 
 @SuppressWarnings("serial")
 public class ModeloTablaCalificaciones extends AbstractTableModel {
