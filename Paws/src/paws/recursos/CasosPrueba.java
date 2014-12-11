@@ -77,12 +77,12 @@ public class CasosPrueba {
 				LinkedList<String> registro = mascotasPrueba.getRegistro(i);
 				
 				// Debugging
-				// /*
+				/*
 				String msg = "";
 				for (String x : registro){
 					msg += x + "\n";
 				} JOptionPane.showMessageDialog(null, msg);
-				// */
+				*/
 				
 				Mascota porRegistrar = new Mascota(registro.get(0), registro.get(1), registro.get(2), Integer.parseInt(registro.get(3)));
 				Suceso temp = new Suceso();

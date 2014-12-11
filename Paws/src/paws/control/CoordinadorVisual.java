@@ -13,6 +13,8 @@ package paws.control;
  *  
  */
 
+import java.util.ArrayList;
+
 import paws.modelo.Mascota;
 import paws.modelo.Usuario;
 import paws.modelo.Organizacion;
@@ -83,6 +85,18 @@ public class CoordinadorVisual {
 		mascotasAsociadas.setUsuario(usuarioActual);
 		mascotasAsociadas.setVisible(true);
 	}
+	
+	public void mostrarMascotasSistema(ArrayList<Mascota> pLista){
+		VentanaMascotasRegistradas registradas = new VentanaMascotasRegistradas();
+		registradas.setDatosIniciales(pLista, false);
+		registradas.setVisible(true);
+	}
+	
+	public void mostrarResultadosEmparejamiento(ArrayList<Mascota> pLista){
+		VentanaMascotasRegistradas registradas = new VentanaMascotasRegistradas();
+		registradas.setDatosIniciales(pLista, true);
+		registradas.setVisible(true);
+	}
 
 	public void mostrarCalificaciones(Usuario pUsuario) {
 		VentanaCalificaciones cals = new VentanaCalificaciones();
@@ -104,6 +118,11 @@ public class CoordinadorVisual {
 	
 	public void mostrarOrganizaciones(Organizacion organizacion) {
 		VentanaListaOrganizaciones organizaciones = new VentanaListaOrganizaciones();
+		organizaciones.setVisible(true);
+	}
+	
+	public void mostrarRegistroOrganizacion(Organizacion organizacion) {
+		VentanaRegistroOrganizaciones organizaciones = new VentanaRegistroOrganizaciones();
 		organizaciones.setVisible(true);
 	}
 	

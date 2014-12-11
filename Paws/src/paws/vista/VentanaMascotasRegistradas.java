@@ -70,8 +70,8 @@ public class VentanaMascotasRegistradas extends JFrame {
 		marcoBotones.add(btnCancelar);
 	}
 	
-	public void setDatosIniciales(ArrayList<Mascota> pLista, boolean emparejamiento){
-		if (emparejamiento) {
+	public void setDatosIniciales(ArrayList<Mascota> pLista, boolean isEmparejamiento){
+		if (isEmparejamiento) {
 			labelTitulo.setText("Resultados Emparejamiento");
 		} else {
 			labelTitulo.setText("Mascotas Registradas en Paws");

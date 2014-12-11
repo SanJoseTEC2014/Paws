@@ -191,24 +191,20 @@ public class Usuario implements Serializable, Comunicable {
 
 	}
 
-	public ArrayList<Mascota> getMascotasPerdidas() {
-		ArrayList<Mascota> perdidas = new ArrayList<Mascota>();
+	public ArrayList<Mascota> getMascotasDesaparecidas() {
+		ArrayList<Mascota> desaparecidas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.isDesaparecida()) {
-				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
-					.getNick().equals(nickname))
-				perdidas.add(mascota);
+			if (mascota.isDesaparecida() && mascota.getUltimoSuceso().getNick().equals(nickname)) {
+				desaparecidas.add(mascota);
 			}
 		}
-		return perdidas;
+		return desaparecidas;
 	}
 	
 	public ArrayList<Mascota> getMascotasEncontradas() {
 		ArrayList<Mascota> encontradas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.isEncontrada()) {
-				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
-					.getNick().equals(nickname))
+			if (mascota.isEncontrada() && mascota.getUltimoSuceso().getNick().equals(nickname)) {
 				encontradas.add(mascota);
 			}
 		}
@@ -218,9 +214,7 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasRefugiadas() {
 		ArrayList<Mascota> refugiadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.isRefugiada()) {
-				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
-					.getNick().equals(nickname))
+			if (mascota.isRefugiada() && mascota.getUltimoSuceso().getNick().equals(nickname)) {
 				refugiadas.add(mascota);
 			}
 		}
@@ -230,9 +224,7 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasLocalizadas() {
 		ArrayList<Mascota> localizadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.isLocalizada()) {
-				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
-					.getNick().equals(nickname))
+			if (mascota.isLocalizada() && mascota.getUltimoSuceso().getNick().equals(nickname)) {
 				localizadas.add(mascota);
 			}
 		}
@@ -242,9 +234,7 @@ public class Usuario implements Serializable, Comunicable {
 	public ArrayList<Mascota> getMascotasAdoptadas() {
 		ArrayList<Mascota> adoptadas = new ArrayList<Mascota>();
 		for (Mascota mascota : Principal.mascotas){
-			if (mascota.isAdoptada()) {
-				if (mascota.getTodosSucesos()[EstadosMascotas.getEstadoInteger(mascota)]
-					.getNick().equals(nickname))
+			if (mascota.isAdoptada() && mascota.getUltimoSuceso().getNick().equals(nickname)) {
 				adoptadas.add(mascota);
 			}
 		}

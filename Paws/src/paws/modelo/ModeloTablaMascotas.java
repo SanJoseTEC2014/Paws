@@ -19,8 +19,6 @@ public class ModeloTablaMascotas extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		System.out.println(Integer.toString(rowIndex) + " " + Integer.toString(columnIndex));
-		System.out.println(listaMascotas.get(rowIndex).toString());
 		switch (columnIndex) {
 			case 0:
 				return listaMascotas.get(rowIndex).getID().toString();
@@ -31,9 +29,9 @@ public class ModeloTablaMascotas extends AbstractTableModel {
 			case 3:
 				return listaMascotas.get(rowIndex).getRaza();
 			case 4:
-				return listaMascotas.get(rowIndex).getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMascotas.get(rowIndex))].getEstado();
+				return listaMascotas.get(rowIndex).getUltimoSuceso().getEstado();
 			case 5:
-				return listaMascotas.get(rowIndex).getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMascotas.get(rowIndex))].getNick();
+				return listaMascotas.get(rowIndex).getUltimoSuceso().getNick();
 			default:
 				return null;
 		}

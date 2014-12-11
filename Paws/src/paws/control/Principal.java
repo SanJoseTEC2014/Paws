@@ -49,9 +49,43 @@ public class Principal {
 		for (Mascota mascota : mascotas) if (IDmascota == mascota.getID()) return mascota;
 		throw new MascotaNoEncontradaException("Error inesperado no se encuentra la mascota");
 	}
+	
+	public static ArrayList<Mascota> getMascotasDesaparecidas(){
+		ArrayList<Mascota> desaparecidas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isDesaparecida()) { desaparecidas.add(x.clone()); } }
+		return desaparecidas;
+	}
+	public static ArrayList<Mascota> getMascotasEncontradas(){
+		ArrayList<Mascota> encontradas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isEncontrada()) { encontradas.add(x.clone()); } }
+		return encontradas;
+	}
+	public static ArrayList<Mascota> getMascotasRefugiadas(){
+		ArrayList<Mascota> refugiadas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isRefugiada()) { refugiadas.add(x.clone()); } }
+		return refugiadas;
+	}
+	public static ArrayList<Mascota> getMascotasLocalizadas(){
+		ArrayList<Mascota> localizadas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isLocalizada()) { localizadas.add(x.clone()); } }
+		return localizadas;
+	}
+	public static ArrayList<Mascota> getMascotasAdoptadas(){
+		ArrayList<Mascota> adoptadas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isAdoptada()) { adoptadas.add(x.clone()); } }
+		return adoptadas;
+	}
+	public static ArrayList<Mascota> getMascotasMuertas(){
+		ArrayList<Mascota> muertas = new ArrayList<Mascota>();
+		for (Mascota x : Principal.mascotas){ if (x.isMuerta()) { muertas.add(x.clone()); } }
+		return muertas;
+	}
+	
 	public static Organizacion getOrganizacionID(Integer IDOrganizacion) throws OrganizacionNoEncontradaException {
 		// TODO búsqueda binaria
-		for (Organizacion organizacion : organizaciones) if (IDOrganizacion == organizacion.getId()) return organizacion;
+		for (Organizacion organizacion : organizaciones) {
+			if (IDOrganizacion == organizacion.getID()) return organizacion;
+		}
 		throw new OrganizacionNoEncontradaException("Error inesperado no se encuentra la organización");
 	}
 	

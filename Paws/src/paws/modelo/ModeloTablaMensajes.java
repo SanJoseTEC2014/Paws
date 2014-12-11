@@ -9,7 +9,7 @@ import paws.control.EstadosMascotas;
 @SuppressWarnings("serial")
 public class ModeloTablaMensajes extends AbstractTableModel {
 	private ArrayList<Mascota> listaMensajes;
-	private String[] titulos = {"", "Nombre Mascota", "Lugar de Encuentro", "Especie", "Raza" };
+	private String[] titulos = {"", "Nombre Mascota", "Lugar del Último Suceso", "Especie", "Raza" };
 
 	public ModeloTablaMensajes(ArrayList<Mascota> pListaMascotas){
 		listaMensajes = pListaMascotas;
@@ -25,9 +25,7 @@ public class ModeloTablaMensajes extends AbstractTableModel {
 		case 1:
 			return listaMensajes.get(rowIndex).getNombre();
 		case 2:
-			return listaMensajes.get(rowIndex)
-				.getTodosSucesos()[EstadosMascotas.getEstadoInteger(listaMensajes.get(rowIndex))]
-				.getLugar();
+			return listaMensajes.get(rowIndex).getUltimoSuceso().getLugar();
 		case 3:
 			return listaMensajes.get(rowIndex).getEspecie();
 		case 4:

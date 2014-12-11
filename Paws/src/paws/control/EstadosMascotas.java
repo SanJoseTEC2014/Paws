@@ -25,16 +25,6 @@ public class EstadosMascotas {
 		return "INDEFINIDO";
 	}
 	
-	public static Integer getEstadoInteger(Mascota pMascotaActual){
-		if (pMascotaActual.isDesaparecida()) return 0;
-		if (pMascotaActual.isEncontrada()) return 1;
-		if (pMascotaActual.isRefugiada()) return 2;
-		if (pMascotaActual.isLocalizada()) return 3;
-		if (pMascotaActual.isAdoptada()) return 4;
-		if (pMascotaActual.isMuerta()) return 5;
-		return -1;
-	}
-	
 	public static Suceso reportarEvento(Mascota pMascotaActual, String pNickEmisor, String pMensaje) throws EventoNoExisteException, TiempoSinEstablecerException {
 		String estadoActual = getEstadoActual(pMascotaActual);
 		switch (pMensaje)

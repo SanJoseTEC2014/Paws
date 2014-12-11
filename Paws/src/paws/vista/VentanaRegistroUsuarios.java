@@ -3,12 +3,14 @@ package paws.vista;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.LinkedList;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import javax.mail.MessagingException;
 
 import paws.control.Correo;
@@ -32,7 +34,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 	private JLabel lblApellidos;
 	private JLabel lblCedula;
 	private JLabel lblContrasenia;
-	private JLabel lblCorreo;
+	private JLabel labelCorreo;
 	private JLabel lblDireccion;
 	private JLabel lblNickname;
 	private JLabel lblNombre;
@@ -63,6 +65,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 		marcoOperaciones.setLayout(new BoxLayout(marcoOperaciones, BoxLayout.Y_AXIS));
 		
 		botonValidacionCampos = new JButton("Verificar Campos Rellenados");
+		botonValidacionCampos.setFont(Diseno.fuenteBotones);
 		botonValidacionCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean hayError = false;
@@ -113,44 +116,46 @@ public class VentanaRegistroUsuarios extends JFrame {
 		botonLeerCondicionesUso = new JButton("Leer Condiciones de Uso");
 		botonLeerCondicionesUso.setEnabled(false);
 		botonLeerCondicionesUso.setOpaque(false);
+		botonLeerCondicionesUso.setFont(Diseno.fuenteBotones);
 		botonLeerCondicionesUso.setAlignmentX(Component.CENTER_ALIGNMENT);
 		marcoOperaciones.add(botonLeerCondicionesUso);
 		
 		checkBoxAceptarCondicionesUso = new JCheckBox("Aceptar Condiciones de Uso");
 		checkBoxAceptarCondicionesUso.setEnabled(false);
+		checkBoxAceptarCondicionesUso.setFont(Diseno.fuenteBotones);
 		checkBoxAceptarCondicionesUso.addActionListener(new ActionListener() {
-				private void abrirVentanaValidacion(String msg) {
-					String codigo = JOptionPane.showInputDialog(getContentPane(),
-							"Ingrese el código enviado a su correo:",
-							msg, JOptionPane.INFORMATION_MESSAGE);
-					
-					if (codigo != null) { // Si el usuario no canceló la ventana de diálogo.
-						if (codigo.equals(String.valueOf(nicknameTextBox.getText().hashCode()))) {
-							botonRegistrar.setEnabled(true);
-						} else {
-							abrirVentanaValidacion("Código incorrecto");
-						}
+			private void abrirVentanaValidacion(String msg) {
+				String codigo = JOptionPane.showInputDialog(getContentPane(),
+						"Ingrese el código enviado a su correo:",
+						msg, JOptionPane.INFORMATION_MESSAGE);
+				
+				if (codigo != null) { // Si el usuario no canceló la ventana de diálogo.
+					if (codigo.equals(String.valueOf(nicknameTextBox.getText().hashCode()))) {
+						botonRegistrar.setEnabled(true);
+					} else {
+						abrirVentanaValidacion("Código incorrecto");
 					}
 				}
+			}
 
-				public void actionPerformed(ActionEvent arg0) {
-					if (checkBoxAceptarCondicionesUso.isSelected())
-					{
-						try {
-							Correo.enviarCodigoCorreo(nicknameTextBox.getText(), nombreTextBox.getText(), correoTextBox.getText());
-							abrirVentanaValidacion("Verificación de código");
-						} catch (MessagingException e) {
-							JOptionPane.showMessageDialog(getContentPane(),
-									e.getMessage(),
-									"Hubo un problema al enviar su correo.",
-									JOptionPane.ERROR_MESSAGE);
-						}
+			public void actionPerformed(ActionEvent arg0) {
+				if (checkBoxAceptarCondicionesUso.isSelected())
+				{
+					try {
+						Correo.enviarCodigoCorreo(nicknameTextBox.getText(), nombreTextBox.getText(), correoTextBox.getText());
+						abrirVentanaValidacion("Verificación de código");
+					} catch (MessagingException e) {
+						JOptionPane.showMessageDialog(getContentPane(),
+							e.getMessage(),
+							"Hubo un problema al enviar su correo.",
+							JOptionPane.ERROR_MESSAGE);
 					}
 				}
+			}
 		});
 		checkBoxAceptarCondicionesUso.setAlignmentX(Component.CENTER_ALIGNMENT);
-		marcoOperaciones.add(checkBoxAceptarCondicionesUso);
 		checkBoxAceptarCondicionesUso.setOpaque(false);
+		marcoOperaciones.add(checkBoxAceptarCondicionesUso);
 		
 		marcoBotones = new JPanel();
 		marcoBotones.setOpaque(false);
@@ -158,6 +163,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 		
 		botonRegistrar = new JButton("Registrar");
 		botonRegistrar.setOpaque(false);
+		botonRegistrar.setFont(Diseno.fuenteBotones);
 		botonRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Principal.usuarios.add(
@@ -189,8 +195,10 @@ public class VentanaRegistroUsuarios extends JFrame {
 			}
 		});
 		botonCancelar.setOpaque(false);
+		botonCancelar.setFont(Diseno.fuenteBotones);
 		botonCancelar.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		marcoBotones.add(botonCancelar);
+		
 		botonLeerCondicionesUso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -212,95 +220,98 @@ public class VentanaRegistroUsuarios extends JFrame {
 		getContentPane().add(labelRegistrarse, BorderLayout.NORTH);
 		
 		marcoCampos = new JPanel();
-		marcoCampos.setBorder(new TitledBorder(null, "Ingrese sus Datos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		marcoCampos.setBorder(new TitledBorder(null, "Ingrese sus Datos",
+			TitledBorder.LEADING, TitledBorder.TOP, Diseno.fuenteBotones, new Color(0,0,0)));
 		marcoCampos.setOpaque(false);
 		marcoCampos.setLayout(new BoxLayout(marcoCampos, BoxLayout.PAGE_AXIS));
 		
 		lblNombre = new JLabel("Nombre");
 		marcoCampos.add(lblNombre);
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNombre.setFont(Diseno.fuenteBotones);
 		
 		nombreTextBox = new JTextField();
-		nombreTextBox.setColumns(10);
 		marcoCampos.add(nombreTextBox);
-		nombreTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nombreTextBox.setFont(Diseno.fuenteBotones);
 		
 		lblApellidos = new JLabel("Apellidos");
 		marcoCampos.add(lblApellidos);
-		lblApellidos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblApellidos.setFont(Diseno.fuenteBotones);
 		
 		apellidosTextBox = new JTextField();
 		marcoCampos.add(apellidosTextBox);
-		apellidosTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		apellidosTextBox.setColumns(10);
+		apellidosTextBox.setFont(Diseno.fuenteBotones);
 		
 		lblCedula = new JLabel("C\u00E9dula");
 		marcoCampos.add(lblCedula);
-		lblCedula.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblCedula.setFont(Diseno.fuenteBotones);
 		
-		MaskFormatter formatoCedula = null;
 		try {
-			formatoCedula = new MaskFormatter("#########");
+			MaskFormatter cedulaFormat = new MaskFormatter("#-####-####");
+			cedulaFormat.setValidCharacters("123456789");
+			cedulaFormat.setPlaceholderCharacter('_');
+			cedulaFormat.setAllowsInvalid(false);
+			cedulaTextBox = new JFormattedTextField(cedulaFormat);
+			cedulaTextBox.setFont(Diseno.fuenteBotones);
+			marcoCampos.add(cedulaTextBox);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(getContentPane(),
+				"Hubo un error inesperado. No se podrán procesar números de cédula.",
+				"Error inesperado", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
-		cedulaTextBox = new JFormattedTextField(formatoCedula);
-		marcoCampos.add(cedulaTextBox);
-		cedulaTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cedulaTextBox.setColumns(10);
 		
 		lblNickname = new JLabel("Nickname");
 		marcoCampos.add(lblNickname);
-		lblNickname.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNickname.setFont(Diseno.fuenteBotones);
 		
 		nicknameTextBox = new JTextField();
 		marcoCampos.add(nicknameTextBox);
-		nicknameTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nicknameTextBox.setColumns(10);
+		nicknameTextBox.setFont(Diseno.fuenteBotones);
 		
 		lblContrasenia = new JLabel("Contrase\u00F1a");
 		marcoCampos.add(lblContrasenia);
-		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblContrasenia.setFont(Diseno.fuenteBotones);
 		
 		passwordTextBox = new JPasswordField();
 		marcoCampos.add(passwordTextBox);
-		passwordTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		passwordTextBox.setFont(Diseno.fuenteBotones);
 		
 		lblTelefono = new JLabel("Tel\u00E9fono");
 		marcoCampos.add(lblTelefono);
-		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTelefono.setFont(Diseno.fuenteBotones);
 		
-		MaskFormatter formatoTelefono = null;
 		try {
-			formatoTelefono = new MaskFormatter("########");
+			MaskFormatter telefonoFormat = new MaskFormatter("####-####");
+			telefonoFormat.setValidCharacters("123456789");
+			telefonoFormat.setPlaceholderCharacter('_');
+			telefonoFormat.setAllowsInvalid(false);
+			telefonoTextBox = new JFormattedTextField(telefonoFormat);
+			telefonoTextBox.setFont(Diseno.fuenteBotones);
+			marcoCampos.add(telefonoTextBox);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(getContentPane(),
+				"Hubo un error inesperado. No se podrán procesar números de teléfono.",
+				"Error inesperado", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
-		telefonoTextBox = new JFormattedTextField(formatoTelefono);
-		marcoCampos.add(telefonoTextBox);
-		telefonoTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		telefonoTextBox.setColumns(10);
 		
-		lblCorreo = new JLabel("Correo");
-		marcoCampos.add(lblCorreo);
-		lblCorreo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelCorreo = new JLabel("Correo");
+		marcoCampos.add(labelCorreo);
+		labelCorreo.setFont(Diseno.fuenteBotones);
 		
 		correoTextBox = new JTextField();
+		correoTextBox.setFont(Diseno.fuenteBotones);
 		marcoCampos.add(correoTextBox);
-		correoTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		correoTextBox.setColumns(10);
 		getContentPane().add(marcoOperaciones, BorderLayout.SOUTH);
 		
 		getContentPane().add(marcoCampos);
 		
 		lblDireccion = new JLabel("Direcci\u00F3n");
+		lblDireccion.setFont(Diseno.fuenteBotones);
 		marcoCampos.add(lblDireccion);
 		
 		direccionTextBox = new JTextField();
-		direccionTextBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		direccionTextBox.setColumns(10);
+		direccionTextBox.setFont(Diseno.fuenteBotones);
 		marcoCampos.add(direccionTextBox);
 	}
 	

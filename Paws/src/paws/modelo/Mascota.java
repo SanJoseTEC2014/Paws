@@ -230,6 +230,12 @@ public class Mascota implements Serializable {
 		return sucesos;
 	}
 	
+	public Suceso getUltimoSuceso() {
+		int i = 0;
+		while (i < 6 && !marcadoresEstado[i]) { i++; }
+		return sucesos[i];
+	}
+	
 	public boolean isDesaparecida() {
 		return marcadoresEstado[0];
 	}

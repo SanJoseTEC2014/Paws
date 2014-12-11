@@ -16,6 +16,14 @@ public class Organizacion implements Serializable {
 	private Integer numeroContacto;
     private ArrayList<Donacion> donaciones;
 	
+    public Organizacion(String pNombre, String pDireccion, Integer pNumeroContacto) {
+        id = ++totalIDsRegistradas; // El total no es un parámetro, se copia de la variable static.
+        nombre = pNombre;
+		numeroContacto = pNumeroContacto;
+		direccion = pDireccion;
+        donaciones = new ArrayList<Donacion>();
+	}
+	
 	public String getDireccion() {
 		return direccion;
 	}
@@ -28,7 +36,7 @@ public class Organizacion implements Serializable {
 	public void setNumeroContacto(Integer numeroContacto) {
 		this.numeroContacto = numeroContacto;
 	}
-	public Integer getId() {
+	public Integer getID() {
 		return id;
 	}
 	public String getNombre() {
@@ -37,14 +45,6 @@ public class Organizacion implements Serializable {
 	
 	public ArrayList<Donacion> getDonaciones(){
 		return donaciones;
-	}
-	
-	public Organizacion(String pNombre, String pDireccion, Integer pNumeroContacto) {
-        id = ++totalIDsRegistradas; // El total no es un parámetro, se copia de la variable static.
-        nombre = pNombre;
-		numeroContacto = pNumeroContacto;
-		direccion = pDireccion;
-        donaciones = new ArrayList<Donacion>();
 	}
 	
 	public void addDonacion(Donacion pDonacion) {

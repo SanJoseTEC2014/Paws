@@ -27,7 +27,7 @@ public class VentanaMascotasDeUsuario extends JFrame {
 	public VentanaMascotasDeUsuario() {
 		setSize(500, 300);
 		getContentPane().setBackground(Diseno.fondoVentanas);
-		labelTitulo = new JLabel("Mis Mascotas");
+		labelTitulo = new JLabel("");
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitulo.setFont(Diseno.fuenteTitulosVentanas);
 		getContentPane().add(labelTitulo, BorderLayout.NORTH);
@@ -45,10 +45,8 @@ public class VentanaMascotasDeUsuario extends JFrame {
 		rdbtnPerdidas.setOpaque(false);
 		rdbtnPerdidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				tablaMascotas.setModel(new ModeloTablaMascotas(usuarioActivo.getMascotasPerdidas()));
+				tablaMascotas.setModel(new ModeloTablaMascotas(usuarioActivo.getMascotasDesaparecidas()));
 				botonEmparejamiento.setVisible(true);
-
 			}
 		});
 		buttonGroup.add(rdbtnPerdidas);
@@ -58,10 +56,8 @@ public class VentanaMascotasDeUsuario extends JFrame {
 		rdbtnEncontradas.setOpaque(false);
 		rdbtnEncontradas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				tablaMascotas.setModel(new ModeloTablaMascotas(usuarioActivo.getMascotasEncontradas()));
 				botonEmparejamiento.setVisible(true);
-
 			}
 		});
 		buttonGroup.add(rdbtnEncontradas);
@@ -71,10 +67,8 @@ public class VentanaMascotasDeUsuario extends JFrame {
 		rdbtnRefugiadas.setOpaque(false);
 		rdbtnRefugiadas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				tablaMascotas.setModel(new ModeloTablaMascotas(usuarioActivo.getMascotasRefugiadas()));
 				botonEmparejamiento.setVisible(true);
-
 			}
 		});
 		buttonGroup.add(rdbtnRefugiadas);
@@ -107,10 +101,12 @@ public class VentanaMascotasDeUsuario extends JFrame {
 					try {
 						Principal.coordinador.mostrarDetallesMascota(Principal.getMascotaID(Integer.parseInt(IDMascota)));
 					} catch (MascotaNoEncontradaException e) {
-						JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(),
+							e.getMessage(), "Error inesperado", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					JOptionPane.showMessageDialog(getContentPane(), "Informaciï¿½n", "Debe seleccionar una mascota primero", JOptionPane.INFORMATION_MESSAGE);			
+					JOptionPane.showMessageDialog(getContentPane(), "Información",
+						"Debe seleccionar una mascota primero.", JOptionPane.INFORMATION_MESSAGE);			
 				}
 			}
 		});
@@ -123,10 +119,8 @@ public class VentanaMascotasDeUsuario extends JFrame {
 				if (fila != -1){
 					Integer IDMascota = (Integer) tablaMascotas.getValueAt(fila, 0);
 					try {
-						ArrayList<Mascota> resultadosMascota = Emparejador.emparejarBajoDemanda(Principal.getMascotaID(IDMascota));
-						VentanaMascotasRegistradas ventanaResultados = new VentanaMascotasRegistradas();
-						ventanaResultados.setDatosIniciales(resultadosMascota, true);
-						ventanaResultados.setVisible(true);
+						Principal.coordinador.mostrarResultadosEmparejamiento(
+							Emparejador.emparejarBajoDemanda(Principal.getMascotaID(IDMascota)));
 					} catch (MascotaNoEncontradaException e1) {
 						JOptionPane.showMessageDialog(getContentPane(),
 						e1.getMessage(), "Error inesperado del sistema.", JOptionPane.ERROR_MESSAGE);
@@ -143,9 +137,14 @@ public class VentanaMascotasDeUsuario extends JFrame {
 	public void setUsuario(Usuario pUsuario){
 		
 		usuarioActivo = pUsuario;
-		if (pUsuario == Acceso.getUsuarioActivo()) botonDetalles.setText("Editar Detalles");
+		if (pUsuario == Acceso.getUsuarioActivo()) {
+			labelTitulo.setText("Mis Mascotas");
+			botonDetalles.setText("Editar Detalles");
+		} else {
+			labelTitulo.setText("Mascotas de " + pUsuario.getNombre());
+		}
 		
-		rdbtnPerdidas.setVisible(usuarioActivo.getMascotasPerdidas().size() != 0);
+		rdbtnPerdidas.setVisible(usuarioActivo.getMascotasDesaparecidas().size() != 0);
 		rdbtnEncontradas.setVisible(usuarioActivo.getMascotasEncontradas().size() != 0);
 		rdbtnAdoptadas.setVisible(usuarioActivo.getMascotasAdoptadas().size() != 0);
 		rdbtnRefugiadas.setVisible(usuarioActivo.getMascotasRefugiadas().size() != 0); 
