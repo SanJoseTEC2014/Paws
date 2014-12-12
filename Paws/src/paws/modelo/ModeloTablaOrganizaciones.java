@@ -5,11 +5,11 @@ import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
 public class ModeloTablaOrganizaciones extends AbstractTableModel {
-	private ArrayList<Organizacion> listaAsociaciones;
-	private String[] titulos = {"Nombre", "Dirección", "Contacto", "Total de Donaciones"};
+	private ArrayList<Organizacion> listaOrganizaciones;
+	private String[] titulos = {"ID","Nombre", "Dirección", "Numero de teléfono","Correo", "Monto total de Donaciones"};
 
 	public ModeloTablaOrganizaciones(ArrayList<Organizacion> pListaAsociaciones){
-		listaAsociaciones = pListaAsociaciones;
+		listaOrganizaciones = pListaAsociaciones;
 	}
 	
 	public String getColumnName(int column) {
@@ -18,19 +18,18 @@ public class ModeloTablaOrganizaciones extends AbstractTableModel {
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
-		
 		case 0:
-			return listaAsociaciones.get(rowIndex).getNombre();
+			return listaOrganizaciones.get(rowIndex).getID().toString();
 		case 1:
-			return listaAsociaciones.get(rowIndex).getDireccion();
+			return listaOrganizaciones.get(rowIndex).getNombre();
 		case 2:
-			return listaAsociaciones.get(rowIndex).getNumeroContacto();		
+			return listaOrganizaciones.get(rowIndex).getDireccion();
 		case 3:
-			Double totalDonaciones = 0.0;
-			for (Donacion x : listaAsociaciones.get(rowIndex).getDonaciones()){
-				totalDonaciones += x.getMonto();
-			};
-			return totalDonaciones;		
+			return listaOrganizaciones.get(rowIndex).getNumeroContacto();	
+		case 4:
+			return listaOrganizaciones.get(rowIndex).getCorreo();
+		case 5:
+			return listaOrganizaciones.get(rowIndex).getMontoTotalDonaciones();
 		default:
 			return null;
 		}
@@ -42,7 +41,7 @@ public class ModeloTablaOrganizaciones extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return listaAsociaciones.size();
+		return listaOrganizaciones.size();
 	}
 }
 

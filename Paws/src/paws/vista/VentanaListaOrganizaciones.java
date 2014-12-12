@@ -6,52 +6,45 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import paws.control.Acceso;
+import paws.control.CoordinadorVisual;
 import paws.control.Principal;
 import paws.control.excepciones.OrganizacionNoEncontradaException;
 import paws.modelo.Donacion;
 import paws.modelo.ModeloTablaOrganizaciones;
 import paws.recursos.Diseno;
 
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 @SuppressWarnings("serial")
 public class VentanaListaOrganizaciones extends JFrame {
-	private JTable tablaOrganizaciones;
 	private final JLabel lblEspacio2 = new JLabel(" ");
+	private JTable tablaOrganizaciones;
 	
 	public VentanaListaOrganizaciones() {
-		setSize(1044, 400);
+		setSize(1044, 450);
 		getContentPane().setBackground(Diseno.fondoVentanas);
-		getContentPane().setLayout(new BorderLayout(10, 10));
 		
 		Panel marcoTitulo = new Panel();
+		marcoTitulo.setBounds(0, 0, 1028, 41);
 		
 		JLabel labelOrganizaciones = new JLabel("Organizaciones");
 		labelOrganizaciones.setFont(Diseno.fuenteTitulosVentanas);
 		marcoTitulo.add(labelOrganizaciones);
-		getContentPane().add(marcoTitulo, BorderLayout.NORTH);
 		
 		JLabel lblEspacio1 = new JLabel(" ");
-		getContentPane().add(lblEspacio1, BorderLayout.WEST);
-		getContentPane().add(lblEspacio2, BorderLayout.EAST);
-		
-		JScrollPane scrollPane = new JScrollPane(tablaOrganizaciones);
-		scrollPane.setOpaque(false);
-		getContentPane().add(scrollPane);
-		
-		tablaOrganizaciones = new JTable();
-		tablaOrganizaciones.setModel(new ModeloTablaOrganizaciones(Principal.organizaciones));
-		tablaOrganizaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tablaOrganizaciones);
+		lblEspacio1.setBounds(0, 34, 3, 317);
 		
 		Panel marcoBotonesInferiores = new Panel();
-		getContentPane().add(marcoBotonesInferiores, BorderLayout.SOUTH);
+		marcoBotonesInferiores.setBounds(0, 378, 1028, 33);
 		
-		JButton btnVerDetallesDeAsociacion = new JButton("Ver detalles de asociaci\u00F3n");
+		JButton btnVerDetallesDeAsociacion = new JButton("Ver detalles");
 		btnVerDetallesDeAsociacion.setFont(Diseno.fuenteBotones);
 		btnVerDetallesDeAsociacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = tablaOrganizaciones.getSelectedRow();
 				if (fila != -1){
-					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0);
+					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0).toString();
 					try {
 						Principal.coordinador.mostrarDetallesAsociaciones(Principal.getOrganizacionID(Integer.parseInt(IDOrganizacion)));
 					} catch (OrganizacionNoEncontradaException e) {
@@ -70,7 +63,7 @@ public class VentanaListaOrganizaciones extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = tablaOrganizaciones.getSelectedRow();
 				if (fila != -1){
-					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0);
+					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0).toString();
 					try {
 						Double pMonto = Double.parseDouble(
 							JOptionPane.showInputDialog(getContentPane(),
@@ -78,6 +71,8 @@ public class VentanaListaOrganizaciones extends JFrame {
 						if (pMonto <= 0.0) {throw new NumberFormatException("El valor ingresado es menor o igual a cero.");}
 						Donacion pDonacion = new Donacion(Acceso.getUsuarioActivo().getNickname(), pMonto);
 						Principal.getOrganizacionID(Integer.parseInt(IDOrganizacion)).addDonacion(pDonacion);
+						Principal.getOrganizacionID(Integer.parseInt(IDOrganizacion)).setMontoTotalDonaciones(pMonto);
+						
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(getContentPane(),
 						"El monto ingresado no es válido.\n" + e.getMessage(),
@@ -102,5 +97,30 @@ public class VentanaListaOrganizaciones extends JFrame {
 			}		
 		});
 		marcoBotonesInferiores.add(btnCerrar);
+		getContentPane().setLayout(null);
+		getContentPane().add(marcoTitulo);
+		getContentPane().add(lblEspacio1);
+		lblEspacio2.setBounds(1025, 34, 3, 317);
+		getContentPane().add(lblEspacio2);
+		getContentPane().add(marcoBotonesInferiores);
+		
+		JLabel lblTotalOrganzacionesRegistradas = new JLabel("Total Organizaciones registradas: " + Principal.organizaciones.size());
+		lblTotalOrganzacionesRegistradas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTotalOrganzacionesRegistradas.setBounds(30, 47, 427, 33);
+		getContentPane().add(lblTotalOrganzacionesRegistradas);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(30, 80, 965, 271);
+		getContentPane().add(scrollPane);
+		
+		tablaOrganizaciones = new JTable();
+		tablaOrganizaciones.setModel(new ModeloTablaOrganizaciones(Principal.organizaciones));
+		tablaOrganizaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablaOrganizaciones.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		tablaOrganizaciones.setVisible(true);
+		tablaOrganizaciones.setShowVerticalLines(true);
+		scrollPane.setViewportView(tablaOrganizaciones);
 	}
+	
+	
 }

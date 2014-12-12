@@ -103,6 +103,12 @@ public class CoordinadorVisual {
 		cals.setUsuario(pUsuario);
 		cals.setVisible(true);
 	}
+	
+	public void mostrarDonaciones(Organizacion pOrganizacion) {
+		VentanaDonaciones donacionesAOrganizaciones = new VentanaDonaciones();
+		donacionesAOrganizaciones.setOrganizacion(pOrganizacion);
+		donacionesAOrganizaciones.setVisible(true);
+	}
 
 	public void mostrarDetallesMascota(Mascota mascota) {
 		VentanaDetallesMascota detallesMascota = new VentanaDetallesMascota();
@@ -110,11 +116,13 @@ public class CoordinadorVisual {
 		detallesMascota.setVisible(true);
 	}
 	
-	public void mostrarDetallesAsociaciones(Organizacion organizacion) {
+	public void mostrarDetallesAsociaciones(Organizacion organizacionActual) {
+		//VentanaDetallesAsociacion detallesAsociacion = new VentanaDetallesAsociacion();
 		VentanaDetallesOrganizacion detallesAsociacion = new VentanaDetallesOrganizacion();
-		detallesAsociacion.setDatosIniciales(organizacion);
+		detallesAsociacion.setDatosIniciales(organizacionActual);
 		detallesAsociacion.setVisible(true);
 	}
+	
 	
 	public void mostrarOrganizaciones(Organizacion organizacion) {
 		VentanaListaOrganizaciones organizaciones = new VentanaListaOrganizaciones();

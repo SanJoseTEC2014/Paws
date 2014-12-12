@@ -135,6 +135,7 @@ public class Principal {
 		cargarBaseDatosMascotas();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
 		CasosPrueba.setCargados(false);
+		CasosPrueba.cargarDocumentoOrganizacionesPrueba();
         cargarMensajeCorreo();
 		
 		EventQueue.invokeLater(new Runnable() {

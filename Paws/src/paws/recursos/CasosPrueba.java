@@ -57,7 +57,7 @@ public class CasosPrueba {
 			DocumentoCasosPrueba organizacionesPrueba = new DocumentoCasosPrueba("organizaciones.csv");
 			for (int i = 0; i < organizacionesPrueba.getDocumentoSize(); i++){
 				LinkedList<String> registro = organizacionesPrueba.getRegistro(i);
-				Organizacion porRegistrar = new Organizacion(registro.get(0), registro.get(1), Integer.parseInt(registro.get(2)));
+				Organizacion porRegistrar = new Organizacion(registro.get(0), registro.get(1),registro.get(2),Integer.parseInt(registro.get(3)),registro.get(4));
 				Principal.organizaciones.add(porRegistrar);
 			}
 			JOptionPane.showMessageDialog(null,
