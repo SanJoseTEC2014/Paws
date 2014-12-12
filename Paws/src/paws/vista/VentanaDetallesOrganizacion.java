@@ -23,7 +23,6 @@ public class VentanaDetallesOrganizacion extends JFrame {
 	private JButton botonSalir;
 	private JFormattedTextField formatTelefono;
 	private JLabel labelCorreo;
-	private JLabel labelPagina;
 	private JLabel labelNombre;
 	private JLabel labelDireccion;
 	private JLabel labelContacto; 
@@ -122,15 +121,6 @@ public class VentanaDetallesOrganizacion extends JFrame {
 						textCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 						marcoDetalles.add(textCorreo);
 						
-						labelPagina = new JLabel("Sitio Web:");
-						labelPagina.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						labelPagina.setHorizontalAlignment(SwingConstants.LEFT);
-						labelPagina.setOpaque(false);
-						marcoDetalles.add(labelPagina);
-						
-						textPagina = new JTextField();
-						textPagina.setHorizontalAlignment(SwingConstants.CENTER);
-						marcoDetalles.add(textPagina);
 						
 				
 		marcoOperaciones = new JPanel();
@@ -170,8 +160,6 @@ public class VentanaDetallesOrganizacion extends JFrame {
 		formatTelefono.setEditable(false);
 		textCorreo.setText(organizacionActual.getCorreo());
 		textCorreo.setEditable(false);
-		textPagina.setText(organizacionActual.getPaginaWeb());
-		textPagina.setEditable(false);
 		
 	}
 	

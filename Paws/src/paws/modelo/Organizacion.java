@@ -15,7 +15,6 @@ public class Organizacion implements Serializable {
 	private String direccion;
 	private Integer numeroContacto;
 	private String correo;
-	private String paginaWeb;
 	private Double totalDonaciones = 0.0;
     private ArrayList<Donacion> donaciones;
 	
@@ -40,14 +39,6 @@ public class Organizacion implements Serializable {
 		this.correo = correo;
 	}
 	
-	public String getPaginaWeb(){
-		return paginaWeb;
-	}
-	
-	public void setPaginaWeb(String pagina){
-		this.paginaWeb = pagina;
-	}
-	
 	public Integer getID() {
 		return id;
 	}
@@ -59,13 +50,12 @@ public class Organizacion implements Serializable {
 		return donaciones;
 	}
 	
-	public Organizacion(String pNombre, String pDireccion,String pCorreo, Integer pNumeroContacto, String pPaginaWeb) {
+	public Organizacion(String pNombre, String pDireccion,String pCorreo, Integer pNumeroContacto) {
         id = ++totalIDsRegistradas; // El total no es un parámetro, se copia de la variable static.
         nombre = pNombre;
 		numeroContacto = pNumeroContacto;
 		direccion = pDireccion;
 		correo = pCorreo;
-		paginaWeb = pPaginaWeb;
         donaciones = new ArrayList<Donacion>();
         
 	}
