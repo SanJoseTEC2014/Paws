@@ -14,15 +14,9 @@ public class Organizacion implements Serializable {
 	private String nombre;
 	private String direccion;
 	private Integer numeroContacto;
+	private String correo;
+	private Double totalDonaciones = 0.0;
     private ArrayList<Donacion> donaciones;
-	
-    public Organizacion(String pNombre, String pDireccion, Integer pNumeroContacto) {
-        id = ++totalIDsRegistradas; // El total no es un parámetro, se copia de la variable static.
-        nombre = pNombre;
-		numeroContacto = pNumeroContacto;
-		direccion = pDireccion;
-        donaciones = new ArrayList<Donacion>();
-	}
 	
 	public String getDireccion() {
 		return direccion;
@@ -36,6 +30,15 @@ public class Organizacion implements Serializable {
 	public void setNumeroContacto(Integer numeroContacto) {
 		this.numeroContacto = numeroContacto;
 	}
+	
+	public String getCorreo(){
+		return correo;
+	}
+	
+	public void setCorreo(String correo){
+		this.correo = correo;
+	}
+	
 	public Integer getID() {
 		return id;
 	}
@@ -47,16 +50,26 @@ public class Organizacion implements Serializable {
 		return donaciones;
 	}
 	
+	public Organizacion(String pNombre, String pDireccion,String pCorreo, Integer pNumeroContacto) {
+        id = ++totalIDsRegistradas; // El total no es un parámetro, se copia de la variable static.
+        nombre = pNombre;
+		numeroContacto = pNumeroContacto;
+		direccion = pDireccion;
+		correo = pCorreo;
+        donaciones = new ArrayList<Donacion>();
+        
+	}
+	
 	public void addDonacion(Donacion pDonacion) {
 		donaciones.add(pDonacion);
 	}
 	
-	public Double getMontoTotalDonaciones(Integer pOrganizacionID){
-		Double ponderado = 0.0;
-        for(Donacion donacion : donaciones){
-			ponderado += donacion.getMonto();
-		}
-        return ponderado;
+	public void setMontoTotalDonaciones(Double monto){
+		this.totalDonaciones += monto;
+	}
+	
+	public Double getMontoTotalDonaciones(){
+		return totalDonaciones;
 	}
 	
 	public static Integer getTotalOrganizaciones(){

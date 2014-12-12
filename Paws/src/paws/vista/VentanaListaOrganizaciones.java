@@ -15,8 +15,7 @@ import paws.recursos.Diseno;
 @SuppressWarnings("serial")
 public class VentanaListaOrganizaciones extends JFrame {
 	private JTable tablaOrganizaciones;
-	private final JLabel lblEspacio2 = new JLabel(" ");
-	
+
 	public VentanaListaOrganizaciones() {
 		setSize(1044, 400);
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -31,6 +30,8 @@ public class VentanaListaOrganizaciones extends JFrame {
 		
 		JLabel lblEspacio1 = new JLabel(" ");
 		getContentPane().add(lblEspacio1, BorderLayout.WEST);
+		
+		JLabel lblEspacio2 = new JLabel(" ");
 		getContentPane().add(lblEspacio2, BorderLayout.EAST);
 		
 		JScrollPane scrollPane = new JScrollPane(tablaOrganizaciones);
@@ -43,7 +44,14 @@ public class VentanaListaOrganizaciones extends JFrame {
 		scrollPane.setViewportView(tablaOrganizaciones);
 		
 		Panel marcoBotonesInferiores = new Panel();
+		FlowLayout flowLayout = (FlowLayout) marcoBotonesInferiores.getLayout();
+		flowLayout.setHgap(20);
+		flowLayout.setAlignment(FlowLayout.RIGHT);
 		getContentPane().add(marcoBotonesInferiores, BorderLayout.SOUTH);
+		
+		JLabel labelTotalDeOrganizaciones = new JLabel("Total de Organizaciones Registradas: " + Principal.organizaciones.size());
+		labelTotalDeOrganizaciones.setFont(Diseno.fuenteBotones);
+		marcoBotonesInferiores.add(labelTotalDeOrganizaciones);
 		
 		JButton btnVerDetallesDeAsociacion = new JButton("Ver detalles de asociaci\u00F3n");
 		btnVerDetallesDeAsociacion.setFont(Diseno.fuenteBotones);
