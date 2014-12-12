@@ -104,7 +104,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnMascotas.add(mntmMisMascotas);
 		
 		JMenu mnRegistradas = new JMenu("Registradas en Paws como ");
-		mnRegistradas.setFont(null);
+		mnRegistradas.setFont(Diseno.fuenteBotones);
 		mnMascotas.add(mnRegistradas);
 		
 		JMenuItem mntmVerDesaparecidas = new JMenuItem("Desaparecidas");
@@ -212,7 +212,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		mnCuenta.add(mntmVerMisDetalles);
 		
 		if(Acceso.isAdministradorActivo()) {
-			JMenuItem mntmParametrosSistema = new JMenuItem("Parametros Sistema");
+			JMenuItem mntmParametrosSistema = new JMenuItem("Párametros del Sistema");
 			mntmParametrosSistema.setFont(Diseno.fuenteBotones);
 			mntmParametrosSistema.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

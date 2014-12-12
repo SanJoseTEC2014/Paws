@@ -61,10 +61,11 @@ public class Suceso implements Serializable {
 	}
 	
 	public String toString() {
-		String msg = "\nUsuario reportante: " + nick;
-		msg += "Lugar: " + lugar;
+		String msg = "Usuario reportante: " + nick;
+		msg += "\nEstado: " + estado;
+		msg += "\nLugar: " + lugar;
 		msg += "\nFecha: " + getFechaString();
-		msg += "\nDescripcion: " + detalles;
+		msg += "\nDescripción: " + detalles;
 		return msg;
 	}
 

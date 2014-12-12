@@ -59,12 +59,24 @@ public class Mascota implements Serializable {
 	private boolean[] marcadoresEspera = new boolean[3]; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
 	private Integer recompensa;
 
-	public Mascota(String pNombre, String pEspecie, String pRaza, Integer pRecompensa) {
+	public Mascota(String pNombre, String pEspecie, String pRaza, Integer pRecompensa) throws TiempoSinEstablecerException {
 		id = ++totalIDsRegistradas;
 		nombre = pNombre;
 		especie = pEspecie;
 		raza = pRaza;
 		recompensa = pRecompensa;
+		// Valores por defecto
+		color = "";
+		edad = "";
+		sexo = "";
+		castrada = false;
+		vacunada = false;
+		desparacitada = false;
+		recompensa = pRecompensa;
+		sucesos = new Suceso[]{new Suceso(), new Suceso(), new Suceso(), new Suceso(), new Suceso(), new Suceso()}; 
+		marcadoresEstado = new boolean[]{false, false, false, false, false, false};
+		marcadoresEspera = new boolean[]{false, false, false};
+		tamanio = "";
 	}
 
 	public Integer getID() {
@@ -160,20 +172,76 @@ public class Mascota implements Serializable {
 	}
 
 	public void addNuevoSuceso(Suceso pSuceso) {
-		String estados[] = {EstadosMascotas.estadoDESAPARECIDA,
-                EstadosMascotas.estadoENCONTRADA,
-                EstadosMascotas.estadoREFUGIADA,
-                EstadosMascotas.estadoLOCALIZADA,
-                EstadosMascotas.estadoADOPTADA,
-                EstadosMascotas.estadoMUERTA};
-
-		for (int i = 0; i < marcadoresEstado.length; i++){
-			if (pSuceso.getEstado().equals(estados[i])) {
-				marcadoresEstado[i] = true; // Añade el último estado
-				sucesos[i] = pSuceso; // Añade el nuevo suceso (lo sobreescribe)
-			} else {
-				marcadoresEstado[i] = false; // Resetea el último estado
+		System.out.println(pSuceso.getEstado());
+		switch(pSuceso.getEstado())
+		{
+			case EstadosMascotas.estadoDESAPARECIDA:
+			{
+				sucesos[0] = pSuceso;
+				marcadoresEstado[0] = true;
+				marcadoresEstado[1] = false;
+				marcadoresEstado[2] = false;
+				marcadoresEstado[3] = false;
+				marcadoresEstado[4] = false;
+				marcadoresEstado[5] = false;
 			}
+			break;
+			case EstadosMascotas.estadoENCONTRADA:
+			{
+				sucesos[1] = pSuceso;
+				marcadoresEstado[0] = false;
+				marcadoresEstado[1] = true;
+				marcadoresEstado[2] = false;
+				marcadoresEstado[3] = false;
+				marcadoresEstado[4] = false;
+				marcadoresEstado[5] = false;
+			}
+			break;
+			case EstadosMascotas.estadoREFUGIADA:
+			{
+				sucesos[2] = pSuceso;
+				marcadoresEstado[0] = false;
+				marcadoresEstado[1] = false;
+				marcadoresEstado[2] = true;
+				marcadoresEstado[3] = false;
+				marcadoresEstado[4] = false;
+				marcadoresEstado[5] = false;
+			}
+			break;
+			case EstadosMascotas.estadoLOCALIZADA:
+			{
+				sucesos[3] = pSuceso;
+				marcadoresEstado[0] = false;
+				marcadoresEstado[1] = false;
+				marcadoresEstado[2] = false;
+				marcadoresEstado[3] = true;
+				marcadoresEstado[4] = false;
+				marcadoresEstado[5] = false;
+			}
+			break;
+			case EstadosMascotas.estadoADOPTADA:
+			{
+				sucesos[4] = pSuceso;
+				marcadoresEstado[0] = false;
+				marcadoresEstado[1] = false;
+				marcadoresEstado[2] = false;
+				marcadoresEstado[3] = false;
+				marcadoresEstado[4] = true;
+				marcadoresEstado[5] = false;
+			}
+			break;
+			case EstadosMascotas.estadoMUERTA:
+			{
+				sucesos[5] = pSuceso;
+				marcadoresEstado[0] = false;
+				marcadoresEstado[1] = false;
+				marcadoresEstado[2] = false;
+				marcadoresEstado[3] = false;
+				marcadoresEstado[4] = false;
+				marcadoresEstado[5] = true;
+			}
+			break;
+			
 		}
 	}
 	
@@ -231,9 +299,10 @@ public class Mascota implements Serializable {
 	}
 	
 	public Suceso getUltimoSuceso() {
-		int i = 0;
-		while (i < 6 && !marcadoresEstado[i]) { i++; }
-		return sucesos[i];
+		for (int i = 0; i < 6; i++){
+			if (marcadoresEstado[i]) { return sucesos[i]; }
+		}
+		throw new NullPointerException("No se encuentra ningún suceso.");
 	}
 	
 	public boolean isDesaparecida() {

@@ -85,17 +85,7 @@ public class CasosPrueba {
 				*/
 				
 				Mascota porRegistrar = new Mascota(registro.get(0), registro.get(1), registro.get(2), Integer.parseInt(registro.get(3)));
-				Suceso temp = new Suceso();
-				switch(registro.get(10)) {
-					case "DESAPARECIDA":
-						temp = new Suceso(registro.get(4), EstadosMascotas.estadoDESAPARECIDA, registro.get(6), registro.get(5));
-						break;
-					case "ENCONTRADA":
-						temp = new Suceso(registro.get(4), EstadosMascotas.estadoENCONTRADA, registro.get(6), registro.get(5));
-						break;
-					default:
-						throw new EventoNoExisteException("Error al cargar el documento de prueba.");
-				}
+				Suceso temp = new Suceso(registro.get(4), registro.get(10), registro.get(6), registro.get(5));
 				porRegistrar.addNuevoSuceso(temp);
 				porRegistrar.setSexo(registro.get(7));
 				porRegistrar.setColor(registro.get(8));
@@ -107,7 +97,7 @@ public class CasosPrueba {
 				Principal.mascotas.add(porRegistrar);
 			}
 			JOptionPane.showMessageDialog(null,
-					"Casos de prueba de mascotas cargados satisfactoriamente.");
+				"Casos de prueba de mascotas cargados satisfactoriamente.");
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
 				e.getMessage(),

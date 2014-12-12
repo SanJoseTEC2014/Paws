@@ -51,14 +51,18 @@ public class VentanaListaOrganizaciones extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = tablaOrganizaciones.getSelectedRow();
 				if (fila != -1){
-					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0);
 					try {
-						Principal.coordinador.mostrarDetallesAsociaciones(Principal.getOrganizacionID(Integer.parseInt(IDOrganizacion)));
+						Principal.coordinador.mostrarDetallesAsociaciones(
+							Principal.getOrganizacionID(
+								(Integer) tablaOrganizaciones.getValueAt(fila, 0)));
 					} catch (OrganizacionNoEncontradaException e) {
-						JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(),
+							e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					JOptionPane.showMessageDialog(getContentPane(), "Información", "Debe seleccionar una organización primero", JOptionPane.INFORMATION_MESSAGE);			
+					JOptionPane.showMessageDialog(getContentPane(),
+						"Información", "Debe seleccionar una organización primero",
+						JOptionPane.INFORMATION_MESSAGE);			
 				}
 			}
 		});
@@ -70,14 +74,18 @@ public class VentanaListaOrganizaciones extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = tablaOrganizaciones.getSelectedRow();
 				if (fila != -1){
-					String IDOrganizacion = (String) tablaOrganizaciones.getValueAt(fila, 0);
 					try {
 						Double pMonto = Double.parseDouble(
 							JOptionPane.showInputDialog(getContentPane(),
-								"Digite el monto que desea donar:", "Donación en curso", JOptionPane.QUESTION_MESSAGE));
-						if (pMonto <= 0.0) {throw new NumberFormatException("El valor ingresado es menor o igual a cero.");}
-						Donacion pDonacion = new Donacion(Acceso.getUsuarioActivo().getNickname(), pMonto);
-						Principal.getOrganizacionID(Integer.parseInt(IDOrganizacion)).addDonacion(pDonacion);
+								"Digite el monto que desea donar:",
+								"Donación en curso", JOptionPane.QUESTION_MESSAGE));
+						if (pMonto <= 0.0) {
+							throw new NumberFormatException("El valor ingresado es menor o igual a cero.");
+						}
+						Donacion pDonacion = new Donacion(
+							Acceso.getUsuarioActivo().getNickname(), pMonto);
+						Principal.getOrganizacionID(
+							(Integer) tablaOrganizaciones.getValueAt(fila, 0)).addDonacion(pDonacion);
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(getContentPane(),
 						"El monto ingresado no es válido.\n" + e.getMessage(),
@@ -88,7 +96,8 @@ public class VentanaListaOrganizaciones extends JFrame {
 						"Error inesperado.", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					JOptionPane.showMessageDialog(getContentPane(), "Información", "Debe seleccionar una organización primero.", JOptionPane.INFORMATION_MESSAGE);			
+					JOptionPane.showMessageDialog(getContentPane(),
+						"Información", "Debe seleccionar una organización primero.", JOptionPane.INFORMATION_MESSAGE);			
 				}
 			}
 		});
