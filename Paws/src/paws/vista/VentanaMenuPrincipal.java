@@ -8,7 +8,6 @@ import paws.control.Acceso;
 import paws.control.Imagenes;
 import paws.control.Principal;
 import paws.control.excepciones.ImagenNoEncontradaException;
-import paws.modelo.Mascota;
 import paws.recursos.Diseno;
 
 import java.awt.event.*;
@@ -22,7 +21,6 @@ import jflow.shape.Picture;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 @SuppressWarnings("serial")

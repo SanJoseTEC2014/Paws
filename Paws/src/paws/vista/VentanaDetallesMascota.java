@@ -158,7 +158,7 @@ public class VentanaDetallesMascota extends JFrame {
 		labelFotoMascota = new JLabel("");
 		labelFotoMascota.setHorizontalAlignment(SwingConstants.CENTER);
 		marcoFoto.add(labelFotoMascota, BorderLayout.CENTER);
-
+		
 		rutaFotoMascota = "";
 
 		JPanel panelBotonesFoto = new JPanel();
@@ -330,8 +330,11 @@ public class VentanaDetallesMascota extends JFrame {
 		comboTamanio.setSelectedItem(mascota.getTamanio());
 
 		try {
-			labelFotoMascota.setIcon(new ImageIcon(Imagenes
-					.getPerfilMascota(mascota.getID())));
+			int ancho = labelFotoMascota.getSize().width;
+			int alto = labelFotoMascota.getSize().height;
+			BufferedImage porInsertar = Imagenes.redimensionar(Imagenes.getPerfilMascota(mascota.getID()), ancho, alto);
+			labelFotoMascota.setText("");
+			labelFotoMascota.setIcon(new ImageIcon(porInsertar));
 		} catch (ImagenNoEncontradaException e) {
 			labelFotoMascota.setText("No existe fotografía para esta mascota.");
 		}
