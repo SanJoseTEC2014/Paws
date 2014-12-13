@@ -55,8 +55,8 @@ public class Mascota implements Serializable {
 	
 	private Suceso[] sucesos = new Suceso[6]; // Para cada suceso del array corresponde un estado
 	// 0 = Desaparecida; 1 = Encontrada; 2 = Refugiada; 3 = Localizada; 4 = Adoptada; 5 = Muerta
-	private boolean[] marcadoresEstado = new boolean[6];
-	private boolean[] marcadoresEspera = new boolean[3]; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
+	private boolean[] marcadoresEstado;
+	private boolean[] marcadoresEspera; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
 	private Integer recompensa;
 
 	public Mascota(String pNombre, String pEspecie, String pRaza, Integer pRecompensa) throws TiempoSinEstablecerException {
@@ -173,76 +173,30 @@ public class Mascota implements Serializable {
 
 	public void addNuevoSuceso(Suceso pSuceso) {
 		System.out.println(pSuceso.getEstado());
-		switch(pSuceso.getEstado())
-		{
-			case EstadosMascotas.estadoDESAPARECIDA:
-			{
-				sucesos[0] = pSuceso;
-				marcadoresEstado[0] = true;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoENCONTRADA:
-			{
-				sucesos[1] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = true;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoREFUGIADA:
-			{
-				sucesos[2] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = true;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoLOCALIZADA:
-			{
-				sucesos[3] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = true;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoADOPTADA:
-			{
-				sucesos[4] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = true;
-				marcadoresEstado[5] = false;
-			}
-			break;
-			case EstadosMascotas.estadoMUERTA:
-			{
-				sucesos[5] = pSuceso;
-				marcadoresEstado[0] = false;
-				marcadoresEstado[1] = false;
-				marcadoresEstado[2] = false;
-				marcadoresEstado[3] = false;
-				marcadoresEstado[4] = false;
-				marcadoresEstado[5] = true;
-			}
-			break;
-			
+		
+		String estados[] = {EstadosMascotas.estadoDESAPARECIDA,
+                EstadosMascotas.estadoENCONTRADA,
+                EstadosMascotas.estadoREFUGIADA,
+                EstadosMascotas.estadoLOCALIZADA,
+                EstadosMascotas.estadoADOPTADA,
+                EstadosMascotas.estadoMUERTA};
+		
+
+				
+		for (int i = 0; i < marcadoresEstado.length; i++){
+		    if (pSuceso.getEstado().equals(estados[i])){
+		        marcadoresEstado[i] = true;
+		        sucesos[i] = pSuceso;
+		    } else {
+		        marcadoresEstado[i] = false;
+		    }
 		}
+		
+		for (int i = 0; i < marcadoresEstado.length; i++){
+			System.out.println("# "+marcadoresEstado[i]);
+
+		}
+		
 	}
 	
 	public boolean isEsperandoLocalizacion(){
@@ -302,6 +256,7 @@ public class Mascota implements Serializable {
 		for (int i = 0; i < 6; i++){
 			if (marcadoresEstado[i]) { return sucesos[i]; }
 		}
+		
 		throw new NullPointerException("No se encuentra ningún suceso.");
 	}
 	
@@ -326,6 +281,10 @@ public class Mascota implements Serializable {
 
 	public BufferedImage getImagen() throws ImagenNoEncontradaException{
 		return Imagenes.getPerfilMascota(id);
+	}
+	
+	public void setImagen(String imagenSeleccionada) {
+		Imagenes.guardarFotoPerfilMascota(id, imagenSeleccionada);		
 	}
 	
 	public String toString() {
@@ -427,5 +386,7 @@ public class Mascota implements Serializable {
 	public static ComboBoxModel<String> getModeloSexos() {
 		return new DefaultComboBoxModel<String>(new String[]{"Macho", "Hembra"});
 	}
+
+
 	
 }

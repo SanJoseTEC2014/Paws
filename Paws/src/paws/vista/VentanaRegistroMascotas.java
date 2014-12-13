@@ -28,6 +28,7 @@ import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class VentanaRegistroMascotas extends JFrame {
+	private boolean fotoSeleccionada = false;
 	private JTextField campoNombre;
 	private JTextField campoNumeroDeChip;
 	private JFormattedTextField campoRecompensa;
@@ -328,6 +329,7 @@ public class VentanaRegistroMascotas extends JFrame {
 									Imagenes.cargarImagen(imagenSeleccionada), ancho, alto);
 							labelFoto.setText("");
 							labelFoto.setIcon(new ImageIcon(porInsertar));
+							fotoSeleccionada = true;
 						} catch (ImagenNoEncontradaException e) {
 							JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
 								"Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -357,47 +359,59 @@ public class VentanaRegistroMascotas extends JFrame {
 		JButton botonRegistrar = new JButton("Registrar");
 		panelOperaciones.add(botonRegistrar);
 		botonRegistrar.addActionListener(new ActionListener() {
+
+
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Mascota mascota = new Mascota(
-							campoNombre.getText(),
-							(String) comboBoxEspecie.getSelectedItem(),
-							(String)comboBoxRaza.getSelectedItem(),
-							Integer.getInteger(campoRecompensa.getText() == null ? "0" : campoRecompensa.getText()));
-					
-					mascota.setCastrada(checkBoxCastrada.isSelected());
-					mascota.setColor((String) comboBoxColor.getSelectedItem());
-					mascota.setDesparacitada(checkBoxDesparacitada.isSelected());
-					mascota.setNumeroChip(campoNumeroDeChip.getText());
-					mascota.setSexo((String) comboBoxSexo.getSelectedItem());
-					mascota.setTamanio((String) comboBoxTamanio.getSelectedItem());
-					mascota.setVacunada(checkBoxVacunada.isSelected());
-					
-					Suceso registro;
-					if (radioButtonEncontrada.isSelected()){
-						registro = new Suceso(Acceso.getUsuarioActivo().getNickname(), EstadosMascotas.estadoENCONTRADA,
-								  editorDireccionSuceso.getText(), campoDetallesSuceso.getText());
-						mascota.addNuevoSuceso(registro);
+				
+				if (fotoSeleccionada)
+					try {
+						Mascota mascota = new Mascota(
+								campoNombre.getText(),
+								(String) comboBoxEspecie.getSelectedItem(),
+								(String)comboBoxRaza.getSelectedItem(),
+								Integer.getInteger(campoRecompensa.getText() == null ? "0" : campoRecompensa.getText()));
+						
+						
+						mascota.setImagen(imagenSeleccionada);
+						mascota.setCastrada(checkBoxCastrada.isSelected());
+						mascota.setColor((String) comboBoxColor.getSelectedItem());
+						mascota.setDesparacitada(checkBoxDesparacitada.isSelected());
+						mascota.setNumeroChip(campoNumeroDeChip.getText());
+						mascota.setSexo((String) comboBoxSexo.getSelectedItem());
+						mascota.setTamanio((String) comboBoxTamanio.getSelectedItem());
+						mascota.setVacunada(checkBoxVacunada.isSelected());
+						
+						
+						Suceso registro;
+						if (radioButtonEncontrada.isSelected()){
+							registro = new Suceso(Acceso.getUsuarioActivo().getNickname(), EstadosMascotas.estadoENCONTRADA,
+									  editorDireccionSuceso.getText(), campoDetallesSuceso.getText());
+							mascota.addNuevoSuceso(registro);
+						}
+						
+						if (radioButtonPerdida.isSelected()){
+							registro = new Suceso(Acceso.getUsuarioActivo().getNickname(), EstadosMascotas.estadoDESAPARECIDA,
+									  editorDireccionSuceso.getText(), campoDetallesSuceso.getText());
+							mascota.addNuevoSuceso(registro);
+						}
+						Principal.mascotas.add(mascota);
+						JOptionPane.showMessageDialog(getContentPane(), 
+							"Le recordamos que puede editar la información\n" +
+							"de ésta mascota buscándola en la ventana de Mis mascotas.", "Registro Satisfactorio",
+							 JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false);
+						
+					} catch (TiempoSinEstablecerException ex) {
+						JOptionPane.showMessageDialog(null,
+								"No se pueden crear sucesos.\n" + ex.getMessage(),
+								"ERROR INESPERADO: Tiempo del Sistema",
+								JOptionPane.ERROR_MESSAGE);
+					} else{
+						JOptionPane.showMessageDialog(null,
+								"Debe cargar una imagen antes de registrar",
+								"INFORMACIÓN",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
-					
-					if (radioButtonPerdida.isSelected()){
-						registro = new Suceso(Acceso.getUsuarioActivo().getNickname(), EstadosMascotas.estadoDESAPARECIDA,
-								  editorDireccionSuceso.getText(), campoDetallesSuceso.getText());
-						mascota.addNuevoSuceso(registro);
-					}
-					Principal.mascotas.add(mascota);
-					JOptionPane.showMessageDialog(getContentPane(), 
-						"Le recordamos que puede editar la información\n" +
-						"de ésta mascota buscándola en la ventana de Mis mascotas.", "Registro Satisfactorio",
-						 JOptionPane.INFORMATION_MESSAGE);
-					setVisible(false);
-					
-				} catch (TiempoSinEstablecerException ex) {
-					JOptionPane.showMessageDialog(null,
-							"No se pueden crear sucesos.\n" + ex.getMessage(),
-							"ERROR INESPERADO: Tiempo del Sistema",
-							JOptionPane.ERROR_MESSAGE);
-				}
 			}
 		});
 		botonRegistrar.setOpaque(false);

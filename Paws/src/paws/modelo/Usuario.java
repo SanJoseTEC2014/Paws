@@ -8,6 +8,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 import paws.control.EstadosMascotas;
+import paws.control.Imagenes;
 import paws.control.Principal;
 import paws.control.excepciones.EventoNoExisteException;
 import paws.control.excepciones.TiempoSinEstablecerException;
@@ -349,5 +350,9 @@ public class Usuario implements Serializable, Comunicable {
 		  // En el campo contraseña, se pone "" y se omite por seguridad.
 		  return clone;
 	}
-	
+
+	public void setImagen(String rutaImagen) {
+		Imagenes.guardarFotoPerfilUsuario(nickname, rutaImagen);
+	}
+
 }

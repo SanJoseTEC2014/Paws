@@ -10,11 +10,13 @@ import javax.swing.border.*;
 import paws.control.Acceso;
 import paws.control.Imagenes;
 import paws.control.Principal;
+import paws.control.excepciones.ImagenNoEncontradaException;
 import paws.modelo.*;
 import paws.recursos.Diseno;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @SuppressWarnings("serial")
@@ -25,7 +27,7 @@ public class VentanaDetallesUsuario extends JFrame {
 	private JButton botonGuardarCambios;
 	private JButton botonSalir;
 	private JButton botonVerMascotas;
-	private JButton btnActualizarFoto;
+	private JButton botonActualizarFoto;
 	private JComboBox<String> comboLapsos;
 	private JFormattedTextField formatCedula;
 	private JFormattedTextField formatTelefono;
@@ -54,6 +56,7 @@ public class VentanaDetallesUsuario extends JFrame {
 	private JTextField textNombre;
 	private Usuario usuarioActual;
 	private JButton btnAgregarCalificacion;
+	protected String imagenSeleccionada;
 
 	public VentanaDetallesUsuario(){
 		setSize(800,500);
@@ -85,19 +88,40 @@ public class VentanaDetallesUsuario extends JFrame {
 				
 				marcoFotoPerfil = new JPanel();
 				marcoFotoPerfil.setBorder(new TitledBorder(null, "Foto de Perfil", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				marcoFotoPerfil.setLayout(new BoxLayout(marcoFotoPerfil, BoxLayout.Y_AXIS));
 				marcoFotoPerfil.setOpaque(false);
 				marcoContenido.add(marcoFotoPerfil, BorderLayout.WEST);
+						marcoFotoPerfil.setLayout(new BorderLayout(0, 0));
 				
 						labelFoto = new JLabel("No disponible");
 						labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
 						labelFoto.setOpaque(false);
 						marcoFotoPerfil.add(labelFoto);
 						
-						btnActualizarFoto = new JButton("Actualizar Foto");
-						btnActualizarFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
-						btnActualizarFoto.setOpaque(false);
-						marcoFotoPerfil.add(btnActualizarFoto);
+						botonActualizarFoto = new JButton("Actualizar Foto");
+						botonActualizarFoto.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								
+								try {
+									imagenSeleccionada = Imagenes.seleccionarImagen();
+									int ancho = labelFoto.getSize().width;
+									int alto = labelFoto.getSize().height;
+									BufferedImage porInsertar = Imagenes.redimensionar(
+											Imagenes.cargarImagen(imagenSeleccionada), ancho, alto);
+									labelFoto.setIcon(new ImageIcon(porInsertar));
+									labelFoto.setText("");
+								} catch (ImagenNoEncontradaException error) {
+									JOptionPane.showMessageDialog(getContentPane(), error.getMessage(),
+										"Advertencia", JOptionPane.WARNING_MESSAGE);
+									imagenSeleccionada = "";
+									labelFoto.setIcon(null);
+									labelFoto.setText("Ninguna Seleccionada");
+								}
+								
+							}
+						});
+						botonActualizarFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+						botonActualizarFoto.setOpaque(false);
+						marcoFotoPerfil.add(botonActualizarFoto, BorderLayout.SOUTH);
 				
 				marcoDetalles = new JPanel();
 				marcoDetalles.setBorder(new TitledBorder(null, "Detalles:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -216,6 +240,7 @@ public class VentanaDetallesUsuario extends JFrame {
 						Acceso.getUsuarioActivo().setCedula(Integer.parseInt(formatCedula.getText()));
 						Acceso.getUsuarioActivo().setTelefono(Integer.parseInt(formatTelefono.getText()));
 						Acceso.getUsuarioActivo().setLapsoEmparejamiento((String)comboLapsos.getSelectedItem());
+						Acceso.getUsuarioActivo().setImagen(imagenSeleccionada);
 					}
 				});
 				
@@ -285,10 +310,18 @@ public class VentanaDetallesUsuario extends JFrame {
 		comboLapsos.setSelectedIndex(Usuario.lapsos.indexOf(usuarioActual.getLapsoEmparejamiento()));
 		botonCondicionesRefugio.setVisible(usuarioActual.isRefugiante());
 		btnAgregarCalificacion.setVisible(usuarioActual != Acceso.getUsuarioActivo());
+		
+		try {
+			labelFoto.setIcon(new ImageIcon(Imagenes
+					.getPerfil(usuarioActual.getNickname())));
+		} catch (ImagenNoEncontradaException e) {
+			labelFoto.setText("USUARIO SIN FOTO");
+		}
+		
 	}
 	
-	public void setModoEdicion(boolean pModo){
-		modoEdicion = pModo;
+	
+	public void setModoEdicion(boolean modoEdicion){
 		textNombre.setEditable(modoEdicion);
 		textApellidos.setEditable(modoEdicion);
 		formatCedula.setEditable(modoEdicion);
@@ -296,8 +329,8 @@ public class VentanaDetallesUsuario extends JFrame {
 		textCorreo.setEditable(modoEdicion);
 		//comboLapsos.setEditable(modoEdicion);
 		comboLapsos.setEnabled(modoEdicion);
-		//botonGuardarCambios.setEnabled(modoEdicion);
 		botonGuardarCambios.setVisible(modoEdicion);
+		botonActualizarFoto.setVisible(modoEdicion);
 		if (usuarioActual == Acceso.getUsuarioActivo()) {botonCondicionesRefugio.setText("Editar mis condiciones registro");}
 	}
 }

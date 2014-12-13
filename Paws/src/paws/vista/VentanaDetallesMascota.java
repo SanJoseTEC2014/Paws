@@ -297,7 +297,6 @@ public class VentanaDetallesMascota extends JFrame {
 		checkDesparacitada.setEnabled(false);
 		checkDesparacitada.setOpaque(false);
 		marcoChecks.add(checkDesparacitada);
-
 		
 	}
 
@@ -347,5 +346,7 @@ public class VentanaDetallesMascota extends JFrame {
 		radioMuerta.setModel(new ReadOnlyRadioButtonModel(mascota.isMuerta()));
 		
 	}
+	
+	public void modoEdicion(){}
 	
 }
