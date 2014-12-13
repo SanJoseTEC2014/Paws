@@ -4,6 +4,8 @@ import com.toedter.calendar.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -15,10 +17,6 @@ import paws.recursos.*;
 
 @SuppressWarnings("serial")
 public class VentanaParametrosSistema extends JFrame {
-	private final String[] calificaciones = new String[]{"5.0",
-							"4.5", "4.0", "3.5", "3.0", "2.5",
-							"2.0", "1.5", "1.0", "0.5", "0.0"};
-	
 	private JButton botonGuardarFecha;
 	private JButton boton1Dia;
 	private JButton boton7Dias;
@@ -27,21 +25,16 @@ public class VentanaParametrosSistema extends JFrame {
 	private JPanel pestaniaFecha;
 	private JCalendar calendar;
 	private JPanel panelCalendar;
-	private JButton botonColorFondoCambiar;
 	private JPanel panelMensajeNuevo;
 	private JTextArea mensajeCorreoNuevo;
 	private JButton btnGuardarMensaje;
-	private JButton botonColorFondoGuardar;
-	private JPanel panelCalificacion;
-	private JPanel panelColorFondo;
 	
 	private Color nuevoColorFondo;
-	private JButton botonCerrar;
 	private JTextField textFecha;
 	private JComboBox<String> comboCalificaciones;
 	
 	public VentanaParametrosSistema() {
-		setSize(435, 420);
+		setSize(435, 459);
 		setResizable(false);
 		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -63,7 +56,15 @@ public class VentanaParametrosSistema extends JFrame {
 		marcoPestanias.addTab("General", pestaniaGeneral);
 		pestaniaGeneral.setLayout(new BoxLayout(pestaniaGeneral, BoxLayout.PAGE_AXIS));
 		
+		JPanel panelCasosPrueba = new JPanel();
+		panelCasosPrueba.setBorder(new TitledBorder(null,
+			"Casos de Prueba", TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones, new Color(0,0,0)));
+		panelCasosPrueba.setOpaque(false);
+		pestaniaGeneral.add(panelCasosPrueba);
+		panelCasosPrueba.setLayout(new BoxLayout(panelCasosPrueba, BoxLayout.Y_AXIS));
+		
 		JButton botonCasos = new JButton("Cargar Casos de Prueba");
+		panelCasosPrueba.add(botonCasos);
 		botonCasos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		botonCasos.addActionListener(new ActionListener() {
@@ -84,7 +85,11 @@ public class VentanaParametrosSistema extends JFrame {
 		});
 		botonCasos.setFont(Diseno.fuenteBotones);
 		botonCasos.setEnabled(!CasosPrueba.isCargadosAmbosCasos());
-		pestaniaGeneral.add(botonCasos);
+		
+		JLabel labelCasosPrueba = new JLabel("Los casos de prueba incluyen: Mascotas, Usuarios y Organizaciones");
+		labelCasosPrueba.setFont(Diseno.fuenteBotones);
+		labelCasosPrueba.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelCasosPrueba.add(labelCasosPrueba);
 		
 		JPanel panelFechaActual = new JPanel();
 		pestaniaGeneral.add(panelFechaActual);
@@ -138,7 +143,7 @@ public class VentanaParametrosSistema extends JFrame {
 		boton30Dias.setFont(Diseno.fuenteBotones);
 		boton30Dias.setEnabled(Tiempo.isFechaEstablecida());
 		
-		panelCalificacion = new JPanel();
+		JPanel panelCalificacion = new JPanel();
 		pestaniaGeneral.add(panelCalificacion);
 		panelCalificacion.setOpaque(false);
 		panelCalificacion.setBorder(new TitledBorder(null, "Bloquear Usuarios con Nota Menor a:",
@@ -147,7 +152,8 @@ public class VentanaParametrosSistema extends JFrame {
 		
 		comboCalificaciones = new JComboBox<String>();
 		comboCalificaciones.setFont(Diseno.fuenteBotones);
-		comboCalificaciones.setModel(new DefaultComboBoxModel<String>(calificaciones));
+		comboCalificaciones.setModel(Usuario.getModeloCalificaciones());
+		comboCalificaciones.setSelectedIndex(Usuario.calificacionesPermitidas.indexOf(Usuario.getCalificacionMinimaPermitida()));
 		panelCalificacion.add(comboCalificaciones, BorderLayout.CENTER);
 		
 		botonGuardarCalificacion = new JButton("Guardar");
@@ -156,18 +162,22 @@ public class VentanaParametrosSistema extends JFrame {
 		botonGuardarCalificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario.setCalificacionMinimaPermitidaUsuarios(
-					Double.valueOf((String) comboCalificaciones.getSelectedItem()));
+					Usuario.calificacionesPermitidas.get(
+						comboCalificaciones.getSelectedIndex()));
+				JOptionPane.showMessageDialog(getContentPane(),
+					"Se guardó la calificación correctamente:\n"
+					+ Usuario.getCalificacionMinimaPermitida());
 			}
 		});
 		panelCalificacion.add(botonGuardarCalificacion, BorderLayout.EAST);
 		
-		panelColorFondo = new JPanel();
+		JPanel panelColorFondo = new JPanel();
 		pestaniaGeneral.add(panelColorFondo);
 		panelColorFondo.setOpaque(false);
 		panelColorFondo.setBorder(new TitledBorder(null, "Color de Fondo:",
 			TitledBorder.CENTER, TitledBorder.TOP, Diseno.fuenteBotones.deriveFont(Font.PLAIN), new Color(0, 0, 0)));
-		
-		botonColorFondoCambiar = new JButton("Cambiar");
+
+		JButton botonColorFondoCambiar = new JButton("Cambiar");
 		botonColorFondoCambiar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonColorFondoCambiar.setFont(Diseno.fuenteBotones);
 		botonColorFondoCambiar.addActionListener(new ActionListener() {
@@ -178,7 +188,7 @@ public class VentanaParametrosSistema extends JFrame {
 		panelColorFondo.setLayout(new BoxLayout(panelColorFondo, BoxLayout.X_AXIS));
 		panelColorFondo.add(botonColorFondoCambiar);
 		
-		botonColorFondoGuardar = new JButton("Guardar");
+		JButton botonColorFondoGuardar = new JButton("Guardar");
 		botonColorFondoGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonColorFondoGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -245,7 +255,7 @@ public class VentanaParametrosSistema extends JFrame {
 			}
 		}
 		
-		botonCerrar = new JButton("Cerrar");
+		JButton botonCerrar = new JButton("Cerrar");
 		botonCerrar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

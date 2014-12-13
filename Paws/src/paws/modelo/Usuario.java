@@ -5,6 +5,8 @@ import java.math.*;
 import java.text.*;
 import java.util.*;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import paws.control.EstadosMascotas;
@@ -19,6 +21,9 @@ public class Usuario implements Serializable, Comunicable {
 	private static final long serialVersionUID = 222L;
 	
 	public static final List<String> lapsos = Arrays.asList("Diario", "Semanal", "Mensual");
+	public static final List<Double> calificacionesPermitidas = 
+		Arrays.asList(5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.0);
+	
 	private static Double calificacionMinimaPermitida;
 	
 	public static Double getCalificacionMinimaPermitida() {
@@ -27,6 +32,14 @@ public class Usuario implements Serializable, Comunicable {
 
 	public static void setCalificacionMinimaPermitidaUsuarios(Double pCalificacion) {
 		calificacionMinimaPermitida = pCalificacion;
+	}
+	
+	public static ComboBoxModel<String> getModeloCalificaciones() {
+		String[] temp = new String[calificacionesPermitidas.size()];
+		for (int i = 0; i < temp.length; i++){
+			temp[i] = calificacionesPermitidas.get(i).toString();
+		}
+		return new DefaultComboBoxModel<String>(temp);
 	}
 	
 	private String nickname;

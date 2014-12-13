@@ -210,6 +210,7 @@ public class VentanaDetallesMascota extends JFrame {
 			}
 		});
 		marcoBotonesBasicos.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		marcoBotonesBasicos.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		marcoBotonesBasicos.add(botonSoyDuenio);
 
 		botonQuieroAdoptarla = new JButton("Quiero adoptarla");
@@ -222,6 +223,11 @@ public class VentanaDetallesMascota extends JFrame {
 		botonGuardarCambios.setOpaque(false);
 
 		JButton botonCerrar = new JButton("Cerrar");
+		botonCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		marcoBotonesBasicos.add(botonCerrar);
 		botonCerrar.setOpaque(false);
 

@@ -45,7 +45,6 @@ public class Principal {
 	}
 	
 	public static Mascota getMascotaID(Integer IDmascota) throws MascotaNoEncontradaException {
-		// TODO búsqueda binaria
 		for (Mascota mascota : mascotas) if (IDmascota == mascota.getID()) return mascota;
 		throw new MascotaNoEncontradaException("Error inesperado no se encuentra la mascota");
 	}
@@ -82,7 +81,6 @@ public class Principal {
 	}
 	
 	public static Organizacion getOrganizacionID(Integer IDOrganizacion) throws OrganizacionNoEncontradaException {
-		// TODO búsqueda binaria
 		for (Organizacion organizacion : organizaciones) {
 			if (IDOrganizacion == organizacion.getID()) return organizacion;
 		}
@@ -133,7 +131,7 @@ public class Principal {
 		Diseno.inicializarLookAndFeel();
 		Diseno.inicializarFuentes();
 		cargarBaseDatosMascotas();
-		Usuario.setCalificacionMinimaPermitidaUsuarios(3.0);
+		Usuario.setCalificacionMinimaPermitidaUsuarios(Usuario.calificacionesPermitidas.get(4)); // 3.0
 		CasosPrueba.setCargados(false);
         cargarMensajeCorreo();
 		

@@ -42,22 +42,23 @@ public class Mascota implements Serializable {
 
 	private Integer id;
 	private String nombre;
-	private String numeroChip;
 	private String especie;
 	private String raza;
+	private Integer recompensa;
+	
+	private String numeroChip;
 	private String color;
 	private String edad;
 	private String sexo;
-	private boolean castrada;
-	private boolean vacunada;
-	private boolean desparacitada;
+	private Boolean castrada;
+	private Boolean vacunada;
+	private Boolean desparacitada;
 	private String tamanio;
-	
-	private Suceso[] sucesos = new Suceso[6]; // Para cada suceso del array corresponde un estado
+	private Suceso[] sucesos; // Para cada suceso del array corresponde un estado
 	// 0 = Desaparecida; 1 = Encontrada; 2 = Refugiada; 3 = Localizada; 4 = Adoptada; 5 = Muerta
-	private boolean[] marcadoresEstado;
-	private boolean[] marcadoresEspera; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
-	private Integer recompensa;
+	private Boolean[] marcadoresEstado;
+	private Boolean[] marcadoresEspera; //0 = Localizacion, 1 = Refugio, 2 = Adopcion
+	
 
 	public Mascota(String pNombre, String pEspecie, String pRaza, Integer pRecompensa) throws TiempoSinEstablecerException {
 		id = ++totalIDsRegistradas;
@@ -74,8 +75,10 @@ public class Mascota implements Serializable {
 		desparacitada = false;
 		recompensa = pRecompensa;
 		sucesos = new Suceso[]{new Suceso(), new Suceso(), new Suceso(), new Suceso(), new Suceso(), new Suceso()}; 
-		marcadoresEstado = new boolean[]{false, false, false, false, false, false};
-		marcadoresEspera = new boolean[]{false, false, false};
+		marcadoresEstado = new Boolean[6];
+		for (int i = 0; i < marcadoresEstado.length; i++) { marcadoresEstado[i] = false; }
+		marcadoresEspera = new Boolean[3];
+		for (int i = 0; i < marcadoresEspera.length; i++) { marcadoresEspera[i] = false; }
 		tamanio = "";
 	}
 
@@ -172,7 +175,6 @@ public class Mascota implements Serializable {
 	}
 
 	public void addNuevoSuceso(Suceso pSuceso) {
-		System.out.println(pSuceso.getEstado());
 		
 		String estados[] = {EstadosMascotas.estadoDESAPARECIDA,
                 EstadosMascotas.estadoENCONTRADA,
@@ -180,8 +182,6 @@ public class Mascota implements Serializable {
                 EstadosMascotas.estadoLOCALIZADA,
                 EstadosMascotas.estadoADOPTADA,
                 EstadosMascotas.estadoMUERTA};
-		
-
 				
 		for (int i = 0; i < marcadoresEstado.length; i++){
 		    if (pSuceso.getEstado().equals(estados[i])){
@@ -190,11 +190,6 @@ public class Mascota implements Serializable {
 		    } else {
 		        marcadoresEstado[i] = false;
 		    }
-		}
-		
-		for (int i = 0; i < marcadoresEstado.length; i++){
-			System.out.println("# "+marcadoresEstado[i]);
-
 		}
 		
 	}
@@ -252,11 +247,10 @@ public class Mascota implements Serializable {
 		return sucesos;
 	}
 	
-	public Suceso getUltimoSuceso() {
-		for (int i = 0; i < 6; i++){
+	public Suceso getUltimoSuceso() {		
+		for (int i = 0; i < marcadoresEstado.length; i++){
 			if (marcadoresEstado[i]) { return sucesos[i]; }
 		}
-		
 		throw new NullPointerException("No se encuentra ningún suceso.");
 	}
 	
@@ -288,49 +282,55 @@ public class Mascota implements Serializable {
 	}
 	
 	public String toString() {
-		String msg = "ID: " + id;
-		msg += "\nNombre de la mascota: " + nombre;
-		msg += "\nChip: " + numeroChip;
-		msg += "\nEspecie: " + especie;
-		msg += "\nRaza: " + raza;
-		msg += "\nColor: " + color;
-		msg += "\nEdad: " + edad;
-		msg += "\nSexo: " + sexo;
-		msg += "\nCastrada: " + (castrada ? "Sí" : "No");
-		msg += "\nVacunada: " + (vacunada ? "Sí" : "No");
-		msg += "\nDesparacitada: " + (desparacitada ? "Sí" : "No");
-		msg += "\nTamaño: " + tamanio;
-		
-		for (int i = 0; i < 5; i++){
-			if (marcadoresEstado[i]) msg += "\nEstado Actual: " + sucesos[i].getEstado();
-		}
-		msg += "\nEsperando Localización: " + (marcadoresEspera[0] ? "Sí" : "No");
-		msg += "\nEsperando Refugio: " 		+ (marcadoresEspera[1] ? "Sí" : "No");
-		msg += "\nEsperando Adopción: " 	+ (marcadoresEspera[2] ? "Sí" : "No");
-		
-		return msg;
+//		String msg = "ID: " + id;
+//		msg += "\nNombre de la mascota: " + nombre;
+//		msg += "\nChip: " + numeroChip;
+//		msg += "\nEspecie: " + especie;
+//		msg += "\nRaza: " + raza;
+//		msg += "\nColor: " + color;
+//		msg += "\nEdad: " + edad;
+//		msg += "\nSexo: " + sexo;
+//		msg += "\nCastrada: " + (castrada ? "Sí" : "No");
+//		msg += "\nVacunada: " + (vacunada ? "Sí" : "No");
+//		msg += "\nDesparacitada: " + (desparacitada ? "Sí" : "No");
+//		msg += "\nTamaño: " + tamanio;
+//		msg += "\nMarcadores Estado:";
+//		for (int i = 0; i < marcadoresEstado.length; i++) { 
+//			msg += " " + marcadoresEstado[i];
+//		}
+//		for (int i = 0; i < marcadoresEstado.length; i++) {
+//			if (marcadoresEstado[i]) msg += "\nEstado Actual: " + sucesos[i].getEstado();
+//		}
+//		msg += "\nEsperando Localización: " + (marcadoresEspera[0] ? "Sí" : "No");
+//		msg += "\nEsperando Refugio: " 		+ (marcadoresEspera[1] ? "Sí" : "No");
+//		msg += "\nEsperando Adopción: " 	+ (marcadoresEspera[2] ? "Sí" : "No");
+//		return msg;
+		return new Boolean(marcadoresEstado == null).toString();
 	}
-
+	
 	// Constructor invocado unicamente por el metodo .clone()
-	private Mascota(Integer pID, String pNombre, String pEspecie, String pRaza, Integer pRecompensa) {
+	private Mascota(Integer pID) {
 		id = pID;
-		nombre = pNombre;
-		especie = pEspecie;
-		raza = pRaza;
-		recompensa = pRecompensa;
 	}
 	
 	public Mascota clone() {
-		  Mascota clone = new Mascota(id, nombre, especie, raza, recompensa);
-		  clone.setColor(color);
-		  clone.setEdad(edad);
-		  clone.setNumeroChip(numeroChip);
-		  clone.setSexo(sexo);
-		  clone.setTamanio(tamanio);		  
-		  clone.setCastrada(castrada);
-		  clone.setDesparacitada(desparacitada);
-		  clone.setVacunada(vacunada);
-		  return clone;
+		Mascota clone = new Mascota(this.id);
+		clone.nombre = this.nombre;
+		clone.especie = this.especie;
+		clone.raza = this.raza;
+		clone.recompensa = this.recompensa;
+		clone.numeroChip = this.numeroChip;
+		clone.color = this.color;
+		clone.edad = this.edad;
+		clone.sexo = this.sexo;
+		clone.castrada = this.castrada;
+		clone.vacunada = this.vacunada;
+		clone.desparacitada = this.desparacitada;
+		clone.sucesos = this.sucesos.clone(); 
+		clone.marcadoresEstado = this.marcadoresEstado.clone();
+		clone.marcadoresEspera = this.marcadoresEspera.clone();
+		clone.tamanio = this.tamanio;
+		return clone;
 	}
 
 	public static DefaultComboBoxModel<String> getModeloEspecies() {
@@ -352,6 +352,10 @@ public class Mascota implements Serializable {
 	public static DefaultComboBoxModel<String> getModeloColores() {
 		int size = colores.size();
 		return new DefaultComboBoxModel<String>(colores.toArray(new String[size]));
+	}
+	
+	public static ComboBoxModel<String> getModeloSexos() {
+		return new DefaultComboBoxModel<String>(new String[]{"Macho", "Hembra"});
 	}
 	
 	public static void addTamanio(String pTamanio){
@@ -379,14 +383,7 @@ public class Mascota implements Serializable {
 		return razas;
 	}
 
-	public static Integer getTotalChips() {
+	public static Integer getTotalIDsRegistradas() {
 		return totalIDsRegistradas;
-	}
-
-	public static ComboBoxModel<String> getModeloSexos() {
-		return new DefaultComboBoxModel<String>(new String[]{"Macho", "Hembra"});
-	}
-
-
-	
+	}	
 }
