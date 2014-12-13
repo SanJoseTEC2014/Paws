@@ -17,7 +17,7 @@ public class Suceso implements Serializable {
 	private String nick;
 	
 	public Suceso() throws TiempoSinEstablecerException {
-		nick = "";
+		nick = "sin suceso";
 		estado = "";
 		lugar = "";
 		// Copia el valor Date de la fecha del Sistema

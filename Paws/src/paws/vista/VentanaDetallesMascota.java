@@ -297,7 +297,6 @@ public class VentanaDetallesMascota extends JFrame {
 		checkDesparacitada.setEnabled(false);
 		checkDesparacitada.setOpaque(false);
 		marcoChecks.add(checkDesparacitada);
-
 		
 	}
 
@@ -330,8 +329,7 @@ public class VentanaDetallesMascota extends JFrame {
 		comboTamanio.setSelectedItem(mascota.getTamanio());
 
 		try {
-			labelFotoMascota.setIcon(new ImageIcon(Imagenes
-					.getPerfilMascota(mascota.getID())));
+			labelFotoMascota.setIcon(new ImageIcon(mascota.getImagen()));
 		} catch (ImagenNoEncontradaException e) {
 			labelFotoMascota.setText("No existe fotografía para esta mascota.");
 		}
@@ -344,5 +342,7 @@ public class VentanaDetallesMascota extends JFrame {
 		radioMuerta.setModel(new ReadOnlyRadioButtonModel(mascota.isMuerta()));
 		
 	}
+	
+	public void modoEdicion(){}
 	
 }

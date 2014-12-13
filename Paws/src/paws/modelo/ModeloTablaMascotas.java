@@ -21,7 +21,7 @@ public class ModeloTablaMascotas extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 			case 0:
-				return listaMascotas.get(rowIndex).getID().toString();
+				return listaMascotas.get(rowIndex).getID();
 			case 1:
 				return listaMascotas.get(rowIndex).getNombre();
 			case 2:
