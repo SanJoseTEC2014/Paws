@@ -171,9 +171,9 @@ public class VentanaRegistroUsuarios extends JFrame {
 						nicknameTextBox.getText(),
 						nombreTextBox.getText(),
 						apellidosTextBox.getText(),
-						Integer.parseInt(cedulaTextBox.getText()),
+						Integer.parseInt(cedulaTextBox.getText().replaceAll("-", "")),
 						new String(passwordTextBox.getPassword()),
-						Integer.parseInt(telefonoTextBox.getText()),
+						Integer.parseInt(telefonoTextBox.getText().replaceAll("-", "")),
 						correoTextBox.getText(),
 						direccionTextBox.getText()
 						)
@@ -247,7 +247,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 		
 		try {
 			MaskFormatter cedulaFormat = new MaskFormatter("#-####-####");
-			cedulaFormat.setValidCharacters("123456789");
+			cedulaFormat.setValidCharacters("1234567890");
 			cedulaFormat.setPlaceholderCharacter('_');
 			cedulaFormat.setAllowsInvalid(false);
 			cedulaTextBox = new JFormattedTextField(cedulaFormat);
@@ -282,7 +282,7 @@ public class VentanaRegistroUsuarios extends JFrame {
 		
 		try {
 			MaskFormatter telefonoFormat = new MaskFormatter("####-####");
-			telefonoFormat.setValidCharacters("123456789");
+			telefonoFormat.setValidCharacters("1234567890");
 			telefonoFormat.setPlaceholderCharacter('_');
 			telefonoFormat.setAllowsInvalid(false);
 			telefonoTextBox = new JFormattedTextField(telefonoFormat);

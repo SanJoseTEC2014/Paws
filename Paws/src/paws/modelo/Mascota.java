@@ -38,7 +38,7 @@ public class Mascota implements Serializable {
 	private static LinkedList<String> especies = new LinkedList<String>();
 	private static LinkedList<LinkedList<String>> razas = new LinkedList<LinkedList<String>>();
 	
-	private static Integer totalIDsRegistradas = 0;
+	private static Integer totalIDsRegistradas;
 
 	private Integer id;
 	private String nombre;
@@ -385,5 +385,9 @@ public class Mascota implements Serializable {
 
 	public static Integer getTotalIDsRegistradas() {
 		return totalIDsRegistradas;
-	}	
+	}
+	
+	public static void setTotalIDsRegistradas(Integer pTotal) {
+		totalIDsRegistradas = pTotal;
+	}
 }

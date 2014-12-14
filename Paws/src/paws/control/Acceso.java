@@ -75,6 +75,10 @@ public class Acceso {
 		return usuarioActivo.isAdministrador();
 	}
 	
+	public static boolean isSuperUsuarioActivo(){
+		return (usuarioActivo == getInstanciaSuperUsuario());
+	}
+	
 	public static Usuario getUsuarioActivo(){
 		return usuarioActivo;
 	}
