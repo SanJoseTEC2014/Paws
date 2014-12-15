@@ -329,12 +329,12 @@ public class VentanaDetallesUsuario extends JFrame {
 			botonPromoverRefugiante.setVisible(false);
 		}
 		
-		if (Acceso.isSuperUsuarioActivo() || Acceso.isAdministradorActivo() && pUsuario.isBloqueado()){
+		if ((Acceso.isSuperUsuarioActivo() || Acceso.isAdministradorActivo()) && pUsuario.isBloqueado()){
 			textNickname.setText(pUsuario.getNickname() + " (USUARIO EN LISTA NEGRA)");
 		} else {
 			textNickname.setText(pUsuario.getNickname() + " (USUARIO EN LISTA BLANCA)");
-			textNickname.setText(usuarioActual.getNickname());
 		}
+		
 		textNombre.setText(usuarioActual.getNombre());
 		textApellidos.setText(usuarioActual.getApellidos());
 		formatCedula.setText(usuarioActual.getCedula().toString());

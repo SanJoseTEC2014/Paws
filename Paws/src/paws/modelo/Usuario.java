@@ -274,7 +274,7 @@ public class Usuario implements Serializable, Comunicable {
 	public double getPonderadoCalificacion(){
 		DecimalFormat redondeo = new DecimalFormat("#.#");
 		redondeo.setRoundingMode(RoundingMode.HALF_UP);
-		return Double.parseDouble(redondeo.format(ponderadoCalificacion));
+		return ponderadoCalificacion;
 		//return ponderadoCalificacion;
 	}
 	

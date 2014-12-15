@@ -200,14 +200,7 @@ public class VentanaDetallesMascota extends JFrame {
 		botonRemplazarImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonRemplazarImagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				mascotaActual.setNombre(campoNombre.getText());
-				mascotaActual.setChip(campoChip.getText());
-				mascotaActual.setColor(campoColor.getText());
-				mascotaActual.setEspecie(comboEspecie.getSelectedItem().toString());
-				mascotaActual.setRaza(comboRaza.getSelectedItem().toString());
-				mascotaActual.setTamanio(comboTamanio.getSelectedItem().toString());
-				mascotaActual.setSexo(comboSexo.getSelectedItem().toString());
-				mascotaActual.setRecompensa(Integer.parseInt(campoMontoRecompensa.getText()));
+				
 			}
 		});
 		panelBotonesFoto.add(botonRemplazarImagen);
@@ -233,7 +226,18 @@ public class VentanaDetallesMascota extends JFrame {
 
 		botonGuardarCambios = new JButton("Guardar Cambios");
 		botonGuardarCambios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {	
+				mascotaActual.setNombre(campoNombre.getText());
+				mascotaActual.setChip(campoChip.getText());
+				mascotaActual.setColor(campoColor.getText());
+				mascotaActual.setEspecie(comboEspecie.getSelectedItem().toString());
+				mascotaActual.setRaza(comboRaza.getSelectedItem().toString());
+				mascotaActual.setTamanio(comboTamanio.getSelectedItem().toString());
+				mascotaActual.setSexo(comboSexo.getSelectedItem().toString());
+				mascotaActual.setRecompensa(Integer.parseInt(campoMontoRecompensa.getText()));
+				mascotaActual.setImagen(rutaFotoMascota);
+				JOptionPane.showMessageDialog(null, "Cambios correctamente guardados", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			
 				
 			}
 		});
@@ -348,8 +352,8 @@ public class VentanaDetallesMascota extends JFrame {
 		
 		JOptionPane.showMessageDialog(getContentPane(), mascota.toString());
 		
-		botonSoyDuenio.setVisible(mascota.isEncontrada() || mascota.isRefugiada() && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
-		botonQuieroAdoptarla.setVisible(mascota.isEncontrada() || mascota.isRefugiada() && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
+		botonSoyDuenio.setVisible((mascota.isEncontrada() || mascota.isRefugiada()) && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
+		botonQuieroAdoptarla.setVisible((mascota.isEncontrada() || mascota.isRefugiada()) && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
 
 		campoNombre.setText(mascota.getNombre());
 		campoChip.setText(mascota.getNumeroChip() == null ? "" : mascota
