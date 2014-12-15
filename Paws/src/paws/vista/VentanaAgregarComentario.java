@@ -1,9 +1,13 @@
 package paws.vista;
 
 import javax.swing.*;
+
 import java.awt.*;
+
 import javax.swing.border.*;
+
 import java.awt.event.*;
+import java.util.ResourceBundle.Control;
 
 import paws.control.*;
 import paws.modelo.*;
@@ -23,7 +27,7 @@ public class VentanaAgregarComentario extends JFrame {
 	private JEditorPane textComentario;
 	private Usuario usuarioACalificar;
 	
-	public VentanaAgregarComentario() {
+	public VentanaAgregarComentario(VentanaDetallesUsuario detallesUsuario) {
 		setSize(480,299);
 		setIconImage(Imagenes.getIconoSistema().getImage());
 		getContentPane().setBackground(Diseno.fondoVentanas);
@@ -87,6 +91,9 @@ public class VentanaAgregarComentario extends JFrame {
 		btnComentar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				usuarioACalificar.addCalificacion(new Calificacion(Acceso.getUsuarioActivo().getNickname(), (Integer) comboCalificacion.getSelectedItem(), textComentario.getText()));
+				detallesUsuario.close();
+				Principal.coordinador.mostrarDetallesUsuario(usuarioACalificar);
+				
 				close();
 			}
 		});

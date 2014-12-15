@@ -98,7 +98,7 @@ public class Mascota implements Serializable {
 		return numeroChip;
 	}
 
-	public void setNumeroChip(String string) {
+	public void setChip(String string) {
 		this.numeroChip = string;
 	}
 

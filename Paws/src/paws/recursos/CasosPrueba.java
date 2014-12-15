@@ -93,7 +93,7 @@ public class CasosPrueba {
 				porRegistrar.setCastrada(registro.get(11).equals("SI") ? true : false);
 				porRegistrar.setVacunada(registro.get(12).equals("SI") ? true : false);
 				porRegistrar.setDesparacitada(registro.get(13).equals("SI") ? true : false);
-				porRegistrar.setNumeroChip(registro.get(14));
+				porRegistrar.setChip(registro.get(14));
 				Principal.mascotas.add(porRegistrar);
 			}
 			JOptionPane.showMessageDialog(null,

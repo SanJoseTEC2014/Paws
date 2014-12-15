@@ -22,41 +22,42 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class VentanaDetallesUsuario extends JFrame {
 	
+	private JButton botonActualizarFoto;
 	private JButton botonCondicionesRefugio;
 	private JButton botonDetalles;
 	private JButton botonGuardarCambios;
+	private JButton botonPromoverRefugiante;
 	private JButton botonSalir;
 	private JButton botonVerMascotas;
-	private JButton botonActualizarFoto;
+	private JButton btnAgregarCalificacion;
 	private JComboBox<String> comboLapsos;
 	private JFormattedTextField formatCedula;
 	private JFormattedTextField formatTelefono;
+	protected String imagenSeleccionada;
 	private JLabel labelApellidos;
 	private JLabel labelCedula;
 	private JLabel labelCorreo;
 	private JLabel labelEstrellas;
 	private JLabel labelFoto;
 	private JLabel labelLapsos;
-	private JLabel labelNickname;
+	private JLabel labelNickname; 
 	private JLabel labelNombre;
 	private JLabel labelPromedio;
-	private JLabel labelTelefono; 
+	private JLabel labelTelefono;
 	private JLabel labelTitulo1;
 	private JLabel labelTitulo2;
 	private JPanel marcoContenido;
 	private JPanel marcoDetalles;
 	private JPanel marcoFotoPerfil;
 	private JPanel marcoOperaciones;
+	
 	private JPanel marcoTitulos;
 	private boolean modoEdicion;
 	private JTextField textApellidos;
-	
 	private JTextField textCorreo;
 	private JTextField textNickname;
 	private JTextField textNombre;
 	private Usuario usuarioActual;
-	private JButton btnAgregarCalificacion;
-	protected String imagenSeleccionada;
 
 	public VentanaDetallesUsuario(){
 		setSize(999,500);
@@ -92,7 +93,7 @@ public class VentanaDetallesUsuario extends JFrame {
 		marcoFotoPerfil.setLayout(new BorderLayout(0, 0));
 		marcoContenido.add(marcoFotoPerfil, BorderLayout.WEST);
 
-		labelFoto = new JLabel("No disponible");
+		labelFoto = new JLabel();
 		labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
 		labelFoto.setOpaque(false);
 		marcoFotoPerfil.add(labelFoto);
@@ -241,6 +242,9 @@ public class VentanaDetallesUsuario extends JFrame {
 				Acceso.getUsuarioActivo().setTelefono(Integer.parseInt(formatTelefono.getText()));
 				Acceso.getUsuarioActivo().setLapsoEmparejamiento((String)comboLapsos.getSelectedItem());
 				Acceso.getUsuarioActivo().setImagen(imagenSeleccionada);
+				JOptionPane.showMessageDialog(null,
+						"Los datos han sido actualizados correctamente",
+						"OK", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
@@ -250,6 +254,21 @@ public class VentanaDetallesUsuario extends JFrame {
 				Principal.coordinador.mostrarAgregarComentario(usuarioActual);
 			}
 		});
+		
+		botonPromoverRefugiante = new JButton("pro/re mover refugiante");
+		botonPromoverRefugiante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				usuarioActual.setRefugiante(usuarioActual.isRefugiante()? false : true); //si no es refugiante lo promueve, si no lo es le quita el permiso
+				botonPromoverRefugiante.setText(usuarioActual.isRefugiante()? "Revocar Refugiante" :  "Promover refugiante");
+
+				
+				JOptionPane.showMessageDialog(null, "El usuario ha sido " 
+						+ (usuarioActual.isRefugiante()? "pro" :  "re") 
+						+ "movido como refugiante", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		marcoOperaciones.add(botonPromoverRefugiante);
 		marcoOperaciones.add(btnAgregarCalificacion);
 		marcoOperaciones.add(botonGuardarCambios);
 		
@@ -268,16 +287,7 @@ public class VentanaDetallesUsuario extends JFrame {
 			}
 		});
 		marcoOperaciones.add(botonDetalles);
-		
-		if (Acceso.isAdministradorActivo()){
-			JButton botonPromover = new JButton("Ver Detalles de Calificaciones");
-			botonPromover.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					Principal.coordinador.mostrarCalificaciones(usuarioActual);
-				}
-			});
-			marcoOperaciones.add(botonPromover);
-		}
+	
 		
 		botonVerMascotas = new JButton("Ver Mascotas Asociadas");
 		botonVerMascotas.addActionListener(new ActionListener() {
@@ -296,16 +306,35 @@ public class VentanaDetallesUsuario extends JFrame {
 		marcoOperaciones.add(botonSalir);
 	}
 	
-	private void close(){
+	public void actualizarVentana(){  
+		repaint();
+	}
+	
+	void close(){
 		setVisible(false);
 	}
 	
+	
 	public void setDatosIniciales(Usuario pUsuario) {
 		
-		botonCondicionesRefugio.setVisible(pUsuario.isRefugiante());
-		
 		usuarioActual = pUsuario;
-		textNickname.setText(usuarioActual.getNickname());
+		botonCondicionesRefugio.setVisible(pUsuario.isRefugiante());
+		btnAgregarCalificacion.setVisible(usuarioActual != Acceso.getUsuarioActivo());
+
+		
+		if (Acceso.isAdministradorActivo() || Acceso.isSuperUsuarioActivo()){
+			botonPromoverRefugiante.setVisible(true);
+			botonPromoverRefugiante.setText(usuarioActual.isRefugiante()? "Revocar Refugiante" :  "Promover refugiante");
+		} else {
+			botonPromoverRefugiante.setVisible(false);
+		}
+		
+		if (Acceso.isSuperUsuarioActivo() || Acceso.isAdministradorActivo() && pUsuario.isBloqueado()){
+			textNickname.setText(pUsuario.getNickname() + " (USUARIO EN LISTA NEGRA)");
+		} else {
+			textNickname.setText(pUsuario.getNickname() + " (USUARIO EN LISTA BLANCA)");
+			textNickname.setText(usuarioActual.getNickname());
+		}
 		textNombre.setText(usuarioActual.getNombre());
 		textApellidos.setText(usuarioActual.getApellidos());
 		formatCedula.setText(usuarioActual.getCedula().toString());
@@ -318,18 +347,22 @@ public class VentanaDetallesUsuario extends JFrame {
 								   "Ponderado: " + usuarioActual.getPonderadoCalificacion());
 		}
 		comboLapsos.setSelectedIndex(Usuario.lapsos.indexOf(usuarioActual.getLapsoEmparejamiento()));
-		botonCondicionesRefugio.setVisible(usuarioActual.isRefugiante());
-		btnAgregarCalificacion.setVisible(usuarioActual != Acceso.getUsuarioActivo());
 		
 		try {
-			labelFoto.setIcon(new ImageIcon(Imagenes
-					.getPerfil(usuarioActual.getNickname())));
+			
+			BufferedImage imagenPerfil = Imagenes.getPerfil(usuarioActual.getNickname());
+			int ancho = 500;
+			int alto = 400;
+			imagenPerfil = Imagenes.redimensionar(
+					imagenPerfil, ancho, alto);
+			
+			labelFoto.setIcon(new ImageIcon(imagenPerfil));
+			
 		} catch (ImagenNoEncontradaException e) {
 			labelFoto.setText("USUARIO SIN FOTO");
 		}
 		
 	}
-	
 	
 	public void setModoEdicion(boolean modoEdicion){
 		textNombre.setEditable(modoEdicion);

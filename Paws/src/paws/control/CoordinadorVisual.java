@@ -13,6 +13,7 @@ package paws.control;
  *  
  */
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import paws.modelo.Mascota;
@@ -22,6 +23,8 @@ import paws.vista.*;
 
 public class CoordinadorVisual {
 	
+	private VentanaAgregarComentario ventanaAgregarComentario;
+
 	public CoordinadorVisual(){}
 	
 	public synchronized void mostrarInicioSesion() {
@@ -42,6 +45,8 @@ public class CoordinadorVisual {
 
 	public synchronized void mostrarDetallesUsuario(Usuario usuarioActual) {
 		VentanaDetallesUsuario detallesUsuario = new VentanaDetallesUsuario();
+		VentanaAgregarComentario agregarComentario = new VentanaAgregarComentario(detallesUsuario);
+		ventanaAgregarComentario = agregarComentario;
 		detallesUsuario.setDatosIniciales(usuarioActual);
 		detallesUsuario.setModoEdicion(usuarioActual == Acceso.getUsuarioActivo());
 		detallesUsuario.setVisible(true);
@@ -68,9 +73,8 @@ public class CoordinadorVisual {
 	}
 	
 	public synchronized void mostrarAgregarComentario(Usuario usuarioACalificar){
-		VentanaAgregarComentario agregarComentario = new VentanaAgregarComentario();
-		agregarComentario.setUsuarioACalificar(usuarioACalificar);
-		agregarComentario.setVisible(true);		
+		ventanaAgregarComentario.setUsuarioACalificar(usuarioACalificar);
+		ventanaAgregarComentario.setVisible(true);		
 	}
 
 	public void mostrarCondicionesRefugio(Usuario usuarioActual) {
@@ -113,7 +117,9 @@ public class CoordinadorVisual {
 	public void mostrarDetallesMascota(Mascota mascota) {
 		VentanaDetallesMascota detallesMascota = new VentanaDetallesMascota();
 		detallesMascota.setDatosIniciales(mascota);
+		detallesMascota.modoEdicion(mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
 		detallesMascota.setVisible(true);
+		
 	}
 	
 	public void mostrarDetallesAsociaciones(Organizacion organizacionActual) {

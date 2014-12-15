@@ -376,7 +376,7 @@ public class VentanaRegistroMascotas extends JFrame {
 						mascota.setCastrada(checkBoxCastrada.isSelected());
 						mascota.setColor((String) comboBoxColor.getSelectedItem());
 						mascota.setDesparacitada(checkBoxDesparacitada.isSelected());
-						mascota.setNumeroChip(campoNumeroDeChip.getText());
+						mascota.setChip(campoNumeroDeChip.getText());
 						mascota.setSexo((String) comboBoxSexo.getSelectedItem());
 						mascota.setTamanio((String) comboBoxTamanio.getSelectedItem());
 						mascota.setVacunada(checkBoxVacunada.isSelected());

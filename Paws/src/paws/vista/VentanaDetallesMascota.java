@@ -14,31 +14,34 @@ import paws.recursos.Diseno;
 
 @SuppressWarnings("serial")
 public class VentanaDetallesMascota extends JFrame {
-	private JTextField campoColor;
-	private JComboBox<String> comboEspecie;
-	private JComboBox<String> comboRaza;
-	private JComboBox<String> comboTamanio;
-	private JComboBox<String> comboSexo;
-	private JTextField campoNumeroChip;
-	private JPanel marcoCentro;
-	private JLabel labelFotoMascota;
-	private JTextField campoNombre;
-	private JPanel marcoDerecha;
-	private JButton botonSoyDuenio;
 	private JButton botonGuardarCambios;
-	private JLabel labelMontoRecompensa;
-	private JTextField campoMontoRecompensa;
 	private JButton botonQuieroAdoptarla;
-	private String rutaFotoMascota;
-	private JRadioButton radioDesaparecida;
-	private JRadioButton radioLocalizada;
-	private JRadioButton radioEncontrada;
-	private JRadioButton radioRefugiada;
-	private JRadioButton radioAdoptada;
-	private JRadioButton radioMuerta;
-	private JCheckBox checkVacunada;
+	private JButton botonSoyDuenio;
+	private JTextField campoColor;
+	private JFormattedTextField campoMontoRecompensa;
+	private JTextField campoNombre;
+	private JTextField campoChip;
 	private JCheckBox checkCastrada;
 	private JCheckBox checkDesparacitada;
+	private JCheckBox checkVacunada;
+	private JComboBox<String> comboEspecie;
+	private JComboBox<String> comboRaza;
+	private JComboBox<String> comboSexo;
+	private JComboBox<String> comboTamanio;
+	private JLabel labelFotoMascota;
+	private JLabel labelMontoRecompensa;
+	private JPanel marcoCentro;
+	private JPanel marcoDerecha;
+	private Mascota mascotaActual;
+	private JRadioButton radioAdoptada;
+	private JRadioButton radioDesaparecida;
+	private JRadioButton radioEncontrada;
+	private JRadioButton radioLocalizada;
+	private JRadioButton radioMuerta;
+	private JRadioButton radioRefugiada;
+	private String rutaFotoMascota;
+	private JButton botonRemplazarImagen;
+	private JButton botonSeleccionarFoto;
 
 	public VentanaDetallesMascota() {
 		setSize(700, 500);
@@ -67,8 +70,8 @@ public class VentanaDetallesMascota extends JFrame {
 		JLabel labelChip = new JLabel("Chip");
 		marcoInformacionPrincipal.add(labelChip);
 
-		campoNumeroChip = new JTextField();
-		marcoInformacionPrincipal.add(campoNumeroChip);
+		campoChip = new JTextField();
+		marcoInformacionPrincipal.add(campoChip);
 
 		JLabel labelColor = new JLabel("Color");
 		marcoInformacionPrincipal.add(labelColor);
@@ -138,7 +141,7 @@ public class VentanaDetallesMascota extends JFrame {
 		labelMontoRecompensa = new JLabel("Recompensa");
 		marcoInformacionPrincipal.add(labelMontoRecompensa);
 
-		campoMontoRecompensa = new JTextField();
+		campoMontoRecompensa = new JFormattedTextField();
 		campoMontoRecompensa.setEditable(false);
 		marcoInformacionPrincipal.add(campoMontoRecompensa);
 
@@ -167,7 +170,7 @@ public class VentanaDetallesMascota extends JFrame {
 		panelBotonesFoto.setLayout(new BoxLayout(panelBotonesFoto,
 				BoxLayout.Y_AXIS));
 
-		JButton botonSeleccionarFoto = new JButton("Seleccionar Nueva Imagen");
+		botonSeleccionarFoto = new JButton("Seleccionar Nueva Imagen");
 		botonSeleccionarFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panelBotonesFoto.add(botonSeleccionarFoto);
 		botonSeleccionarFoto.setOpaque(false);
@@ -193,15 +196,22 @@ public class VentanaDetallesMascota extends JFrame {
 			}
 		});
 
-		JButton botonGuardar = new JButton("Reemplazar Imagen en el Sistema");
-		botonGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		botonGuardar.addActionListener(new ActionListener() {
+		botonRemplazarImagen = new JButton("Reemplazar Imagen en el Sistema");
+		botonRemplazarImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botonRemplazarImagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				mascotaActual.setNombre(campoNombre.getText());
+				mascotaActual.setChip(campoChip.getText());
+				mascotaActual.setColor(campoColor.getText());
+				mascotaActual.setEspecie(comboEspecie.getSelectedItem().toString());
+				mascotaActual.setRaza(comboRaza.getSelectedItem().toString());
+				mascotaActual.setTamanio(comboTamanio.getSelectedItem().toString());
+				mascotaActual.setSexo(comboSexo.getSelectedItem().toString());
+				mascotaActual.setRecompensa(Integer.parseInt(campoMontoRecompensa.getText()));
 			}
 		});
-		panelBotonesFoto.add(botonGuardar);
-		botonGuardar.setOpaque(false);
+		panelBotonesFoto.add(botonRemplazarImagen);
+		botonRemplazarImagen.setOpaque(false);
 
 		JPanel marcoBotonesBasicos = new JPanel();
 		getContentPane().add(marcoBotonesBasicos, BorderLayout.SOUTH);
@@ -222,6 +232,11 @@ public class VentanaDetallesMascota extends JFrame {
 		marcoBotonesBasicos.add(botonQuieroAdoptarla);
 
 		botonGuardarCambios = new JButton("Guardar Cambios");
+		botonGuardarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				
+			}
+		});
 		marcoBotonesBasicos.add(botonGuardarCambios);
 		botonGuardarCambios.setVisible(false);
 		botonGuardarCambios.setOpaque(false);
@@ -310,13 +325,34 @@ public class VentanaDetallesMascota extends JFrame {
 		
 	}
 
+	public void modoEdicion(boolean isMascotaDeUsuarioActivo){
+		botonGuardarCambios.setVisible(isMascotaDeUsuarioActivo);
+		campoNombre.setEditable(isMascotaDeUsuarioActivo);
+		campoColor.setEditable(isMascotaDeUsuarioActivo);
+		campoMontoRecompensa.setEditable(isMascotaDeUsuarioActivo);
+		campoChip.setEnabled(isMascotaDeUsuarioActivo);
+		comboEspecie.setEnabled(isMascotaDeUsuarioActivo);
+		comboRaza.setEnabled(isMascotaDeUsuarioActivo);
+		comboSexo.setEnabled(isMascotaDeUsuarioActivo);
+		comboTamanio.setEnabled(isMascotaDeUsuarioActivo);
+		campoMontoRecompensa.setEditable(isMascotaDeUsuarioActivo);
+		
+		botonRemplazarImagen.setVisible(isMascotaDeUsuarioActivo);
+		botonRemplazarImagen.setVisible(isMascotaDeUsuarioActivo);
+		
+	}
+	
 	public void setDatosIniciales(Mascota mascota) {
+		
+		mascotaActual = mascota;
+		
 		JOptionPane.showMessageDialog(getContentPane(), mascota.toString());
 		
-		botonSoyDuenio.setVisible(mascota.isEncontrada() || mascota.isRefugiada());
+		botonSoyDuenio.setVisible(mascota.isEncontrada() || mascota.isRefugiada() && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
+		botonQuieroAdoptarla.setVisible(mascota.isEncontrada() || mascota.isRefugiada() && !mascota.getUltimoSuceso().getNick().equals(Acceso.getUsuarioActivo().getNickname()));
 
 		campoNombre.setText(mascota.getNombre());
-		campoNumeroChip.setText(mascota.getNumeroChip() == null ? "" : mascota
+		campoChip.setText(mascota.getNumeroChip() == null ? "" : mascota
 				.getNumeroChip().toString());
 		campoColor.setText(mascota.getColor());
 
@@ -324,7 +360,6 @@ public class VentanaDetallesMascota extends JFrame {
 		campoMontoRecompensa.setVisible(mascota.isDesaparecida());
 		campoMontoRecompensa.setText(mascota.getRecompensa() == null ? "0" : mascota.getRecompensa().toString());
 
-		botonQuieroAdoptarla.setVisible(mascota.isEncontrada() || mascota.isRefugiada());
 
 		comboEspecie.setModel(Mascota.getModeloEspecies());
 		comboEspecie.setSelectedItem(mascota.getEspecie());
@@ -366,7 +401,5 @@ public class VentanaDetallesMascota extends JFrame {
 		radioMuerta.setModel(new ReadOnlyRadioButtonModel(mascota.isMuerta()));
 		
 	}
-	
-	public void modoEdicion(){}
 	
 }
