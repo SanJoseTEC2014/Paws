@@ -175,12 +175,16 @@ public class VentanaDetallesMascota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					rutaFotoMascota = Imagenes.seleccionarImagen();
-					int ancho = labelFotoMascota.getSize().width;
-					int alto = labelFotoMascota.getSize().height;
-					BufferedImage porInsertar = Imagenes.redimensionar(
-							Imagenes.cargarImagen(rutaFotoMascota), ancho, alto);
+					BufferedImage porInsertar = Imagenes.cargarImagen(rutaFotoMascota);
+					Dimension nuevoTamanio = Imagenes.getNuevaDimension(
+							labelFotoMascota.getSize().width,
+							labelFotoMascota.getSize().height,
+							porInsertar.getSampleModel().getWidth(),
+							porInsertar.getSampleModel().getHeight());
 					labelFotoMascota.setText("");
-					labelFotoMascota.setIcon(new ImageIcon(porInsertar));
+					labelFotoMascota.setIcon(
+						new ImageIcon(
+							Imagenes.redimensionar(porInsertar, nuevoTamanio.width, nuevoTamanio.height)));
 				} catch (ImagenNoEncontradaException ex) {
 					JOptionPane.showMessageDialog(getContentPane(),
 						ex.getMessage(), "Advertencia",
@@ -335,11 +339,21 @@ public class VentanaDetallesMascota extends JFrame {
 		comboTamanio.setSelectedItem(mascota.getTamanio());
 
 		try {
-			int ancho = labelFotoMascota.getSize().width;
-			int alto = labelFotoMascota.getSize().height;
-			BufferedImage porInsertar = Imagenes.redimensionar(Imagenes.getPerfilMascota(mascota.getID()), ancho, alto);
+//			int ancho = labelFotoMascota.getSize().width;
+//			int alto = labelFotoMascota.getSize().height;
+//			BufferedImage porInsertar = Imagenes.redimensionar(Imagenes.getPerfilMascota(mascota.getID()), ancho, alto);
+//			labelFotoMascota.setText("");
+//			labelFotoMascota.setIcon(new ImageIcon(porInsertar));
+			BufferedImage porInsertar = Imagenes.getPerfilMascota(mascota.getID());
+			Dimension nuevoTamanio = Imagenes.getNuevaDimension(
+					labelFotoMascota.getSize().width,
+					labelFotoMascota.getSize().height,
+					porInsertar.getSampleModel().getWidth(),
+					porInsertar.getSampleModel().getHeight());
 			labelFotoMascota.setText("");
-			labelFotoMascota.setIcon(new ImageIcon(porInsertar));
+			labelFotoMascota.setIcon(
+				new ImageIcon(
+					Imagenes.redimensionar(porInsertar, nuevoTamanio.width, nuevoTamanio.height)));
 		} catch (ImagenNoEncontradaException e) {
 			labelFotoMascota.setText("No existe fotografía para esta mascota.");
 		}

@@ -132,6 +132,7 @@ public class Principal {
 		Diseno.inicializarFuentes();
 		cargarBaseDatosMascotas();
 		Usuario.setCalificacionMinimaPermitidaUsuarios(Usuario.calificacionesPermitidas.get(4)); // 3.0
+		Mascota.setTotalIDsRegistradas(0);
 		CasosPrueba.setCargados(false);
         cargarMensajeCorreo();
 		

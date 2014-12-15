@@ -63,7 +63,7 @@ public class VentanaMenuPrincipal extends JFrame {
 		marcoContenido.add(labelBienvenido);
 		
 		JLabel labelLogotipo = new JLabel("");
-		marcoContenido.add(labelLogotipo);
+		
 		try {
 			BufferedImage logo = Imagenes.getLogo2();
 			Dimension nuevoTamanio = Imagenes.getNuevaDimension(
@@ -75,6 +75,7 @@ public class VentanaMenuPrincipal extends JFrame {
 			JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(),
 				"Logotipo no encontrado.", JOptionPane.ERROR_MESSAGE);
 		}
+		marcoContenido.add(labelLogotipo);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

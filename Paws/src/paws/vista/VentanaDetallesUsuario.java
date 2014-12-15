@@ -59,7 +59,7 @@ public class VentanaDetallesUsuario extends JFrame {
 	protected String imagenSeleccionada;
 
 	public VentanaDetallesUsuario(){
-		setSize(800,500);
+		setSize(999,500);
 		getContentPane().setBackground(Diseno.fondoVentanas);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -68,222 +68,232 @@ public class VentanaDetallesUsuario extends JFrame {
 		marcoTitulos.setLayout(new BorderLayout(0, 0));
 		marcoTitulos.setOpaque(false);
 		getContentPane().add(marcoTitulos, BorderLayout.NORTH);
+
+		labelTitulo1 = new JLabel("Información");
+		labelTitulo1.setFont(Diseno.fuenteTitulosVentanas);
+		labelTitulo1.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTitulo1.setOpaque(false);
+		marcoTitulos.add(labelTitulo1, BorderLayout.NORTH);
 		
-				labelTitulo1 = new JLabel("Información");
-				labelTitulo1.setFont(Diseno.fuenteTitulosVentanas);
-				labelTitulo1.setHorizontalAlignment(SwingConstants.CENTER);
-				labelTitulo1.setOpaque(false);
-				marcoTitulos.add(labelTitulo1, BorderLayout.NORTH);
-				
-				labelTitulo2 = new JLabel("Contacto");
-				labelTitulo2.setHorizontalAlignment(SwingConstants.CENTER);
-				labelTitulo2.setFont(Diseno.fuenteTitulosVentanas);
-				labelTitulo2.setOpaque(false);
-				marcoTitulos.add(labelTitulo2, BorderLayout.SOUTH);
-				
+		labelTitulo2 = new JLabel("Contacto");
+		labelTitulo2.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTitulo2.setFont(Diseno.fuenteTitulosVentanas);
+		labelTitulo2.setOpaque(false);
+		marcoTitulos.add(labelTitulo2, BorderLayout.SOUTH);
+		
 		marcoContenido = new JPanel();
 		marcoContenido.setLayout(new BorderLayout(0, 0));
 		marcoContenido.setOpaque(false);
 		getContentPane().add(marcoContenido, BorderLayout.CENTER);
 				
-				marcoFotoPerfil = new JPanel();
-				marcoFotoPerfil.setBorder(new TitledBorder(null, "Foto de Perfil", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				marcoFotoPerfil.setOpaque(false);
-				marcoContenido.add(marcoFotoPerfil, BorderLayout.WEST);
-						marcoFotoPerfil.setLayout(new BorderLayout(0, 0));
+		marcoFotoPerfil = new JPanel();
+		marcoFotoPerfil.setBorder(new TitledBorder(null, "Foto de Perfil", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		marcoFotoPerfil.setOpaque(false);
+		marcoFotoPerfil.setLayout(new BorderLayout(0, 0));
+		marcoContenido.add(marcoFotoPerfil, BorderLayout.WEST);
+
+		labelFoto = new JLabel("No disponible");
+		labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+		labelFoto.setOpaque(false);
+		marcoFotoPerfil.add(labelFoto);
+		
+		botonActualizarFoto = new JButton("Actualizar Foto");
+		botonActualizarFoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
-						labelFoto = new JLabel("No disponible");
-						labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
-						labelFoto.setOpaque(false);
-						marcoFotoPerfil.add(labelFoto);
-						
-						botonActualizarFoto = new JButton("Actualizar Foto");
-						botonActualizarFoto.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								
-								try {
-									imagenSeleccionada = Imagenes.seleccionarImagen();
-									int ancho = labelFoto.getSize().width;
-									int alto = labelFoto.getSize().height;
-									BufferedImage porInsertar = Imagenes.redimensionar(
-											Imagenes.cargarImagen(imagenSeleccionada), ancho, alto);
-									labelFoto.setIcon(new ImageIcon(porInsertar));
-									labelFoto.setText("");
-								} catch (ImagenNoEncontradaException error) {
-									JOptionPane.showMessageDialog(getContentPane(), error.getMessage(),
-										"Advertencia", JOptionPane.WARNING_MESSAGE);
-									imagenSeleccionada = "";
-									labelFoto.setIcon(null);
-									labelFoto.setText("Ninguna Seleccionada");
-								}
-								
-							}
-						});
-						botonActualizarFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
-						botonActualizarFoto.setOpaque(false);
-						marcoFotoPerfil.add(botonActualizarFoto, BorderLayout.SOUTH);
+				try {
+					imagenSeleccionada = Imagenes.seleccionarImagen();
+					int ancho = labelFoto.getSize().width;
+					int alto = labelFoto.getSize().height;
+					BufferedImage porInsertar = Imagenes.redimensionar(
+							Imagenes.cargarImagen(imagenSeleccionada), ancho, alto);
+					labelFoto.setIcon(new ImageIcon(porInsertar));
+					labelFoto.setText("");
+				} catch (ImagenNoEncontradaException error) {
+					JOptionPane.showMessageDialog(getContentPane(), error.getMessage(),
+						"Advertencia", JOptionPane.WARNING_MESSAGE);
+					imagenSeleccionada = "";
+					labelFoto.setIcon(null);
+					labelFoto.setText("Ninguna Seleccionada");
+				}
 				
-				marcoDetalles = new JPanel();
-				marcoDetalles.setBorder(new TitledBorder(null, "Detalles:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				marcoDetalles.setLayout(new GridLayout(0, 2, 3, 3));
-				marcoDetalles.setOpaque(false);
-				marcoContenido.add(marcoDetalles, BorderLayout.CENTER);
+			}
+		});
+		botonActualizarFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botonActualizarFoto.setOpaque(false);
+		marcoFotoPerfil.add(botonActualizarFoto, BorderLayout.SOUTH);
+		
+		marcoDetalles = new JPanel();
+		marcoDetalles.setBorder(new TitledBorder(null, "Detalles:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		marcoDetalles.setLayout(new GridLayout(0, 2, 3, 3));
+		marcoDetalles.setOpaque(false);
+		marcoContenido.add(marcoDetalles, BorderLayout.CENTER);
 				
-						labelNickname = new JLabel("Nickname: ");
-						labelNickname.setOpaque(false);
-						marcoDetalles.add(labelNickname);
-						
-						textNickname = new JTextField();
-						textNickname.setEditable(false);
-						textNickname.setHorizontalAlignment(SwingConstants.CENTER);
-						textNickname.setColumns(10);
-						marcoDetalles.add(textNickname);
-						
-						labelNombre = new JLabel("Nombre: ");
-						labelNombre.setOpaque(false);
-						marcoDetalles.add(labelNombre);
-						
-						textNombre = new JTextField();
-						textNombre.setHorizontalAlignment(SwingConstants.CENTER);
-						textNombre.setColumns(10);
-						marcoDetalles.add(textNombre);
-						
-						labelApellidos = new JLabel("Apellidos:");
-						labelApellidos.setOpaque(false);
-						marcoDetalles.add(labelApellidos);
-						
-						textApellidos = new JTextField();
-						textApellidos.setHorizontalAlignment(SwingConstants.CENTER);
-						textApellidos.setColumns(10);
-						marcoDetalles.add(textApellidos);
-						
-						labelCedula = new JLabel("N\u00FAmero de C\u00E9dula: ");
-						labelCedula.setOpaque(false);
-						marcoDetalles.add(labelCedula);
-						
-						try {
-							formatCedula = new JFormattedTextField(new MaskFormatter("#########"));
-							formatCedula.setHorizontalAlignment(SwingConstants.CENTER);
-							marcoDetalles.add(formatCedula);
-						} catch (ParseException e) {
-							JOptionPane.showMessageDialog(null, e.getMessage());
-							JLabel error = new JLabel("Error inesperado en el sistema."); 
-							error.setOpaque(false);
-							marcoDetalles.add(error);
-						}
-						
-						labelTelefono = new JLabel("N\u00FAmero de Tel\u00E9fono:");
-						labelTelefono.setOpaque(false);
-						marcoDetalles.add(labelTelefono);
-						
-						try {
-							formatTelefono = new JFormattedTextField(new MaskFormatter("########"));
-							formatTelefono.setHorizontalAlignment(SwingConstants.CENTER);
-							marcoDetalles.add(formatTelefono);
-						} catch (ParseException e) {
-							JOptionPane.showMessageDialog(null, e.getMessage());
-							marcoDetalles.add(new JLabel("Error inesperado en el sistema."));
-						}
-						
-						labelCorreo = new JLabel("Correo Electr\u00F3nico:");
-						labelCorreo.setOpaque(false);
-						marcoDetalles.add(labelCorreo);
-						
-						textCorreo = new JTextField();
-						textCorreo.setHorizontalAlignment(SwingConstants.CENTER);
-						marcoDetalles.add(textCorreo);
-						
-						labelPromedio = new JLabel("Promedio de Calificaciones: ");
-						labelPromedio.setOpaque(false);
-						marcoDetalles.add(labelPromedio);
-						
-						labelEstrellas = new JLabel("");
-						labelEstrellas.setHorizontalAlignment(SwingConstants.CENTER);
-						labelEstrellas.setOpaque(false);
-						marcoDetalles.add(labelEstrellas);
-						
-						labelLapsos = new JLabel("Peridiocidad de Emparejamientos");
-						labelLapsos.setOpaque(false);
-						marcoDetalles.add(labelLapsos);
-						
-						comboLapsos = new JComboBox<String>();
-						// Esto permite que cuando el ComboBox esté desactivado, pueda
-						// seguir viéndose el texto del lapso del Usuario claramente.
-						comboLapsos.setRenderer(new DefaultListCellRenderer(){
-						    @Override
-						    public Component
-						    getListCellRendererComponent(JList<?> list, Object value, int index,
-						    							boolean isSelected, boolean cellHasFocus)
-						    {
-						        JComponent result = (JComponent)super.getListCellRendererComponent
-						        					(list, value, index, isSelected, cellHasFocus);
-						        result.setOpaque(false);
-						        return result;
-						    }
-						});
-						// Aquí se obtienen los datos directamente del Modelo
-						String[] lapsos = (String[]) Usuario.lapsos.toArray();
-						comboLapsos.setModel(new DefaultComboBoxModel<String>(lapsos));
-						marcoDetalles.add(comboLapsos);
+		labelNickname = new JLabel("Nickname: ");
+		labelNickname.setOpaque(false);
+		marcoDetalles.add(labelNickname);
+		
+		textNickname = new JTextField();
+		textNickname.setEditable(false);
+		textNickname.setHorizontalAlignment(SwingConstants.CENTER);
+		textNickname.setColumns(10);
+		marcoDetalles.add(textNickname);
+		
+		labelNombre = new JLabel("Nombre: ");
+		labelNombre.setOpaque(false);
+		marcoDetalles.add(labelNombre);
+		
+		textNombre = new JTextField();
+		textNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		textNombre.setColumns(10);
+		marcoDetalles.add(textNombre);
+		
+		labelApellidos = new JLabel("Apellidos:");
+		labelApellidos.setOpaque(false);
+		marcoDetalles.add(labelApellidos);
+		
+		textApellidos = new JTextField();
+		textApellidos.setHorizontalAlignment(SwingConstants.CENTER);
+		textApellidos.setColumns(10);
+		marcoDetalles.add(textApellidos);
+		
+		labelCedula = new JLabel("N\u00FAmero de C\u00E9dula: ");
+		labelCedula.setOpaque(false);
+		marcoDetalles.add(labelCedula);
+		
+		try {
+			formatCedula = new JFormattedTextField(new MaskFormatter("#########"));
+			formatCedula.setHorizontalAlignment(SwingConstants.CENTER);
+			marcoDetalles.add(formatCedula);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			JLabel error = new JLabel("Error inesperado en el sistema."); 
+			error.setOpaque(false);
+			marcoDetalles.add(error);
+		}
+		
+		labelTelefono = new JLabel("N\u00FAmero de Tel\u00E9fono:");
+		labelTelefono.setOpaque(false);
+		marcoDetalles.add(labelTelefono);
+		
+		try {
+			formatTelefono = new JFormattedTextField(new MaskFormatter("########"));
+			formatTelefono.setHorizontalAlignment(SwingConstants.CENTER);
+			marcoDetalles.add(formatTelefono);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			marcoDetalles.add(new JLabel("Error inesperado en el sistema."));
+		}
+		
+		labelCorreo = new JLabel("Correo Electr\u00F3nico:");
+		labelCorreo.setOpaque(false);
+		marcoDetalles.add(labelCorreo);
+		
+		textCorreo = new JTextField();
+		textCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+		marcoDetalles.add(textCorreo);
+		
+		labelPromedio = new JLabel("Promedio de Calificaciones: ");
+		labelPromedio.setOpaque(false);
+		marcoDetalles.add(labelPromedio);
+		
+		labelEstrellas = new JLabel("");
+		labelEstrellas.setHorizontalAlignment(SwingConstants.CENTER);
+		labelEstrellas.setOpaque(false);
+		marcoDetalles.add(labelEstrellas);
+		
+		labelLapsos = new JLabel("Peridiocidad de Emparejamientos");
+		labelLapsos.setOpaque(false);
+		marcoDetalles.add(labelLapsos);
+		
+		comboLapsos = new JComboBox<String>();
+		// Esto permite que cuando el ComboBox esté desactivado, pueda
+		// seguir viéndose el texto del lapso del Usuario claramente.
+		comboLapsos.setRenderer(new DefaultListCellRenderer(){
+		    @Override
+		    public Component
+		    getListCellRendererComponent(JList<?> list, Object value, int index,
+		    							boolean isSelected, boolean cellHasFocus)
+		    {
+		        JComponent result = (JComponent)super.getListCellRendererComponent
+		        					(list, value, index, isSelected, cellHasFocus);
+		        result.setOpaque(false);
+		        return result;
+		    }
+		});
+		// Aquí se obtienen los datos directamente del Modelo
+		String[] lapsos = (String[]) Usuario.lapsos.toArray();
+		comboLapsos.setModel(new DefaultComboBoxModel<String>(lapsos));
+		marcoDetalles.add(comboLapsos);
 				
 		marcoOperaciones = new JPanel();
 		marcoOperaciones.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 		marcoOperaciones.setOpaque(false);
 		getContentPane().add(marcoOperaciones, BorderLayout.SOUTH);
 				
-				botonGuardarCambios = new JButton("Guardar Cambios");
-				botonGuardarCambios.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Acceso.getUsuarioActivo().setApellidos(textApellidos.getText());
-						Acceso.getUsuarioActivo().setNombre(textNombre.getText());
-						Acceso.getUsuarioActivo().setCorreo(textCorreo.getText());
-						Acceso.getUsuarioActivo().setCedula(Integer.parseInt(formatCedula.getText()));
-						Acceso.getUsuarioActivo().setTelefono(Integer.parseInt(formatTelefono.getText()));
-						Acceso.getUsuarioActivo().setLapsoEmparejamiento((String)comboLapsos.getSelectedItem());
-						Acceso.getUsuarioActivo().setImagen(imagenSeleccionada);
-					}
-				});
-				
-				btnAgregarCalificacion = new JButton("Agregar Calificacion");
-				btnAgregarCalificacion.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Principal.coordinador.mostrarAgregarComentario(usuarioActual);
-					}
-				});
-				marcoOperaciones.add(btnAgregarCalificacion);
-				marcoOperaciones.add(botonGuardarCambios);
-				
-				botonCondicionesRefugio = new JButton("Ver Condiciones de Refugio");
-				botonCondicionesRefugio.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Principal.coordinador.mostrarCondicionesRefugio(usuarioActual);
-					}
-				});
-				marcoOperaciones.add(botonCondicionesRefugio);
-				
-				botonDetalles = new JButton("Ver Detalles de Calificaciones");
-				botonDetalles.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Principal.coordinador.mostrarCalificaciones(usuarioActual);
-					}
-				});
-				marcoOperaciones.add(botonDetalles);
-				
-				botonVerMascotas = new JButton("Ver Mascotas Asociadas");
-				botonVerMascotas.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Principal.coordinador.mostrarMascotasAsociadas(usuarioActual);
-					}
-				});
-				marcoOperaciones.add(botonVerMascotas);
-				
-				botonSalir = new JButton("Salir");
-				botonSalir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						close();
-					}
-				});
-				marcoOperaciones.add(botonSalir);
+		botonGuardarCambios = new JButton("Guardar Cambios");
+		botonGuardarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Acceso.getUsuarioActivo().setApellidos(textApellidos.getText());
+				Acceso.getUsuarioActivo().setNombre(textNombre.getText());
+				Acceso.getUsuarioActivo().setCorreo(textCorreo.getText());
+				Acceso.getUsuarioActivo().setCedula(Integer.parseInt(formatCedula.getText()));
+				Acceso.getUsuarioActivo().setTelefono(Integer.parseInt(formatTelefono.getText()));
+				Acceso.getUsuarioActivo().setLapsoEmparejamiento((String)comboLapsos.getSelectedItem());
+				Acceso.getUsuarioActivo().setImagen(imagenSeleccionada);
+			}
+		});
+		
+		btnAgregarCalificacion = new JButton("Agregar Calificacion");
+		btnAgregarCalificacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarAgregarComentario(usuarioActual);
+			}
+		});
+		marcoOperaciones.add(btnAgregarCalificacion);
+		marcoOperaciones.add(botonGuardarCambios);
+		
+		botonCondicionesRefugio = new JButton("Ver Condiciones de Refugio");
+		botonCondicionesRefugio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarCondicionesRefugio(usuarioActual);
+			}
+		});
+		marcoOperaciones.add(botonCondicionesRefugio);
+		
+		botonDetalles = new JButton("Ver Detalles de Calificaciones");
+		botonDetalles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarCalificaciones(usuarioActual);
+			}
+		});
+		marcoOperaciones.add(botonDetalles);
+		
+		if (Acceso.isAdministradorActivo()){
+			JButton botonPromover = new JButton("Ver Detalles de Calificaciones");
+			botonPromover.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Principal.coordinador.mostrarCalificaciones(usuarioActual);
+				}
+			});
+			marcoOperaciones.add(botonPromover);
+		}
+		
+		botonVerMascotas = new JButton("Ver Mascotas Asociadas");
+		botonVerMascotas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Principal.coordinador.mostrarMascotasAsociadas(usuarioActual);
+			}
+		});
+		marcoOperaciones.add(botonVerMascotas);
+		
+		botonSalir = new JButton("Salir");
+		botonSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				close();
+			}
+		});
+		marcoOperaciones.add(botonSalir);
 	}
 	
 	private void close(){
@@ -331,6 +341,8 @@ public class VentanaDetallesUsuario extends JFrame {
 		comboLapsos.setEnabled(modoEdicion);
 		botonGuardarCambios.setVisible(modoEdicion);
 		botonActualizarFoto.setVisible(modoEdicion);
-		if (usuarioActual == Acceso.getUsuarioActivo()) {botonCondicionesRefugio.setText("Editar mis condiciones registro");}
+		if (usuarioActual == Acceso.getUsuarioActivo()) {
+			botonCondicionesRefugio.setText("Editar Condiciones Refugio");
+		}
 	}
 }
