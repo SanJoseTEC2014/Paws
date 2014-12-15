@@ -377,7 +377,7 @@ public class VentanaBusqueda extends JFrame {
 				if (pestanias.getSelectedIndex() == 1){
 					int fila = tablaResultadosMascotas.getSelectedRow();
 					if (fila != -1){
-						String IDMascota = (String) tablaResultadosMascotas.getValueAt(fila, 0);
+						String IDMascota = (String) tablaResultadosMascotas.getValueAt(fila, 0).toString();
 						try {
 							Principal.coordinador.mostrarDetallesMascota(Principal.getMascotaID(Integer.parseInt(IDMascota)));
 						} catch (MascotaNoEncontradaException e) {
